@@ -63,7 +63,7 @@ Kwaadwillende stakeholders
 | Nep-reviewers | Verspreiden van vals negatieve reviews via app of social media | Laag | Geen | Verlies van klantenvertrouwen, reputatieschade |
 
 UI-model
-
+Staat in sprint verslag
 **Actoren**
 
 Interne actoren
