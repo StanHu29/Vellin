@@ -112,3 +112,438 @@ Grootste problemen van de actoren
 - Geen centrale data
 - Slechte communicatie tussen actoren
 - Handmatige processen
+Bedrijfsprocesanalyse
+In dit hoofdstuk wordt de huidige situatie van de Chocolate Firm geanalyseerd. Er wordt
+
+gekeken naar hoe processen nu verlopen, welke knelpunten daarin zitten en hoe de nieuwe
+
+mobiele applicatie deze problemen oplost. Het verschil tussen de huidige en gewenste
+
+situatie wordt tot slot samengevat in een GAP-analyse en uitgewerkt in een SIPOC.
+
+1. IST-situatie
+Binnen de Chocolate Firm verlopen de bedrijfsprocessen op dit moment nog grotendeels
+
+handmatig. Bestellingen komen binnen via verschillende kanalen. Grote supermarkten
+
+mailen hun orders in bulk, kleinere speciaalzaken bestellen vaak telefonisch en
+
+vertegenwoordigers noteren orders onderweg in eigen Excel-bestanden. Elke medewerker
+
+werkt daarin op zijn eigen manier zonder vaste afspraken. Dit leidt regelmatig tot discussies
+
+over welke versie van een bestand de juiste is.
+
+Aan het einde van de dag worden de bestanden doorgestuurd naar de productieafdeling en
+
+het magazijn. Dit gebeurt niet altijd op tijd. Sommige medewerkers sturen bestanden pas de
+
+volgende ochtend of vergeten dit helemaal. Soms raken bestanden zoek in de e-mailstroom
+
+of komen ze dubbel binnen. De productieplanner moet dan zelf uitzoeken welke versie
+
+klopt.
+
+De productieplanning wordt handmatig opgesteld op basis van de ontvangen bestanden.
+
+Hierbij wordt geen rekening gehouden met de actuele voorraden. Dit leidt soms tot stilstand
+
+van de productielijn omdat een ingrediënt ontbreekt of juist tot overproductie waarbij grote
+
+partijen onverkocht in het magazijn blijven liggen.
+
+Het voorraadbeheer gebeurt met de hand via logboeken in het magazijn. Bij drukte wordt
+
+dit niet altijd meteen bijgewerkt, waardoor de gegevens soms dagen achterlopen. Er is geen
+
+real-time inzicht in de werkelijke voorraad. Bestellingen bij leveranciers worden ongepland
+
+geplaatst op basis van wat iemand in de logboeken ziet.
+
+De kwaliteitscontrole is steekproefsgewijs. Bij elke batch wordt een kleine selectie getest.
+
+Omdat de productie soms achterloopt, schiet dit er regelmatig bij in. Fouten worden
+
+daardoor vaak pas ontdekt nadat producten al naar klanten zijn verstuurd.
+
+Verzendlabels worden grotendeels met de hand geschreven of oude sjablonen worden
+
+hergebruikt. Dit leidt regelmatig tot fouten met adressen of ordernummers en dus
+
+verkeerde leveringen. Klanten hebben geen toegang tot track & trace informatie.
+
+Facturatie gebeurt handmatig op basis van kopieën van orders en leverbonnen. Er is geen
+
+systeem dat automatisch bijhoudt of facturen zijn betaald. Hierdoor blijven facturen
+
+regelmatig te lang openstaan.
+
+De klantenservice ontvangt dagelijks vragen en klachten over te late leveringen, verkeerde
+
+producten of kwaliteitsproblemen. Er is geen centraal systeem met klantgegevens of
+
+eerdere interacties. Medewerkers moeten daardoor steeds opnieuw dezelfde vragen stellen
+
+en klachten worden vaak afzonderlijk opgelost zonder structurele verbetering.
+
+2. Knelpunten
+Geen centrale orderverwerking : Bestellingen komen binnen via e-mail, telefoon en Excel-
+
+bestanden zonder vaste afspraken. Dit zorgt voor verwarring, dubbele versies en fouten in
+
+de verwerking.
+
+Onbetrouwbare informatiedoorstroming : Bestanden worden niet altijd op tijd doorgestuurd
+
+naar de productieafdeling. Hierdoor werkt de planner met incomplete of verouderde
+
+informatie.
+
+Geen real-time voorraadinzicht : Het voorraadbeheer loopt via handmatige logboeken die
+
+niet altijd actueel zijn. Dit leidt tot tekorten op de productielijn of juist overproductie.
+
+Gebrekkige kwaliteitscontrole : Door tijdsdruk wordt de kwaliteitscontrole soms
+
+overgeslagen. Fouten worden pas ontdekt nadat producten al zijn verstuurd.
+
+Foutgevoelig logistiek proces : Handmatig geschreven verzendlabels leiden tot verkeerde
+
+leveringen. Klanten hebben geen inzicht in de status van hun bestelling.
+
+Handmatige facturatie zonder opvolging : Facturen worden handmatig opgesteld en er is
+
+geen systeem dat bijhoudt of ze zijn betaald. Hierdoor blijven openstaande facturen te lang
+
+liggen.
+
+Geen centraal klantoverzicht : De klantenservice heeft geen toegang tot klantgeschiedenis of
+
+eerdere interacties. Klanten worden daardoor niet consistent geholpen en klachten worden
+
+niet structureel opgelost.
+
+3. SOLL-situatie
+In de nieuwe situatie is er één centrale mobiele app voor alle klantprocessen. Klanten
+
+registreren hun producten via een QR-code of handmatige invoer. Via een persoonlijk
+
+dashboard zien ze direct alle productinformatie, zoals allergenen, herkomst, certificeringen
+
+en houdbaarheid.
+
+Klachten worden ingediend via een eenvoudig formulier in de app. Klanten kunnen er foto's
+
+of video's bij sturen. De app herkent veelvoorkomende problemen automatisch en biedt
+
+direct een oplossing of compensatie aan. Klanten kunnen de status van hun klacht live
+
+volgen en krijgen een bericht bij elke update.
+
+Klanten bestellen nieuwe producten direct via de app. De app is gekoppeld aan het ERP-
+
+systeem, zodat voorraad en levertijden altijd actueel zijn. Een medewerker is hier niet meer
+
+voor nodig.
+
+Communicatie is persoonlijk. Klanten krijgen pushberichten over producten die passen bij
+
+hun eerdere aankopen en voorkeuren. Ze stellen zelf in welk soort berichten ze willen
+
+ontvangen.
+
+ERP, BI en CRM zijn gekoppeld aan de app. Data wordt automatisch gesynchroniseerd.
+
+Medewerkers hebben altijd een volledig en actueel klantprofiel beschikbaar.
+
+Een AI-chatbot is 24/7 beschikbaar voor vragen over producten, allergenen, bestellingen en
+
+klachten. Bij ingewikkeldere vragen kunnen klanten live chatten met een medewerker of
+
+een terugbelverzoek indienen.
+
+4. GAP-analyse
+Aspect IST SOLL GAP
+Orderverwerking Losse kanalen,
+Excel-bestanden
+per medewerker
+Centrale digitale
+orderverwerking
+via app en ERP
+Gestandaardiseerd
+digitaal orderproces
+bouwen
+Informatiedoorstromin
+g
+Bestanden
+worden te laat of
+niet doorgestuurd
+Automatische
+synchronisatie
+van orders naar
+productie
+ERP-koppeling
+realiseren
+Voorraadbeheer Handmatige
+logboeken, geen
+real-time inzicht
+Real-time
+voorraadinzicht
+via gekoppeld
+systeem
+Voorraadbeheermodul
+e koppelen aan ERP
+Kwaliteitscontrole Steekproefsgewij
+s, wordt soms
+overgeslagen
+Gestructureerde
+kwaliteitscontrole
+per batch
+Digitaal
+kwaliteitscontroleproce
+s inrichten
+Logistiek Handgeschreven
+labels, geen track
+& trace
+Automatische
+labels en track &
+trace voor
+klanten
+Logistieke module
+bouwen met track &
+trace
+Facturatie Handmatig, geen
+automatische
+opvolging
+Automatische
+facturatie en
+betalingsopvolgin
+g
+Facturatiemodule
+koppelen aan ERP
+Klantenservice Geen centraal
+klantoverzicht
+Centraal CRM
+met volledige
+klantgeschiedenis
+CRM implementeren
+en koppelen aan app
+5. SIPOC (Klachtenproces)
+Supplier
+s
+Inputs Process Outputs Customers
+Klant,
+ERP,
+CRM
+Klachtomschrijvin
+g, foto/video,
+productcode,
+aankoopgegevens
+Klant dient
+klacht in via
+app 2. App
+herkent het
+probleemtyp
+e 3. Directe
+oplossing of
+doorverwijzin
+g 4.
+Medewerker
+beoordeelt
+indien nodig
+Klant krijgt
+statusupdates
+Klacht
+wordt
+afgehandeld
+Opgeloste klacht,
+statusupdates,
+compensatie of
+vervanging, data
+voor
+kwaliteitsverbeterin
+g
+Klant,
+klantenservice,
+kwaliteitsafdeling,
+productontwikkelin
+g
+User stories
+In dit hoofdstuk worden de functionele en niet-functionele eisen van de mobiele app
+
+uitgewerkt in user stories. Elke user story beschrijft wat een gebruiker wil, waarom hij
+
+dat wil en wanneer de story als klaar wordt beschouwd via de acceptatiecriteria. De
+
+stories zijn geprioriteerd op basis van de doelstellingen en knelpunten uit de
+
+bedrijfsprocesanalyse.
+
+De inschatting wordt gedaan in story points. Story points geven aan hoe complex en
+
+tijdrovend een taak is. Als richtlijn hanteert het team het volgende:
+
+− 1 story point = zeer eenvoudige taak ongeveer 2 uur werk
+− 2 story points = eenvoudige taak ongeveer 4 uur werk
+− 3 story points = gemiddelde taak ongeveer 1 dag werk
+− 5 story points = complexe taak ongeveer 2-3 dagen werk
+− 8 story points = zeer complexe taak ongeveer 1 week werk
+De prioriteit wordt bepaald aan de hand van de MoSCoW-methode
+
+ID (^) F
+Naam (^) Productregistratie via QR-code
+Omschrijving (^) Als klant wil ik mijn chocoladeproduct registreren via een QR-
+code op de verpakking zodat ik direct toegang heb tot alle
+productinformatie in de app.
+Acceptatiecriteria:
+− De camera van de app herkent de QR-code op de
+verpakking
+− Na scannen wordt het product automatisch
+toegevoegd aan het dashboard
+− Als de QR-code niet werkt kan de klant handmatig een
+batchnummer of productcode invoeren
+− Het geregistreerde product toont aankoopdatum,
+houdbaarheid, allergenen, herkomst en
+certificeringen
+Inschatting (^) 5 story points
+Prioriteit Must have
+ID (^) F
+Naam (^) Persoonlijk dashboard
+Omschrijving (^) Als klant wil ik een persoonlijk dashboard zien met al mijn
+geregistreerde producten zodat ik snel alle productinformatie
+op één plek kan vinden.
+Acceptatiecriteria:
+− Het dashboard toont alle geregistreerde producten
+met aankoopdatum en houdbaarheid
+− De klant ziet per product de allergenen, herkomst en
+certificeringen zoals Fairtrade
+− Het dashboard is beschikbaar in Nederlands en Engels
+− Het dashboard werkt zowel in lichte als donkere
+modus
+Inschatting (^) 5 story points
+Prioriteit Must have
+ID (^) F
+Naam (^) Klacht indienen via de app
+Omschrijving (^) Als klant wil ik een klacht indienen via een formulier in de app
+zodat ik snel en eenvoudig een probleem kan melden zonder
+te hoeven bellen of mailen.
+Acceptatiecriteria:
+
+− De klant kan een klacht indienen via een formulier
+met foto of video als bijlage
+− De app herkent automatisch veelvoorkomende
+problemen zoals smeltschade of breukschade
+− De klant ontvangt direct een bevestiging van de
+melding
+− De klant kan de status van de klacht live volgen in de
+app
+− De klant krijgt een pushbericht bij elke statuswijziging
+Inschatting (^) 8 story points
+Prioriteit Must have
+ID (^) F
+Naam (^) Direct bestellen via de app
+Omschrijving (^) Als klant wil ik nieuwe producten direct bestellen via de app
+zodat ik niet afhankelijk ben van een verkoopmedewerker of
+extern portaal
+Acceptatiecriteria:
+− De klant kan producten bestellen via de app
+− De voorraad en levertijden zijn altijd actueel dankzij
+de koppeling met het ERP-systeem
+− B2B klanten zien aanvullende informatie over
+productieplanning en voorraadstatus
+− De klant ontvangt een orderbevestiging via de app na
+het plaatsen van een bestelling
+Inschatting (^) 8 story points
+Prioriteit Must have
+ID (^) F
+Naam (^) Persoonlijke pushberichten ontvangen
+Omschrijving (^) Als klant wil ik persoonlijke pushberichten ontvangen over
+producten die bij mij passen zodat ik relevante aanbiedingen
+en nieuwe producten niet mis
+Acceptatiecriteria:
+− De app stuurt pushberichten op basis van
+aankoopgeschiedenis en voorkeuren
+− De klant kan zelf instellen welk type berichten hij wil
+ontvangen zoals alleen duurzame producten of alleen
+nieuwe smaken
+− De klant kan niet-storen periodes instellen
+− Berichten worden verstuurd bij nieuwe smaken,
+limited editions en seizoensproducten
+Inschatting (^) 5 story points
+Prioriteit Should have
+
+ID (^) F
+Naam (^) AI-chatbot gebruiken voor vragen
+Omschrijving (^) Als klant wil ik 24/7 vragen stellen via een AI-chatbot zodat ik
+altijd snel antwoord krijg zonder te hoeven wachten op een
+medewerker
+Acceptatiecriteria:
+− De chatbot is 24/7 beschikbaar en beantwoordt
+vragen over producten, allergenen, bestellingen en
+klachten
+− Antwoorden zijn gepersonaliseerd op basis van CRM-
+gegevens van de klant
+− Bij complexere vragen kan de klant doorverbonden
+worden met een live medewerker tijdens
+openingstijden
+− De klant kan ook een terugbelverzoek indienen via de
+app
+Inschatting (^) 8 story points
+Prioriteit Should have
+
+ID F
+Naam (^) Notificatie bij bijna verlopen product
+Omschrijving (^) Als klant wil ik automatisch een melding ontvangen als een
+product bijna over de datum raakt zodat ik het product op
+tijd kan gebruiken en verspilling voorkom
+Acceptatiecriteria:
+− De app stuurt automatisch een pushbericht wanneer
+een product binnen 7 dagen over de datum raakt
+− De melding toont de productnaam en de
+houdbaarheidsdatum
+− De klant kan instellen of hij dit soort meldingen wil
+ontvangen
+− De melding is beschikbaar in de taal die de klant heeft
+ingesteld
+Inschatting (^) 3 story points
+Prioriteit Could have
+ID (^) NF
+Naam (^) Beveiliging en privacy
+Omschrijving (^) Als klant wil ik dat mijn gegevens veilig worden opgeslagen en
+verwerkt zodat ik erop kan vertrouwen dat mijn persoonlijke
+informatie niet in verkeerde handen valt
+
+Acceptatiecriteria:
+− Alle dataoverdracht is beveiligd met end-to-end
+encryptie
+− De klant kan inloggen met tweefactorauthenticatie
+− De klant kan zelf instellen welke gegevens worden
+verzameld en hoe deze worden gebruikt
+− De klant wordt transparant geïnformeerd over
+wijzigingen in het privacybeleid
+Inschatting (^) 8 story points
+Prioriteit Must have
+ID (^) NF
+Naam (^) Prestaties en betrouwbaarheid
+Omschrijving (^) Als klant wil ik dat de app snel laadt en weinig uitvalt zodat ik
+altijd gebruik kan maken van de app zonder frustratie
+Acceptatiecriteria:
+− Pagina's laden binnen 2 seconden
+− De app heeft een minimale downtime en is vrijwel
+altijd beschikbaar
+− Bij een fout krijgt de klant een duidelijke foutmelding
+en geen lege pagina
+− De app werkt stabiel op zowel iOS als Android
+Inschatting (^) 5 story points
+Prioriteit Must have
+ID (^) NF
+Naam (^) Toegankelijkheid
+Omschrijving (^) Als klant met een visuele beperking wil ik de app kunnen
+gebruiken met een schermlezer en grotere letters zodat ik
+dezelfde ervaring heb als andere gebruikers
+Acceptatiecriteria:
+− De app ondersteunt schermlezers voor slechtzienden
+− Lettergroottes zijn aanpasbaar door de klant
+− Alle video's in de app hebben ondertiteling
+Inschatting (^) 5 story points
+Prioriteit Should have
