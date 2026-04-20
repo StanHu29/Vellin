@@ -1,6 +1,6 @@
 Markdown-inhoud
 Chocolate Firm Requirement specificatie
-![ ](chocolate-firm-app-canvas.png.png)
+
 **Missie**
 
 Wij maken chocoladeproducten die mensen verbinden met smaak, kwaliteit en duurzaamheid.
@@ -185,6 +185,8 @@ Een Al-chatbot is 24/7 beschikbaar voor vragen over producten, allergenen, beste
 | Supplier S | Inputs | Process | Outputs | Customers |
 | --- | --- | --- | --- | --- |
 | Klant, ERP, CRM | Klachtomschrijvin g,foto/video, productcode, aankoopgegevens | 1. Klant dient klacht in via app 2. App herkent het problemtyp e 3. Directe oplossing of doorverwijzin g4. Medewerker beoordeelt indien nodig 5. Klant krijgt statusupdates 6. Klacht wordt afgehandeld | Opgeloste klacht, statusupdates, compensatie of vervanging, data voor kwaliteitsverbeterin g | Klant, klantenservice, kwaliteitsafdeling, productontwikkelin g |
+
+![ ](chocolate-firm-app-canvas.png.png)
 
 ### User stories
 
