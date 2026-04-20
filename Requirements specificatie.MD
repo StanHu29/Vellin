@@ -186,6 +186,8 @@ Een Al-chatbot is 24/7 beschikbaar voor vragen over producten, allergenen, beste
 | --- | --- | --- | --- | --- |
 | Klant, ERP, CRM | Klachtomschrijvin g,foto/video, productcode, aankoopgegevens | 1. Klant dient klacht in via app 2. App herkent het problemtyp e 3. Directe oplossing of doorverwijzin g4. Medewerker beoordeelt indien nodig 5. Klant krijgt statusupdates 6. Klacht wordt afgehandeld | Opgeloste klacht, statusupdates, compensatie of vervanging, data voor kwaliteitsverbeterin g | Klant, klantenservice, kwaliteitsafdeling, productontwikkelin g |
 
+![Chocolate Firm App Canvas](assets/chocolate-firm-app-canvas.png)
+
 ### User stories
 
 In dit hoofdstuk worden de functionele en niet-functionele eisen van de mobilele app uitgewerkt in user stories. Elke user story beschrijft wat een gebruiker wil, waarom hij dat wil en wanneer de story als klaar wordt beschouwd via de acceptatiecriteria. De stories zijn geprioriteerd op basis van de doelstellingen en knelpunten uit de bedrijfsprocesanalyse.
