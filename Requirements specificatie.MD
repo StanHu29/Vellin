@@ -1,6 +1,6 @@
 Markdown-inhoud
 Chocolate Firm Requirement specificatie
-![ ](chocolate-firm-app-canvas.png)
+![ ](chocolate-firm-app-canvas.png.png)
 **Missie**
 
 Wij maken chocoladeproducten die mensen verbinden met smaak, kwaliteit en duurzaamheid.
