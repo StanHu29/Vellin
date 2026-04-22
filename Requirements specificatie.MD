@@ -356,5 +356,11 @@ Het overzicht van de collectie (F02) en de gedetailleerde productkaart (F01) met
 ![My chocolate](Screenshot%202026-04-20%20112809.png)
 ![My chocolate](Screenshot%202026-04-20%20113312.png)
 
+---
+
+### 3. Support & Klachten (AI Chatbot)
+De interactieve chat-interface (F03 & F06) waar de AI-chatbot de gebruiker helpt bij vragen of het indienen van een klacht met foto-upload.
+
+![AI Chatbot](Screenshot%202026-04-20%20112809.png)
 
 
