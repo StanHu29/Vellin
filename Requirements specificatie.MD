@@ -350,7 +350,11 @@ Dit scherm (F02) is de centrale hub van de app. Vanuit hier kan de gebruiker dir
 ---
 
 ### 2. Mijn Chocolade & Productinformatie
-Het overzicht van de collectie (F02) en de gedetailleerde productkaart (F01) met herkomstinformatie en de optie om een klacht in te dienen (F03).
+Het overzicht van de collectie (F02) en de gedetailleerde productkaart (F01) met herkomstinformatie
 
-![Mijn Chocolade](Screenshot%202026-04-20%20110319.png)
-![Product Detail](Screenshot%202026-04-20%20110507.png)
+![Shop Overzicht](Screenshot%202026-04-20%20113126.jpg)
+![AI Chatbot Interface](Screenshot%202026-04-20%20112809.png)
+![B2B Portaal](Screenshot%202026-04-20%20113312.png)
+
+
+
