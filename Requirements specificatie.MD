@@ -363,4 +363,12 @@ De interactieve chat-interface (F03 & F06) waar de AI-chatbot de gebruiker helpt
 
 ![AI Chatbot](Screenshot%202026-04-22%20155254.png)
 
+---
+
+#### 4. Consumenten Shop (B2C)
+Dit scherm is gericht op de individuele klant, met focus op productafbeeldingen en eenvoudige bestelmogelijkheden.
+![B2C Shop](Screenshot%202026-04-22%20154944.png)
+
+Voor zakelijke klanten (zoals supermarkten) toont de app real-time voorraadinformatie uit het magazijn en de huidige productieplanning, zodat zij grotere bulkorders nauwkeurig kunnen plannen.(F04)
+![B2B Portaal](Screenshot%202026-04-22%20163536.png)
 
