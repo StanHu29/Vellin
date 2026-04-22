@@ -343,4 +343,6 @@ Hieronder worden de belangrijkste schermen van de Chocolate Firm app weergegeven
 Dit scherm (F02) is de centrale hub van de app. Vanuit hier kan de gebruiker direct de scanner starten (F01).
 
 ![Dashboard](Screenshot%202026-04-20%20104645.png)
-![Scanner](Screenshot%202026-04-20%20105033.png)
+![Dashboard](Screenshot%202026-04-20%20105033.png)
+![scanner](Screenshot%202026-04-20%20110319.png)
+![scanner](Screenshot%202026-04-20%20110507.png)
