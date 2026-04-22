@@ -332,6 +332,15 @@ $$
 
 ### Sitemap
 
-Hieronder is de sitemap van de te ontwikkelen mobiele applicatie gevisualiseerd. Dit schema geeft de hiërarchische navigatiestructuur weer.
-
+Hieronder is de sitemap van de te ontwikkelen mobiele applicatie gevisualiseerd. 
 ![Sitemap Chocolate Firm App](Screenshot%202026-04-20%20095621.png)
+
+## Wireframes
+
+Hieronder worden de belangrijkste schermen van de Chocolate Firm app weergegeven. Deze ontwerpen visualiseren de functionele eisen zoals beschreven in de User Stories.
+
+### 1. Dashboard & Productregistratie
+Dit scherm (F02) is de centrale hub van de app. Vanuit hier kan de gebruiker direct de scanner starten (F01).
+
+![Dashboard](Screenshot%202026-04-20%20104645.png)
+![Scanner](Screenshot%202026-04-20%20105033.png)
