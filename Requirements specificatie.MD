@@ -352,8 +352,8 @@ Dit scherm (F02) is de centrale hub van de app. Vanuit hier kan de gebruiker dir
 ### 2. Mijn Chocolade & Productinformatie
 Het overzicht van de collectie (F02) en de gedetailleerde productkaart (F01) met herkomstinformatie
 
-![My chocolate](Screenshot%202026-04-20%20113126.png)
 ![My chocolate](Screenshot%202026-04-20%20112809.png)
+![My chocolate](Screenshot%202026-04-20%20113126.png)
 ![My chocolate](Screenshot%202026-04-20%20113312.png)
 
 ---
@@ -369,7 +369,7 @@ De interactieve chat-interface (F03 & F06) waar de AI-chatbot de gebruiker helpt
 Dit scherm is gericht op de individuele klant, met focus op productafbeeldingen en eenvoudige bestelmogelijkheden.
 ![B2C Shop](Screenshot%202026-04-22%20154944.png)
 
-Voor zakelijke klanten (zoals supermarkten) toont de app real-time voorraadinformatie uit het magazijn en de huidige productieplanning, zodat zij grotere bulkorders nauwkeurig kunnen plannen.(F04)
+(B2B) Voor zakelijke klanten (zoals supermarkten) toont de app real-time voorraadinformatie uit het magazijn en de huidige productieplanning, zodat zij grotere bulkorders nauwkeurig kunnen plannen.(F04)
 
 ![B2B Portaal](Screenshot%202026-04-22%20163536.png)
 
