@@ -361,6 +361,6 @@ Het overzicht van de collectie (F02) en de gedetailleerde productkaart (F01) met
 ### 3. Support & Klachten (AI Chatbot)
 De interactieve chat-interface (F03 & F06) waar de AI-chatbot de gebruiker helpt bij vragen of het indienen van een klacht met foto-upload.
 
-![AI Chatbot](Screenshot%202026-04-20%20112809.png)
+![AI Chatbot](Screenshot%202026-04-22%20155254.png)
 
 
