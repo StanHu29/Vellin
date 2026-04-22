@@ -308,3 +308,30 @@ $$
 | Inschatting | 5 story points |
 | Prioriteit | Should have |
 
+
+
+### Definition of Ready (DoR)
+
+*Wanneer is een User Story klaar om door het ontwikkelteam te worden opgepakt in een sprint?*
+
+* De User Story is geformuleerd volgens het standaard format (Als [actor] wil ik [actie] zodat [waarde]).
+* De acceptatiecriteria zijn helder, concreet en testbaar opgesteld.
+* De complexiteit van de User Story is ingeschat door het team (voorzien van Story Points).
+* De User Story is klein genoeg (voldoet aan de INVEST-criteria) om binnen één sprint te worden afgerond.
+* Indien de User Story invloed heeft op de UI, is er een goedgekeurd wireframe beschikbaar.
+
+### Definition of Done (DoD)
+
+*Wanneer is een User Story afgerond en klaar om aan de klant op te leveren?*
+
+* Alle acceptatiecriteria voor de User Story zijn succesvol getest en afgevinkt.
+* De geschreven code voldoet aan de programmeerrichtlijnen van het team.
+* De functionaliteit voldoet aan de vastgestelde veiligheids- en privacy-eisen (waaronder end-to-end encryptie).
+* De functionaliteit voldoet aan de non-functionele toegankelijkheidseisen (zoals aanpasbare lettergrootte en contrast).
+* De Product Owner (de Chocolate Firm) heeft de functionaliteit beoordeeld en geaccepteerd.
+
+### Sitemap
+
+Hieronder is de sitemap van de te ontwikkelen mobiele applicatie gevisualiseerd. Dit schema geeft de hiërarchische navigatiestructuur weer.
+
+![Sitemap Chocolate Firm App](Screenshot%202026-04-20%20095621.png)
