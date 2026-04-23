@@ -379,3 +379,16 @@ Dit scherm is gericht op de individuele klant, met focus op productafbeeldingen 
 
 ![B2B Portaal](Screenshot%202026-04-22%20163536.png)
 
+MMM-labels
+
+| Onderdeel | Toelichting |
+| --- | --- |
+| Organisatorische Context | AI gebruikt voor opmaak |
+| Actoren | AI gebruikt voor opmaak |
+| Bedrijfsprocesanalyse | AI gebruikt voor structuur. |
+| Productvisie | Geen gebruik gemaakt van AI-tools. |
+| User stories | AI gebruikt voor inspiratie. |
+| Dor & DoD | AI gebruikt voor structuur |
+| Sitemap | Geen gebruik gemaakt van AI-tools. |
+| Wireframes | Samen met AI gemaakt. |
+
