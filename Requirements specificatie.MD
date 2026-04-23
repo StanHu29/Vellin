@@ -379,7 +379,7 @@ Dit scherm is gericht op de individuele klant, met focus op productafbeeldingen 
 
 ![B2B Portaal](Screenshot%202026-04-22%20163536.png)
 
-MMM-labels
+**MMM-labels**
 
 | Onderdeel | Toelichting |
 | --- | --- |
