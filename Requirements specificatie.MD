@@ -1,6 +1,12 @@
 Markdown-inhoud
 Chocolate Firm Requirement specificatie
 
+**Inleiding**
+
+De chocolate Firm is een chocoladeproducent die zich afspeelt in de game van Edumundo. Het bedrijf produceert tabletten, repen, uitdeelverpakkingen en seizoen producten en levert deze aan supermarkten, groothandels en speciaalzaken. Op dit moment werkt de organisatie nog grotendeels op basis van handmatige en verdeelde processen waarbij orders via verschillende kanalen binnenkomen, voorraden in papieren logboeken worden bijgehouden en facturen handmatig worden opgesteld. Dit leidt tot fouten, vertragingen en een gebrek aan overzicht dat groei van het bedrijf vermindert.
+
+Om dit aan te pakken heeft de Raad van Commissarissen besloten een innovatieve mobiele applicatie te ontwikkelen die de klantervaring verbetert en werkt als startpunt van een bredere digitale transformatie. Dit document beschrijft de requirements specificatie van de Chocolate Firm.
+
 **Missie**
 
 Wij maken chocoladeproducten die mensen verbinden met smaak, kwaliteit en duurzaamheid.
