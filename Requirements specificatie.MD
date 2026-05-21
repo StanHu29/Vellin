@@ -348,36 +348,32 @@ Hieronder worden de belangrijkste schermen van de Chocolate Firm app weergegeven
 ### 1. Dashboard & Productregistratie
 Dit scherm (F02) is de centrale hub van de app. Vanuit hier kan de gebruiker direct de scanner starten (F01).
 
-![Dashboard](Screenshot%202026-04-20%20104645.png)
-![Dashboard](Screenshot%202026-04-20%20105033.png)
-![scanner](Screenshot%202026-04-20%20110319.png)
-![scanner](Screenshot%202026-04-20%20110507.png)
+![Dashboard](1.jpg)
+![Product Registratie QR](ChatGPT Image May 20, 2026, 06_30_45 PM.jpg)
+![Product Registratie Handmatig](ChatGPT Image May 20, 2026, 08_17_36 PM.png)
 
 ---
 
 ### 2. Mijn Chocolade & Productinformatie
 Het overzicht van de collectie (F02) en de gedetailleerde productkaart (F01) met herkomstinformatie
 
-![My chocolate](Screenshot%202026-04-20%20112809.png)
-![My chocolate](Screenshot%202026-04-20%20113126.png)
-![My chocolate](Screenshot%202026-04-20%20113312.png)
-
+![Mijn Chocolade Details](ChatGPT Image May 20, 2026, 08_22_12 PM.png)
+![Cocoa Journey Map](5ccd6c30-c31e-4319-93dc-cd7abc17c0ca.jpg)
 ---
 
 ### 3. Support & Klachten (AI Chatbot)
 De interactieve chat-interface (F03 & F06) waar de AI-chatbot de gebruiker helpt bij vragen of het indienen van een klacht met foto-upload.
 
-![AI Chatbot](Screenshot%202026-04-22%20155254.png)
+![Customer Support Chat](ChatGPT Image May 20, 2026, 08jj_24_20 PM.jpg)
 
 ---
 
 #### 4. Consumenten Shop (B2C)
 Dit scherm is gericht op de individuele klant, met focus op productafbeeldingen en eenvoudige bestelmogelijkheden.
-![B2C Shop](Screenshot%202026-04-22%20154944.png)
+
+![Shop Interface](ChatGPT Image May 20, 20jgg26, 08_24_20 PM.jpg)
 
 (B2B) Voor zakelijke klanten (zoals supermarkten) toont de app real-time voorraadinformatie uit het magazijn en de huidige productieplanning, zodat zij grotere bulkorders nauwkeurig kunnen plannen.(F04)
-
-![B2B Portaal](Screenshot%202026-04-22%20163536.png)
 
 **MMM-labels**
 
