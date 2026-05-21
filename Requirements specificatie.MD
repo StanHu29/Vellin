@@ -213,7 +213,6 @@ Een AI-chatbot is 24/7 beschikbaar voor vragen over producten, allergenen, beste
 | --- | --- | --- | --- | --- |
 | Klant, ERP, CRM | Klachtomschrijving, foto/video, productcode, aankoopgegevens | 1. Klant dient klacht in via app 2. App herkent het probleemtype 3. Directe oplossing of doorverwijzing 4. Medewerker beoordeelt indien nodig 5. Klant krijgt statusupdates 6. Klacht wordt afgehandeld | Opgeloste klacht, statusupdates, compensatie of vervanging, data voor kwaliteitsverbetering | Klant, klantenservice, kwaliteitsafdeling, productontwikkeling |
 
-![ ](chocolate-firm-app-canvas.png.png)
 
 ---
 
