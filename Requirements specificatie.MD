@@ -1,3 +1,15 @@
+# Inhoudsopgave
+
+1. Organisatorische Context  
+2. Actoren  
+3. Bedrijfsprocesanalyse  
+4. Productvisie  
+5. User Stories  
+6. Definition of Ready & Definition of Done  
+7. Sitemap  
+8. Wireframes  
+9. MMM-labels
+
 # 1. Organisatorische Context
 
 Dit hoofdstuk beschrijft de missie, visie, strategie en doelstellingen van de Chocolate Firm, specifiek gericht op de ontwikkeling van de mobiele applicatie. De organisatorische context vormt de basis voor alle keuzes in dit document.
@@ -337,7 +349,7 @@ Wanneer is een User Story afgerond en klaar om aan de klant op te leveren?
 
 # 7. Sitemap
 
-De sitemap hieronder toont de structuur van de Vellin app. De pagina's zijn gebaseerd op de must have en should have user stories. Pagina's die vallen onder could have zijn wel opgenomen in de sitemap maar worden later ontwikkeld.
+De sitemap hieronder toont de structuur van de app. De pagina's zijn gebaseerd op de must have en should have user stories. Pagina's die vallen onder could have zijn wel opgenomen in de sitemap maar worden later ontwikkeld.
 
 ![Sitemap Chocolate Firm App](Screenshot%202026-04-20%20095621.png)
 
@@ -345,7 +357,7 @@ De sitemap hieronder toont de structuur van de Vellin app. De pagina's zijn geba
 
 # 8. Wireframes
 
-Hieronder worden de belangrijkste schermen van de de Vellin app weergegeven. De wireframes dekken de must have user stories F01, F02, F03, F04 en F06. Dit vormt het MVP van de app. De overige pagina's uit de sitemap zoals de productbibliotheek, community, instellingen en notificaties vallen buiten het MVP en worden in een latere versie uitgewerkt.
+Hieronder worden de belangrijkste schermen van de app weergegeven. De wireframes dekken de must have user stories F01, F02, F03, F04 en F06. Dit vormt het MVP van de app. De overige pagina's uit de sitemap zoals de productbibliotheek, community, instellingen en notificaties vallen buiten het MVP en worden in een latere versie uitgewerkt.
 
 ## 1. Dashboard & Productregistratie
 
