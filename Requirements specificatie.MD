@@ -348,7 +348,7 @@ Hieronder worden de belangrijkste schermen van de Chocolate Firm app weergegeven
 ### 1. Dashboard & Productregistratie
 Dit scherm (F02) is de centrale hub van de app. Vanuit hier kan de gebruiker direct de scanner starten (F01).
 
-![Dashboard](1.jpg)
+![Dashboard](1.png)
 ![Product Registratie QR](ChatGPT Image May 20, 2026, 06_30_45 PM.jpg)
 ![Product Registratie Handmatig](ChatGPT Image May 20, 2026, 08_17_36 PM.png)
 
