@@ -357,7 +357,7 @@ Dit scherm (F02) is de centrale hub van de app. Vanuit hier kan de gebruiker dir
 ### 2. Mijn Chocolade & Productinformatie
 Het overzicht van de collectie (F02) en de gedetailleerde productkaart (F01) met herkomstinformatie
 
-![Mijn Chocolade Details](mijn chocolade.png)
+![Mijn Chocolade Details](mijnchocolade.png)
 ![Cocoa Journey Map](5ccd6c30-c31e-4319-93dc-cd7abc17c0ca.png)
 ---
 
