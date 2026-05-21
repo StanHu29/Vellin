@@ -349,7 +349,7 @@ Hieronder worden de belangrijkste schermen van de Chocolate Firm app weergegeven
 Dit scherm (F02) is de centrale hub van de app. Vanuit hier kan de gebruiker direct de scanner starten (F01).
 
 ![Dashboard](1.png)
-![Product Registratie QR](ChatGPT Image May 20, 2026, 06_30_45 PM.jpg)
+![Product Registratie QR](ChatGPT Image May 20, 2026, 06_30_45 PM.png)
 ![Product Registratie Handmatig](ChatGPT Image May 20, 2026, 08_17_36 PM.png)
 
 ---
@@ -364,14 +364,14 @@ Het overzicht van de collectie (F02) en de gedetailleerde productkaart (F01) met
 ### 3. Support & Klachten (AI Chatbot)
 De interactieve chat-interface (F03 & F06) waar de AI-chatbot de gebruiker helpt bij vragen of het indienen van een klacht met foto-upload.
 
-![Customer Support Chat](ChatGPT Image May 20, 2026, 08jj_24_20 PM.jpg)
+![Customer Support Chat](ChatGPT Image May 20, 2026, 08jj_24_20 PM.png)
 
 ---
 
 #### 4. Consumenten Shop (B2C)
 Dit scherm is gericht op de individuele klant, met focus op productafbeeldingen en eenvoudige bestelmogelijkheden.
 
-![Shop Interface](ChatGPT Image May 20, 20jgg26, 08_24_20 PM.jpg)
+![Shop Interface](ChatGPT Image May 20, 20jgg26, 08_24_20 PM.png)
 
 (B2B) Voor zakelijke klanten (zoals supermarkten) toont de app real-time voorraadinformatie uit het magazijn en de huidige productieplanning, zodat zij grotere bulkorders nauwkeurig kunnen plannen.(F04)
 
