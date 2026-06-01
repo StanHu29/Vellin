@@ -1,39 +1,39 @@
+<script type="module" src="js/app.js"></script>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Klachten</title>
-<link rel="stylesheet" href="css/style.css">
+<title>Klachten – Vellin</title>
+<link rel="stylesheet" href="CSS/style.css">
 </head>
-
 <body>
 
 <nav>
-<a href="dashboard.html">Dashboard</a>
-<a href="klachten.html">Klachten</a>
-<a href="shop.html">Shop</a>
-<a href="chatbot.html">Chatbot</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="klachten.html"> Klachten</a>
+  <a href="shop.html">Shop</a>
+  <a href="chatbot.html">Chatbot</a>
 </nav>
 
 <div class="container">
+  <h1>Klacht indienen</h1>
+  <p style="color:#888;">Vul het formulier in. We reageren binnen 1 werkdag.</p>
 
-<h1>Klacht Indienen</h1>
+  <span class="label">Onderwerp</span>
+  <input type="text" id="onderwerp" placeholder="Bijv. beschadigd product, verkeerde levering...">
 
-<input type="text" id="onderwerp" placeholder="Onderwerp">
+  <span class="label">Beschrijving</span>
+  <textarea id="beschrijving" rows="5" placeholder="Beschrijf het probleem zo duidelijk mogelijk..."></textarea>
 
-<textarea id="beschrijving"
-placeholder="Beschrijf het probleem"></textarea>
+  <span class="label">Productcode (optioneel)</span>
+  <input type="text" id="klachtProductCode" placeholder="Bijv. CHOC-001">
 
-<button onclick="verstuurKlacht()">
-Versturen
-</button>
+  <br><br>
+  <button onclick="verstuurKlacht()">Klacht versturen</button>
 
-<div id="klachtStatus"></div>
-
+  <div id="klachtStatus"></div>
 </div>
-
-<script src="js/app.js"></script>
 
 </body>
 </html>

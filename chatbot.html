@@ -1,37 +1,36 @@
+<script type="module" src="js/app.js"></script>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Chatbot</title>
-<link rel="stylesheet" href="css/style.css">
+<title>AI Chatbot – Vellin</title>
+<link rel="stylesheet" href="CSS/style.css">
 </head>
-
 <body>
 
 <nav>
-<a href="dashboard.html">Dashboard</a>
-<a href="klachten.html">Klachten</a>
-<a href="shop.html">Shop</a>
-<a href="chatbot.html">Chatbot</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="klachten.html">Klachten</a>
+  <a href="shop.html">Shop</a>
+  <a href="chatbot.html"> Chatbot</a>
 </nav>
 
 <div class="container">
+  <h1>AI Chatbot</h1>
+  <p style="color:#888;">Stel 24/7 vragen over producten, allergenen, bestellingen en klachten.</p>
 
-<h1>AI Chatbot</h1>
+  <div class="chat-box" id="chatBox">
+    <div class="chat-bericht-bot">
+      Hallo! Ik ben de Vellin assistent  Waarmee kan ik je helpen? Je kunt vragen stellen over producten, allergenen, bestellingen of klachten.
+    </div>
+  </div>
 
-<input type="text" id="vraag"
-placeholder="Typ je vraag">
-
-<button onclick="vraagBot()">
-Versturen
-</button>
-
-<div id="antwoord"></div>
-
+  <div class="chat-invoer">
+    <input type="text" id="vraag" placeholder="Typ je vraag..." onkeydown="if(event.key==='Enter') vraagBot()">
+    <button onclick="vraagBot()">Versturen</button>
+  </div>
 </div>
-
-<script src="js/app.js"></script>
 
 </body>
 </html>
