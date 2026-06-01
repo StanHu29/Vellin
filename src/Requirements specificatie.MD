@@ -90,7 +90,7 @@ Bron: https://husite.nl/open-ict/sdgs-bij-open-ict/sdg-toolbox/stakeholderanalys
 
 ## UI-model
 
-![Ui-model](stakeholder-ui-model.png)
+![Ui-model](documenten/Stakeholder%20ui-model.png)
 
 ---
 
@@ -218,7 +218,7 @@ Een AI-chatbot is 24/7 beschikbaar voor vragen over producten, allergenen, beste
 
 # 4. Productvisie
 
-![Productvisie](productvisie.png)
+![Productvisie](documenten/productvisie.png)
 
 ---
 
@@ -350,7 +350,7 @@ Wanneer is een User Story afgerond en klaar om aan de klant op te leveren?
 
 De sitemap hieronder toont de structuur van de app. De pagina's zijn gebaseerd op de must have en should have user stories. Pagina's die vallen onder could have zijn wel opgenomen in de sitemap maar worden later ontwikkeld.
 
-![Sitemap Chocolate Firm App](Screenshot%202026-04-20%20095621.png)
+![Sitemap Chocolate Firm App](documenten/Sitemap.png)
 
 ---
 
@@ -364,9 +364,9 @@ Dashboard met notificaties, geregistreerde producten en snelle toegang tot recep
 
 **Gekoppeld aan:** F01, F02
 
-![Dashboard](1.png)
-![Product Registratie QR](foto.png)
-![Product Registratie Handmatig](handmatig.png)
+![Dashboard](documenten/Home%20page.png)
+![Product Registratie QR](documenten/Register%20product%20foto.png)
+![Product Registratie Handmatig](documenten/Register%20product.png)
 
 ---
 
@@ -376,8 +376,8 @@ Toont productinformatie, allergenen, certificeringen en de herkomst van cacao. V
 
 **Gekoppeld aan:** F01, F02
 
-![Mijn Chocolade Details](mijnchocolade.png)
-![Cocoa Journey Map](5ccd6c30-c31e-4319-93dc-cd7abc17c0ca.png)
+![Mijn Chocolade Details](documenten/My%20Chocolate.png)
+![Cocoa Journey Map](documenten/Tracking.png)
 
 ---
 
@@ -387,7 +387,7 @@ Supportpagina met AI-chat en live chat voor vragen en klachten.
 
 **Gekoppeld aan:** F03, F06
 
-![Customer Support Chat](support.png)
+![Customer Support Chat](documenten/Support.png)
 
 ---
 
@@ -397,7 +397,7 @@ Shop met zoekfunctie, filters en productoverzicht. De B2B-versie toont extra inf
 
 **Gekoppeld aan:** F04
 
-![Shop Interface](shop.png)
+![Shop Interface](documenten/Shop.png)
 
 ---
 
