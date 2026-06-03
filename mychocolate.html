@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chocolate Firm – Dashboard</title>
+<link rel="stylesheet" href="CSS/style.css">
+<style>
+
+/* AL JE CSS HIER */
+
+.chocolate-list{
+    padding:20px;
+}
+
+.chocolate-card{
+    background:white;
+    border-radius:24px;
+    overflow:hidden;
+    margin-bottom:24px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.chocolate-image{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.chocolate-content{
+    padding:20px;
+}
+
+.chocolate-content h3{
+    margin:0;
+}
+
+.origin{
+    color:#6d3519;
+    font-weight:600;
+}
+
+.expiry{
+    color:#777;
+}
+
+.journey-btn{
+    width:100%;
+    border:none;
+    background:#6d3519;
+    color:white;
+    padding:14px;
+    margin-top:12px;
+    border-radius:16px;
+    cursor:pointer;
+}
+
+.journey-content{
+    display:none;
+    margin-top:20px;
+}
+
+.journey-content.active{
+    display:block;
+}
+
+.timeline{
+    border-left:3px solid #6d3519;
+    padding-left:16px;
+}
+
+.timeline-item{
+    margin-bottom:18px;
+}
+
+.journey-stats{
+    margin-top:20px;
+    display:grid;
+    gap:10px;
+}
+
+.stat{
+    background:#f7f2ee;
+    padding:12px;
+    border-radius:14px;
+}
+.journey-header{
+    margin-bottom:20px;
+}
+
+.journey-header h3{
+    margin:0;
+    color:#5c2c16;
+}
+
+.journey-header p{
+    color:#888;
+    margin-top:6px;
+}
+
+.journey-summary{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-bottom:30px;
+}
+
+.summary-card{
+    background:#faf6f2;
+    padding:14px;
+    border-radius:16px;
+}
+
+.summary-label{
+    display:block;
+    font-size:12px;
+    color:#999;
+    margin-bottom:6px;
+}
+
+.timeline-modern{
+    position:relative;
+    margin-bottom:30px;
+}
+
+.timeline-modern::before{
+    content:'';
+    position:absolute;
+    left:7px;
+    top:0;
+    bottom:0;
+    width:2px;
+    background:#d9c4b7;
+}
+
+.timeline-row{
+    display:flex;
+    gap:18px;
+    margin-bottom:24px;
+    position:relative;
+}
+
+.timeline-marker{
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    background:#8b5e3c;
+    flex-shrink:0;
+    margin-top:4px;
+    position:relative;
+    z-index:2;
+}
+
+.timeline-row.active .timeline-marker{
+    background:#d97706;
+    box-shadow:0 0 0 5px rgba(217,119,6,.15);
+}
+
+.timeline-info h4{
+    margin:0;
+    font-size:16px;
+}
+
+.timeline-info p{
+    margin-top:4px;
+    color:#777;
+}
+
+.impact-title{
+    margin-bottom:15px;
+}
+
+.impact-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.impact-card{
+    background:white;
+    border:1px solid #eee;
+    border-radius:18px;
+    padding:18px;
+    text-align:center;
+}
+
+.impact-number{
+    font-size:22px;
+    font-weight:700;
+    color:#5c2c16;
+    margin-bottom:6px;
+}
+
+.impact-label{
+    font-size:12px;
+    color:#777;
+}
+.journey-content{
+    display:none;
+    animation:fadeIn .3s ease;
+}
+
+.journey-content.active{
+    display:block;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+</style>
+<script type="module" src="js/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand-header">
+      <img src="images/ChatGPT Image Jun 3, 2026, 12_13_49 AM.png" alt="Chocolate Firm" class="logo-sm">
+      <h1 class="app-title">Chocolate Firm</h1>
+    </div>
+  </header>
+
+  <main class="feed">
+<section class="hero-feature-card">
+
+    <div class="feature-copy">
+
+        <span class="feature-pill">
+            My Collection
+        </span>
+
+        <h3>Track Every Chocolate Story</h3>
+
+        <p>
+            Follow the journey from cocoa farm to your home.
+        </p>
+
+    </div>
+
+    <div class="feature-image-wrap">
+
+        <img
+        src="images/my-chocolate.png"
+        alt="Chocolate Collection">
+
+    </div>
+
+</section>
+
+
+<div
+id="chocolateList"
+class="chocolate-list">
+
+    <!-- Product 1 -->
+
+    <article class="chocolate-card">
+
+        <img src="images/ChatGPT Image Jun 3, 2026, 12_03_13 AM.png"
+             class="chocolate-image"
+             alt="Dark Chocolate">
+
+        <div class="chocolate-content">
+
+            <h3>Dark Chocolate 85%</h3>
+
+            <p class="origin">🇪🇨 Ecuador</p>
+
+            <p class="expiry">Expires Apr 25, 2026</p>
+
+            <button class="journey-btn"
+                    onclick="toggleJourney('journey1')">
+
+                View Journey
+
+            </button>
+
+            <div class="journey-content" id="journey1">
+
+    <div class="journey-header">
+        <h3>🌍 Cocoa Journey</h3>
+        <p>From cocoa bean to your home</p>
+    </div>
+
+    <div class="journey-summary">
+
+        <div class="summary-card">
+            <span class="summary-label">Origin</span>
+            <strong>Ecuador</strong>
+        </div>
+
+        <div class="summary-card">
+            <span class="summary-label">Processed</span>
+            <strong>Quito</strong>
+        </div>
+
+        <div class="summary-card">
+            <span class="summary-label">Produced</span>
+            <strong>Belgium</strong>
+        </div>
+
+        <div class="summary-card">
+            <span class="summary-label">Delivered</span>
+            <strong>Jan 15 2026</strong>
+        </div>
+
+    </div>
+
+    <div class="timeline-modern">
+
+        <div class="timeline-row">
+            <div class="timeline-marker"></div>
+            <div class="timeline-info">
+                <h4>Cocoa Farm</h4>
+                <p>Ecuador • Nov 2025</p>
+            </div>
+        </div>
+
+        <div class="timeline-row">
+            <div class="timeline-marker"></div>
+            <div class="timeline-info">
+                <h4>Processing Plant</h4>
+                <p>Quito • Dec 2025</p>
+            </div>
+        </div>
+
+        <div class="timeline-row">
+            <div class="timeline-marker"></div>
+            <div class="timeline-info">
+                <h4>Chocolate Factory</h4>
+                <p>Belgium • Jan 2026</p>
+            </div>
+        </div>
+
+        <div class="timeline-row active">
+            <div class="timeline-marker"></div>
+            <div class="timeline-info">
+                <h4>Your Home</h4>
+                <p>Delivered Jan 15 2026</p>
+            </div>
+        </div>
+
+    </div>
+
+    <h3 class="impact-title">
+        Sustainability Impact
+    </h3>
+
+    <div class="impact-grid">
+
+        <div class="impact-card">
+            <div class="impact-number">250L</div>
+            <div class="impact-label">Water Saved</div>
+        </div>
+
+        <div class="impact-card">
+            <div class="impact-number">5kg</div>
+            <div class="impact-label">CO₂ Offset</div>
+        </div>
+
+        <div class="impact-card">
+            <div class="impact-number">130%</div>
+            <div class="impact-label">Fair Wage</div>
+        </div>
+
+    </div>
+
+</div>
+
+            
+
+        </div>
+
+    </article>
+
+    <!-- Product 2 -->
+
+    <article class="chocolate-card">
+
+    <img src="images/ChatGPT Image Jun 3, 2026, 12_04_28 AM.png"
+         class="chocolate-image"
+         alt="Milk Chocolate">
+
+    <div class="chocolate-content">
+
+        <h3>Milk Chocolate Classic</h3>
+
+        <p class="origin">🇬🇭 Ghana</p>
+
+        <p class="expiry">Expires May 12, 2026</p>
+
+        <button class="journey-btn"
+                onclick="toggleJourney('journey2', this)">
+
+            View Journey
+
+        </button>
+
+        <div class="journey-content" id="journey2">
+
+            <div class="journey-header">
+                <h3>🌍 Cocoa Journey</h3>
+                <p>From cocoa bean to your home</p>
+            </div>
+
+            <div class="journey-summary">
+
+                <div class="summary-card">
+                    <span class="summary-label">Origin</span>
+                    <strong>Ghana</strong>
+                </div>
+
+                <div class="summary-card">
+                    <span class="summary-label">Processed</span>
+                    <strong>Accra</strong>
+                </div>
+
+                <div class="summary-card">
+                    <span class="summary-label">Produced</span>
+                    <strong>Belgium</strong>
+                </div>
+
+                <div class="summary-card">
+                    <span class="summary-label">Delivered</span>
+                    <strong>May 2026</strong>
+                </div>
+
+            </div>
+
+            <div class="timeline-modern">
+
+                <div class="timeline-row">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-info">
+                        <h4>Cocoa Farm</h4>
+                        <p>Ghana • Oct 2025</p>
+                    </div>
+                </div>
+
+                <div class="timeline-row">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-info">
+                        <h4>Processing Plant</h4>
+                        <p>Accra • Nov 2025</p>
+                    </div>
+                </div>
+
+                <div class="timeline-row">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-info">
+                        <h4>Chocolate Factory</h4>
+                        <p>Belgium • Dec 2025</p>
+                    </div>
+                </div>
+
+                <div class="timeline-row active">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-info">
+                        <h4>Your Home</h4>
+                        <p>Delivered May 2026</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <h3 class="impact-title">
+                Sustainability Impact
+            </h3>
+
+            <div class="impact-grid">
+
+                <div class="impact-card">
+                    <div class="impact-number">310L</div>
+                    <div class="impact-label">Water Saved</div>
+                </div>
+
+                <div class="impact-card">
+                    <div class="impact-number">6kg</div>
+                    <div class="impact-label">CO₂ Offset</div>
+                </div>
+
+                <div class="impact-card">
+                    <div class="impact-number">125%</div>
+                    <div class="impact-label">Fair Wage</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</article>
+<article class="chocolate-card">
+
+    <img src="images/ChatGPT Image Jun 3, 2026, 12_06_13 AM.png"
+         class="chocolate-image"
+         alt="White Chocolate">
+
+    <div class="chocolate-content">
+
+        <h3>White Chocolate Delight</h3>
+
+        <p class="origin">🇲🇬 Madagascar</p>
+
+        <p class="expiry">Expires Jun 8, 2026</p>
+
+        <button class="journey-btn"
+                onclick="toggleJourney('journey3', this)">
+            View Journey
+        </button>
+
+        <div class="journey-content" id="journey3">
+
+            <div class="journey-header">
+                <h3>🌍 Cocoa Journey</h3>
+                <p>From cocoa bean to your home</p>
+            </div>
+
+            <div class="journey-summary">
+
+                <div class="summary-card">
+                    <span class="summary-label">Origin</span>
+                    <strong>Madagascar</strong>
+                </div>
+
+                <div class="summary-card">
+                    <span class="summary-label">Processed</span>
+                    <strong>Antananarivo</strong>
+                </div>
+
+                <div class="summary-card">
+                    <span class="summary-label">Produced</span>
+                    <strong>Belgium</strong>
+                </div>
+
+                <div class="summary-card">
+                    <span class="summary-label">Delivered</span>
+                    <strong>Jun 2026</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</article>
+</div>
+
+</main>
+  
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item active">
+      <img class="nav-icon" src="images/home.png" alt="Home">
+      <span class="nav-label">Home</span>
+    </a>
+    <a href="shop.html" class="nav-item">
+      <img class="nav-icon" src="images/shop.png" alt="Shop">
+      <span class="nav-label">Shop</span>
+    </a>
+    <a href="index.html" class="nav-item">
+      <img class="nav-icon" src="images/orders.png" alt="Library">
+      <span class="nav-label">Library</span>
+    </a>
+    <a href="klachten.html" class="nav-item">
+      <img class="nav-icon" src="images/service.png" alt="Service">
+      <span class="nav-label">Service</span>
+    </a>
+    <a href="settings.html" class="nav-item">
+      <img class="nav-icon" src="images/settings.png" alt="Settings">
+      <span class="nav-label">Settings</span>
+    </a>
+  </nav>
+</div>
+<script>
+
+function toggleJourney(id, button){
+
+    document.querySelectorAll('.journey-content')
+        .forEach(section => {
+
+            if(section.id !== id){
+                section.classList.remove('active');
+            }
+
+        });
+
+    document.querySelectorAll('.journey-btn')
+        .forEach(btn => {
+
+            if(btn !== button){
+                btn.textContent = 'View Journey';
+            }
+
+        });
+
+    const section =
+        document.getElementById(id);
+
+    section.classList.toggle('active');
+
+    if(section.classList.contains('active')){
+        button.textContent = 'Hide Journey';
+    }else{
+        button.textContent = 'View Journey';
+    }
+
+}
+
+</script>
+<script>
+
+const savedProducts =
+JSON.parse(
+    localStorage.getItem("products")
+) || [];
+
+const chocolateList =
+document.getElementById(
+    "chocolateList"
+);
+
+savedProducts.forEach(product => {
+
+    chocolateList.insertAdjacentHTML(
+
+        "beforeend",
+
+        `
+        <article class="chocolate-card">
+
+            <div class="chocolate-content">
+
+                <h3>${product.name}</h3>
+
+                <p class="origin">
+                    Registered Product
+                </p>
+
+                <p class="expiry">
+                    Batch: ${product.batch}
+                </p>
+
+                <button
+                class="journey-btn">
+
+                    Product Registered
+
+                </button>
+
+            </div>
+
+        </article>
+        `
+
+    );
+
+});
+
+</script>
+</body>
+</html>
+CSS/style.css

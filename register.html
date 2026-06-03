@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chocolate Firm Register</title>
+<link rel="stylesheet" href="CSS/style.css">
+<script type="module" src="js/app.js" defer></script>
+</head>
+
+<body>
+
+<div class="container">
+  <main class="hero-section">
+    <aside class="login-card">
+      <div class="panel-head">
+        <p class="panel-label">New user</p>
+        <h2>Create your account</h2>
+      </div>
+      <div class="auth-card">
+        <input type="text" id="registerName" placeholder="Full name">
+        <input type="email" id="registerEmail" placeholder="Email address">
+        <input type="password" id="registerPassword" placeholder="Password">
+        <input type="password" id="registerConfirmPassword" placeholder="Confirm password">
+        <button onclick="register()">Register</button>
+        <div class="form-row">
+          <label><input type="checkbox" id="acceptTerms"> I agree to the terms</label>
+        </div>
+        <p class="auth-footer">Already have an account? <a href="index.html">Login</a></p>
+      </div>
+    </aside>
+  </main>
+</div>
+
+</body>
+</html>

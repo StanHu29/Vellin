@@ -1,39 +1,315 @@
-<script type="module" src="js/app.js"></script>
 <!DOCTYPE html>
-<html lang="nl">
+
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Klachten – Vellin</title>
+<title>Service - Chocolate Firm</title>
+
 <link rel="stylesheet" href="CSS/style.css">
+
+<style>
+
+.chat-container{
+    padding:20px;
+    padding-bottom:120px;
+}
+
+.chat-hero{
+    background:white;
+    border-radius:24px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.chat-hero h1{
+    margin:0;
+    color:#5c2c16;
+}
+
+.chat-hero p{
+    color:#777;
+    margin-top:8px;
+}
+
+.chat-box{
+    background:white;
+    border-radius:24px;
+    padding:20px;
+    min-height:350px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.message{
+    padding:14px;
+    border-radius:18px;
+    max-width:80%;
+    line-height:1.5;
+}
+
+.bot{
+    background:#f7f2ee;
+    color:#333;
+}
+
+.user{
+    background:#6d3519;
+    color:white;
+    margin-left:auto;
+}
+
+.chat-input{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.chat-input input{
+    flex:1;
+    padding:14px;
+    border-radius:14px;
+    border:1px solid #ddd;
+    font-size:15px;
+}
+
+.chat-input button{
+    border:none;
+    background:#6d3519;
+    color:white;
+    padding:14px 20px;
+    border-radius:14px;
+    cursor:pointer;
+}
+
+.quick-questions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+}
+
+.quick-btn{
+    border:none;
+    background:#f7f2ee;
+    color:#6d3519;
+    padding:10px 14px;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+</style>
+
 </head>
+
 <body>
 
-<nav>
-  <a href="dashboard.html">Dashboard</a>
-  <a href="klachten.html"> Klachten</a>
-  <a href="shop.html">Shop</a>
-  <a href="chatbot.html">Chatbot</a>
+<div class="app">
+
+<header class="topbar">
+    <div class="brand-header">
+        <img src="images/ChatGPT Image Jun 3, 2026, 12_13_49 AM.png"
+             alt="Chocolate Firm"
+             class="logo-sm">
+
+```
+    <h1 class="app-title">
+        Chocolate Firm
+    </h1>
+</div>
+```
+
+</header>
+
+<main class="feed">
+
+<div class="chat-container">
+
+```
+<div class="chat-hero">
+
+    <h1>💬 Vellin Service Assistant</h1>
+
+    <p>
+        Need help with your products,
+        cocoa journey, expiry dates or support requests?
+        Vellin is here to assist you.
+    </p>
+
+</div>
+
+<div class="chat-box" id="chatBox">
+
+    <div class="message bot">
+        Hi Sarah 👋<br><br>
+        I'm Vellin, your chocolate service assistant.
+        How can I help you today?
+    </div>
+
+</div>
+
+<div class="chat-input">
+
+    <input
+    id="userInput"
+    type="text"
+    placeholder="Ask Vellin a question...">
+
+    <button onclick="sendMessage()">
+        Send
+    </button>
+
+</div>
+```
+
+</div>
+
+</main>
+
+<nav class="bottom-nav">
+
+```
+<a href="dashboard.html" class="nav-item">
+    <img class="nav-icon" src="images/home.png" alt="Home">
+    <span class="nav-label">Home</span>
+</a>
+
+<a href="shop.html" class="nav-item">
+    <img class="nav-icon" src="images/shop.png" alt="Shop">
+    <span class="nav-label">Shop</span>
+</a>
+
+<a href="mychocolate.html" class="nav-item">
+    <img class="nav-icon" src="images/orders.png" alt="My Products">
+    <span class="nav-label">My Products</span>
+</a>
+
+<a href="service.html" class="nav-item active">
+    <img class="nav-icon" src="images/service.png" alt="Service">
+    <span class="nav-label">Service</span>
+</a>
+
+<a href="settings.html" class="nav-item">
+    <img class="nav-icon" src="images/settings.png" alt="Settings">
+    <span class="nav-label">Settings</span>
+</a>
+```
+
 </nav>
 
-<div class="container">
-  <h1>Klacht indienen</h1>
-  <p style="color:#888;">Vul het formulier in. We reageren binnen 1 werkdag.</p>
-
-  <span class="label">Onderwerp</span>
-  <input type="text" id="onderwerp" placeholder="Bijv. beschadigd product, verkeerde levering...">
-
-  <span class="label">Beschrijving</span>
-  <textarea id="beschrijving" rows="5" placeholder="Beschrijf het probleem zo duidelijk mogelijk..."></textarea>
-
-  <span class="label">Productcode (optioneel)</span>
-  <input type="text" id="klachtProductCode" placeholder="Bijv. CHOC-001">
-
-  <br><br>
-  <button onclick="verstuurKlacht()">Klacht versturen</button>
-
-  <div id="klachtStatus"></div>
 </div>
+
+<script>
+
+function askQuestion(question){
+
+    document.getElementById("userInput").value = question;
+    sendMessage();
+
+}
+
+function sendMessage(){
+
+    const input =
+    document.getElementById("userInput");
+
+    const question =
+    input.value.trim();
+
+    if(!question) return;
+
+    const chat =
+    document.getElementById("chatBox");
+
+    chat.innerHTML +=
+    `<div class="message user">${question}</div>`;
+
+    const q =
+    question.toLowerCase();
+
+    let answer =
+    "I'm sorry, I couldn't understand your question. Please try again.";
+
+    if(
+        q.includes("origin") ||
+        q.includes("come from")
+    ){
+        answer =
+        "Your Dark Chocolate 85% originates from Ecuador and was processed in Quito before arriving at your home.";
+    }
+
+    else if(
+        q.includes("expire")
+    ){
+        answer =
+        "Milk Chocolate Classic expires first on May 12, 2026.";
+    }
+
+    else if(
+        q.includes("recipe")
+    ){
+        answer =
+        "You can make Chocolate Brownies, Chocolate Mousse or Hot Chocolate using products from your collection.";
+    }
+
+    else if(
+        q.includes("damaged") ||
+        q.includes("issue") ||
+        q.includes("problem")
+    ){
+        answer =
+        "I'm sorry to hear that. Please provide your product name and batch number so our support team can assist you.";
+    }
+
+    else if(
+        q.includes("journey")
+    ){
+        answer =
+        "You can view the full cocoa journey from the My Products page by clicking View Journey.";
+    }
+if(
+    q.includes("damaged") ||
+    q.includes("issue") ||
+    q.includes("problem") ||
+    q.includes("complaint")
+){
+    answer =
+    "Thank you for contacting Chocolate Firm Support. Your issue has been received successfully. Our team will review your request and respond within 1 business day.";
+}
+else if(
+    q.includes("wrong") ||
+    q.includes("delivery")
+)
+{
+    answer =
+    "Your delivery issue has been recorded. Please keep your order information available in case our support team needs additional details.";
+}
+else if(
+    q.includes("broken")
+)
+{
+    answer =
+    "We're sorry your product arrived damaged. Your report has been submitted successfully and our support team will contact you shortly.";
+}
+    setTimeout(() => {
+
+        chat.innerHTML +=
+        `<div class="message bot">${answer}</div>`;
+
+        chat.scrollTop =
+        chat.scrollHeight;
+
+    }, 500);
+
+    input.value = "";
+
+}
+
+</script>
 
 </body>
 </html>
