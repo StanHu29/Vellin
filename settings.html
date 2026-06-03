@@ -1,0 +1,372 @@
+<!-- settings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Chocolate Firm</title>
+  <link rel="stylesheet" href="CSS/style.css">
+  <script type="module" src="js/app.js" defer></script>
+  <style>
+    /* Styles for the settings page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .settings-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    
+    .settings-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    
+    .settings-back {
+      cursor: pointer;
+    }
+    
+    .settings-card {
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .settings-card h3 {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .settings-card p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    
+    .settings-button {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    
+    .settings-button:hover {
+      background-color: #555;
+    }
+    
+    .settings-button:active {
+      background-color: #444;
+    }
+    
+    /* Mobile styles */
+    @media (max-width: 600px) {
+      .settings-header {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      
+      .settings-title {
+        font-size: 20px;
+      }
+      
+      .settings-card {
+        margin-bottom: 10px;
+      }
+      
+      .content-row {
+        flex-direction: column;
+      }
+      
+      .content-row strong {
+        font-size: 14px;
+      }
+      .settings-hero {
+    height: 180px;
+    border-radius: 0 0 32px 32px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.settings-hero .hero-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.settings-hero .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,.15),
+        rgba(0,0,0,.05)
+    );
+}
+
+.settings-hero .hero-content {
+    position: absolute;
+    left: 35px;
+    bottom: 20px;
+    z-index: 2;
+}
+
+.settings-subtitle{
+    display:none;
+}
+
+.settings-name{
+    font-size:58px;
+    margin:0;
+    line-height:0.95;
+    color:#4b2c1d;
+    font-weight:700;
+}
+
+.settings-description{
+    margin-top:8px;
+    font-size:18px;
+    color:white;
+    font-weight:500;
+}
+
+.profile-card{
+    background:white;
+    border-radius:28px;
+    padding:22px;
+    margin:0 20px 24px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+.profile-avatar{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    background:#6d3519;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:700;
+}
+
+.profile-info h3{
+    margin:0;
+    font-size:18px;
+}
+
+.profile-info p{
+    margin:4px 0;
+    color:#777;
+}
+
+.member-badge{
+    display:inline-block;
+    margin-top:4px;
+    background:#f4e2c7;
+    color:#6d3519;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.settings-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    padding:0 20px;
+}
+
+.setting-item{
+    background:white;
+    border:none;
+    border-radius:20px;
+    padding:18px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    text-align:left;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+    cursor:pointer;
+}
+
+.setting-item h4{
+    margin:0;
+    font-size:16px;
+}
+
+.setting-item p{
+    margin-top:5px;
+    color:#8b8b8b;
+    font-size:13px;
+}
+
+.setting-item span{
+    font-size:26px;
+    color:#999;
+}
+
+.logout-btn{
+    width:calc(100% - 40px);
+    margin:24px 20px;
+    background:#6d3519;
+    border-radius:18px;
+}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+<header class="topbar">
+  <div class="brand-header">
+    <img src="images/ChatGPT Image Jun 3, 2026, 12_13_49 AM.png"
+         alt="Chocolate Firm"
+         class="logo-sm">
+    <h1 class="app-title">Settings</h1>
+  </div>
+</header>
+
+<main class="feed">
+
+<section class="hero-welcome settings-hero">
+  <img class="hero-bg"
+       src="images/hero-chocolate.png"
+       alt="Chocolate Background">
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <h2 class="settings-name">
+        Sarah Johnson
+    </h2>
+
+    <p class="settings-description">
+        Manage your account and preferences
+    </p>
+
+</div>
+</section>
+
+<div class="profile-card">
+
+  <div class="profile-avatar">
+    SJ
+  </div>
+
+  <div class="profile-info">
+    <h3>Sarah Johnson</h3>
+    <p>sarah@example.com</p>
+    <span class="member-badge">Premium Member</span>
+  </div>
+
+</div>
+
+<div class="settings-list">
+
+  <button class="setting-item">
+    <div>
+      <h4>Edit Profile</h4>
+      <p>Update your personal information</p>
+    </div>
+    <span>›</span>
+  </button>
+
+  <button class="setting-item">
+    <div>
+      <h4>Notifications</h4>
+      <p>Manage alerts and updates</p>
+    </div>
+    <span>›</span>
+  </button>
+
+  <button class="setting-item">
+    <div>
+      <h4>Language</h4>
+      <p>English</p>
+    </div>
+    <span>›</span>
+  </button>
+
+  <button class="setting-item">
+    <div>
+      <h4>Privacy & Security</h4>
+      <p>Control account privacy</p>
+    </div>
+    <span>›</span>
+  </button>
+
+  <button class="setting-item">
+    <div>
+      <h4>About</h4>
+      <p>Version 1.0.0</p>
+    </div>
+    <span>›</span>
+  </button>
+
+</div>
+
+<div class="cta-section">
+  <button class="btn-primary btn-lg logout-btn">
+    Log Out
+  </button>
+</div>
+
+<div class="spacer"></div>
+
+</main>
+
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="nav-item">
+    <img class="nav-icon" src="images/home.png">
+    <span class="nav-label">Home</span>
+  </a>
+
+  <a href="shop.html" class="nav-item">
+    <img class="nav-icon" src="images/shop.png">
+    <span class="nav-label">Shop</span>
+  </a>
+
+  <a href="index.html" class="nav-item">
+    <img class="nav-icon" src="images/orders.png">
+    <span class="nav-label">Library</span>
+  </a>
+
+  <a href="klachten.html" class="nav-item">
+    <img class="nav-icon" src="images/service.png">
+    <span class="nav-label">Service</span>
+  </a>
+
+  <a href="settings.html" class="nav-item active">
+    <img class="nav-icon" src="images/settings.png">
+    <span class="nav-label">Settings</span>
+  </a>
+</nav>
+
+</div>
+</body>
+</html>
