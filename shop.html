@@ -3,49 +3,397 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop – Vellin</title>
+<title>Vellin – Winkel</title>
 <link rel="stylesheet" href="CSS/style.css">
+<style>
+/* Shop-specifieke stijlen */
+.shop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 16px 8px;
+}
+.shop-header h1 {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--primary);
+}
+.winkelwagen-knop {
+  position: relative;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+.winkelwagen-teller {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.zoekbalk {
+  margin: 8px 16px;
+  position: relative;
+}
+.zoekbalk input {
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: white;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+.zoekbalk::before {
+  content: '🔍';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+}
+.pill-filters {
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.pill-filters::-webkit-scrollbar { display: none; }
+.pill {
+  flex-shrink: 0;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.pill.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* Productkaarten grid */
+.shop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 0 16px 16px;
+}
+.product-shop-kaart {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+.product-shop-afbeelding {
+  position: relative;
+  height: 130px;
+  overflow: hidden;
+  background: #f5f0eb;
+}
+.product-shop-afbeelding img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.product-shop-tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--primary);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.tag-uitverkocht {
+  background: #999;
+}
+.product-shop-info {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.product-shop-info h4 {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-family: 'Playfair Display', serif;
+  line-height: 1.2;
+}
+.product-shop-beschrijving {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.product-shop-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.product-shop-prijs {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+.product-shop-voorraad {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #2d7a2d;
+  background: #e8f5e9;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+.product-shop-voorraad.laag {
+  color: #e65100;
+  background: #fff3e0;
+}
+.product-shop-voorraad.uitverkocht {
+  color: #999;
+  background: #f5f5f5;
+}
+.product-shop-levertijd {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+.b2b-info {
+  background: #f8f4f0;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.b2b-info span {
+  font-weight: 700;
+  color: var(--secondary);
+}
+.btn-winkelwagen {
+  margin-top: auto;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-family: inherit;
+}
+.btn-winkelwagen:hover { background: #5a3e2a; }
+.btn-uitverkocht {
+  background: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* Winkelwagen overlay */
+.winkelwagen-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: flex-end;
+}
+.winkelwagen-overlay.active { display: flex; }
+.winkelwagen-panel {
+  width: 100%;
+  max-height: 70vh;
+  background: white;
+  border-radius: 28px 28px 0 0;
+  padding: 24px;
+  overflow-y: auto;
+}
+.winkelwagen-panel h2 {
+  margin: 0 0 16px;
+  font-family: 'Playfair Display', serif;
+  color: var(--primary);
+}
+.wagen-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+.wagen-item-rechts {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.btn-verwijder {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px;
+}
+.wagen-totaal {
+  padding: 16px 0 12px;
+  font-size: 1rem;
+  text-align: right;
+}
+.btn-afrekenen {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary), #5a3e2a);
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.winkelwagen-sluiten {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+#orderResultaat {
+  padding: 0 16px 16px;
+}
+.status-melding {
+  padding: 16px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+.status-success {
+  background: #e8f5e9;
+  color: #2d7a2d;
+  border: 1px solid #a5d6a7;
+}
+.status-error {
+  background: #fff0f0;
+  color: #c0392b;
+  border: 1px solid #ffcdd2;
+}
+</style>
 <script type="module" src="js/app.js" defer></script>
 </head>
 <body>
-
-<nav>
-  <a href="dashboard.html">Dashboard</a>
-  <a href="klachten.html">Klachten</a>
-  <a href="shop.html">Shop</a>
-  <a href="chatbot.html">Chatbot</a>
-</nav>
-
-<div class="container">
-  <div class="page-header">
-    <div>
-      <h1>Shop</h1>
-      <p class="page-subtitle">Ontdek onze chocoladeproducten</p>
+<div class="app">
+  <header class="topbar">
+    <div class="brand-header">
+      <img src="images/ChatGPT Image Jun 3, 2026, 12_13_49 AM.png" alt="Vellin" class="logo-sm">
+      <h1 class="app-title">Vellin</h1>
     </div>
-    <button class="icon-button" aria-label="Cart">🛒<span class="icon-badge">1</span></button>
+  </header>
+
+  <main class="feed" style="padding-bottom:100px;">
+    <div class="shop-header">
+      <div>
+        <h1>Winkel</h1>
+        <p style="margin:4px 0 0;color:var(--text-secondary);font-size:0.9rem;">Ontdek onze chocoladeproducten</p>
+      </div>
+      <button class="winkelwagen-knop" onclick="toonWinkelwagen()" aria-label="Winkelwagen">
+        🛒
+        <span class="winkelwagen-teller">0</span>
+      </button>
+    </div>
+
+    <div class="zoekbalk">
+      <input type="search" id="shopZoeken" placeholder="Producten zoeken..." oninput="updateShopFilter()">
+    </div>
+
+    <div class="pill-filters">
+      <button class="pill active" data-filter="all" onclick="updateShopFilter(this)">Alle</button>
+      <button class="pill" data-filter="seizoen" onclick="updateShopFilter(this)">Seizoen</button>
+      <button class="pill" data-filter="limited" onclick="updateShopFilter(this)">Limited Edition</button>
+      <button class="pill" data-filter="fairtrade" onclick="updateShopFilter(this)">Fairtrade</button>
+    </div>
+
+    <div class="shop-grid" id="shopProducten"></div>
+    <div id="orderResultaat"></div>
+
+    <div class="spacer"></div>
+  </main>
+
+  <!-- Winkelwagen Overlay -->
+  <div class="winkelwagen-overlay" id="winkelwagenOverlay" onclick="if(event.target===this)sluitWinkelwagen()">
+    <div class="winkelwagen-panel" style="position:relative;">
+      <button class="winkelwagen-sluiten" onclick="sluitWinkelwagen()">✕</button>
+      <h2>🛒 Winkelwagen</h2>
+      <div id="winkelwagenInhoud"></div>
+    </div>
   </div>
 
-  <div class="search-bar">
-    <input type="search" id="shopSearch" placeholder="Search products..." oninput="updateShopFilter()">
-  </div>
-
-  <div class="pill-filters" id="shopFilters">
-    <button type="button" class="pill active" data-filter="all" onclick="updateShopFilter(this)">All</button>
-    <button type="button" class="pill" data-filter="seasonal" onclick="updateShopFilter(this)">Seasonal</button>
-    <button type="button" class="pill" data-filter="limited" onclick="updateShopFilter(this)">Limited Edition</button>
-    <button type="button" class="pill" data-filter="fairtrade" onclick="updateShopFilter(this)">Fairtrade</button>
-  </div>
-
-  <div class="product-grid" id="shopProducten"></div>
-  <div id="orderResultaat"></div>
+  <!-- Onderste navigatie -->
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item">
+      <img class="nav-icon" src="images/home.png" alt="Home">
+      <span class="nav-label">Home</span>
+    </a>
+    <a href="shop.html" class="nav-item active">
+      <img class="nav-icon" src="images/shop.png" alt="Winkel">
+      <span class="nav-label">Winkel</span>
+    </a>
+    <a href="mychocolate.html" class="nav-item">
+      <img class="nav-icon" src="images/orders.png" alt="Mijn Producten">
+      <span class="nav-label">Mijn Producten</span>
+    </a>
+    <a href="klachten.html" class="nav-item">
+      <img class="nav-icon" src="images/service.png" alt="Service">
+      <span class="nav-label">Service</span>
+    </a>
+    <a href="settings.html" class="nav-item">
+      <img class="nav-icon" src="images/settings.png" alt="Instellingen">
+      <span class="nav-label">Instellingen</span>
+    </a>
+  </nav>
 </div>
-<footer class="bottom-nav">
-  <a href="dashboard.html"><span>🏠</span><span>Home</span></a>
-  <a href="shop.html" class="active"><span>🛍️</span><span>Shop</span></a>
-  <a href="dashboard.html"><span>📚</span><span>Library</span></a>
-  <a href="klachten.html"><span>🎧</span><span>Service</span></a>
-  <a href="chatbot.html"><span>⚙️</span><span>Settings</span></a>
-</footer>
-
 </body>
 </html>

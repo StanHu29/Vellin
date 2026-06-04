@@ -1,4 +1,8 @@
-// --- SUPABASE SETUP ---
+// ============================================================
+//  Vellin Chocolate Firm – app.js
+//  Volledig herschreven: NL, werkende functies, AI chatbot
+// ============================================================
+
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const supabase = createClient(
@@ -6,309 +10,634 @@ const supabase = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkdWp3ZXhia3J5am9jcnBva2xqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMTAzNzEsImV4cCI6MjA5NTg4NjM3MX0.kOQpBavXpsxr7jn7NZFQw58fxpNlN7e32NWcgQezx-g'
 )
 
-// --- LOGIN ---
-function login() {
+// ============================================================
+//  AUTHENTICATIE
+// ============================================================
+
+function inloggen() {
   const email = document.getElementById('email')?.value.trim()
-  const password = document.getElementById('password')?.value.trim()
-  if (!email || !password) { alert('Vul je gegevens in.'); return; }
+  const wachtwoord = document.getElementById('password')?.value.trim()
 
-  const users = JSON.parse(localStorage.getItem('users') || '[]')
-  const user = users.find(u => u.email === email && u.password === password)
+  if (!email || !wachtwoord) {
+    toonFoutmelding('Vul je e-mailadres en wachtwoord in.')
+    return
+  }
 
-  if (user) {
-    localStorage.setItem('gebruiker', user.email)
+  const gebruikers = JSON.parse(localStorage.getItem('gebruikers') || '[]')
+  const gebruiker = gebruikers.find(u => u.email === email && u.wachtwoord === wachtwoord)
+
+  if (gebruiker) {
+    localStorage.setItem('huidigGebruiker', JSON.stringify(gebruiker))
     window.location.href = 'dashboard.html'
     return
   }
 
-  if (password.length >= 3 && users.length === 0) {
-    localStorage.setItem('gebruiker', email)
+  // Demo-login: als geen accounts bestaan
+  if (gebruikers.length === 0 && wachtwoord.length >= 3) {
+    const demoGebruiker = { naam: 'Demo Gebruiker', email, wachtwoord }
+    gebruikers.push(demoGebruiker)
+    localStorage.setItem('gebruikers', JSON.stringify(gebruikers))
+    localStorage.setItem('huidigGebruiker', JSON.stringify(demoGebruiker))
     window.location.href = 'dashboard.html'
-  } else {
-    alert('Ongeldige inloggegevens.')
+    return
   }
+
+  toonFoutmelding('Onjuist e-mailadres of wachtwoord.')
 }
 
-function register() {
-  const name = document.getElementById('registerName')?.value.trim()
+function registreren() {
+  const naam = document.getElementById('registerName')?.value.trim()
   const email = document.getElementById('registerEmail')?.value.trim()
-  const password = document.getElementById('registerPassword')?.value.trim()
-  const confirmPassword = document.getElementById('registerConfirmPassword')?.value.trim()
-  const acceptTerms = document.getElementById('acceptTerms')?.checked
+  const wachtwoord = document.getElementById('registerPassword')?.value.trim()
+  const bevestig = document.getElementById('registerConfirmPassword')?.value.trim()
+  const akkoord = document.getElementById('acceptTerms')?.checked
 
-  if (!name || !email || !password || !confirmPassword) {
-    alert('Fill in all fields.')
+  if (!naam || !email || !wachtwoord || !bevestig) {
+    toonFoutmelding('Vul alle velden in.')
+    return
+  }
+  if (wachtwoord !== bevestig) {
+    toonFoutmelding('Wachtwoorden komen niet overeen.')
+    return
+  }
+  if (!akkoord) {
+    toonFoutmelding('Accepteer de gebruiksvoorwaarden om door te gaan.')
     return
   }
 
-  if (password !== confirmPassword) {
-    alert('Passwords do not match.')
+  const gebruikers = JSON.parse(localStorage.getItem('gebruikers') || '[]')
+  if (gebruikers.find(u => u.email === email)) {
+    toonFoutmelding('Er bestaat al een account met dit e-mailadres.')
     return
   }
 
-  if (!acceptTerms) {
-    alert('Please accept the terms.')
-    return
-  }
-
-  const users = JSON.parse(localStorage.getItem('users') || '[]')
-  if (users.find(u => u.email === email)) {
-    alert('An account with this email already exists.')
-    return
-  }
-
-  users.push({ name, email, password })
-  localStorage.setItem('users', JSON.stringify(users))
-  localStorage.setItem('gebruiker', email)
+  const nieuweGebruiker = { naam, email, wachtwoord }
+  gebruikers.push(nieuweGebruiker)
+  localStorage.setItem('gebruikers', JSON.stringify(gebruikers))
+  localStorage.setItem('huidigGebruiker', JSON.stringify(nieuweGebruiker))
   window.location.href = 'dashboard.html'
 }
 
-// --- PRODUCT DATA ---
+function uitloggen() {
+  localStorage.removeItem('huidigGebruiker')
+  window.location.href = 'index.html'
+}
+
+function huidigGebruiker() {
+  return JSON.parse(localStorage.getItem('huidigGebruiker') || 'null')
+}
+
+function toonFoutmelding(tekst) {
+  const bestaand = document.getElementById('foutmelding')
+  if (bestaand) {
+    bestaand.textContent = tekst
+    bestaand.style.display = 'block'
+    return
+  }
+  alert(tekst)
+}
+
+// ============================================================
+//  PRODUCTDATA
+// ============================================================
+
 const productData = {
-  'CHOC-001': { naam: 'Pure Chocoladereep 85%', houdbaar: '25 apr 2026', allergenen: ['Melk', 'Soja'] },
-  'CHOC-002': { naam: 'Melkchocolade Classic', houdbaar: '12 mei 2026', allergenen: ['Melk', 'Noten'] },
-  'CHOC-003': { naam: 'White Chocolate Delight', houdbaar: '8 jun 2026', allergenen: ['Melk'] },
-  'CHOC-004': { naam: 'Hazelnoot Reep', houdbaar: '30 jul 2026', allergenen: ['Noten', 'Melk'] },
+  'CHOC-001': {
+    naam: 'Pure Chocoladereep 85%',
+    houdbaar: '25 apr 2026',
+    allergenen: ['Melk', 'Soja'],
+    herkomst: 'Ecuador',
+    certificeringen: ['Fairtrade', 'Biologisch']
+  },
+  'CHOC-002': {
+    naam: 'Melkchocolade Classic',
+    houdbaar: '12 mei 2026',
+    allergenen: ['Melk', 'Noten'],
+    herkomst: 'Ghana',
+    certificeringen: ['Fairtrade']
+  },
+  'CHOC-003': {
+    naam: 'Witte Chocolade Delight',
+    houdbaar: '8 jun 2026',
+    allergenen: ['Melk'],
+    herkomst: 'Madagascar',
+    certificeringen: ['Biologisch']
+  },
+  'CHOC-004': {
+    naam: 'Hazelnoot Reep',
+    houdbaar: '30 jul 2026',
+    allergenen: ['Noten', 'Melk'],
+    herkomst: 'Ivoorkust',
+    certificeringen: ['Fairtrade']
+  },
 }
 
-// --- DASHBOARD ---
-async function registreerProduct() {
-  const code = document.getElementById('productCode').value.trim().toUpperCase()
-  const statusDiv = document.getElementById('registerStatus')
-  const gebruiker = localStorage.getItem('gebruiker') || 'demo@vellin.nl'
+// ============================================================
+//  PRODUCT REGISTREREN
+// ============================================================
 
-  if (!code) {
-    statusDiv.innerHTML = '<div class="status-melding status-error">Voer een productcode in.</div>'
+function registreerProduct() {
+  const code = document.getElementById('productCode')?.value.trim().toUpperCase()
+  const batch = document.getElementById('batchNumber')?.value.trim()
+  const bon = document.getElementById('receiptNumber')?.value.trim()
+
+  if (!code && !batch) {
+    toonFoutmelding('Voer een productcode of batchnummer in.')
     return
   }
 
-  const { error } = await supabase
-    .from('producten')
-    .insert([{ gebruiker, productcode: code }])
+  const gebruikerEmail = huidigGebruiker()?.email || 'demo@vellin.nl'
+  const productCode = code || batch
 
-  if (error) {
-    statusDiv.innerHTML = '<div class="status-melding status-error">Fout: ' + error.message + '</div>'
-    return
+  const opgeslagen = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
+  const info = productData[productCode]
+
+  const nieuwProduct = {
+    code: productCode,
+    naam: info ? info.naam : `Product ${productCode}`,
+    houdbaar: info ? info.houdbaar : 'Onbekend',
+    herkomst: info ? info.herkomst : 'Onbekend',
+    allergenen: info ? info.allergenen : [],
+    certificeringen: info ? info.certificeringen : [],
+    batch: batch || productCode,
+    bon: bon || '',
+    datum: new Date().toLocaleDateString('nl-NL'),
+    gebruiker: gebruikerEmail
   }
 
-  document.getElementById('productCode').value = ''
-  statusDiv.innerHTML = '<div class="status-melding status-success">✓ Product geregistreerd!</div>'
-  toonProducten()
+  opgeslagen.push(nieuwProduct)
+  localStorage.setItem('geregistreerdeProducten', JSON.stringify(opgeslagen))
+
+  // Supabase opslaan (optioneel, niet-blokkerend)
+  supabase.from('producten').insert([{ gebruiker: gebruikerEmail, productcode: productCode }]).then()
+
+  // Succes modal tonen
+  const modal = document.getElementById('successModal')
+  if (modal) modal.classList.add('active')
 }
 
-async function toonProducten() {
-  const div = document.getElementById('producten')
-  if (!div) return
-
-  const gebruiker = localStorage.getItem('gebruiker') || 'demo@vellin.nl'
-  const { data, error } = await supabase
-    .from('producten')
-    .select('*')
-    .eq('gebruiker', gebruiker)
-
-  if (error || !data || data.length === 0) {
-    div.innerHTML = '<p style="color:#888;">Nog geen producten geregistreerd. Voer een productcode in hierboven.</p>'
-    return
-  }
-
-  div.innerHTML = data.map(rij => {
-    const info = productData[rij.productcode]
-    if (info) {
-      return `
-        <div class="product-kaart">
-          <div style="font-size:40px;"> </div>
-          <h4>${info.naam}</h4>
-          <p> Houdbaar t/m ${info.houdbaar}</p>
-          <p>${info.allergenen.map(a => `<span class="badge">${a}</span>`).join('')}</p>
-          <p style="font-size:12px; color:#c9a84c;">Code: ${rij.productcode}</p>
-        </div>`
-    } else {
-      return `
-        <div class="product-kaart">
-          <div style="font-size:40px;"> </div>
-          <h4>Onbekend product</h4>
-          <p style="color:#888;">Code: ${rij.productcode}</p>
-        </div>`
-    }
-  }).join('')
+function gaNaarCollectie() {
+  window.location.href = 'mychocolate.html'
 }
 
-// Auto-loading producten disabled to preserve manual product cards in the static dashboard layout
-// if (document.getElementById('producten')) toonProducten()
+// ============================================================
+//  KLACHTEN
+// ============================================================
 
-// --- KLACHTEN ---
 async function verstuurKlacht() {
   const onderwerp = document.getElementById('onderwerp')?.value.trim()
   const beschrijving = document.getElementById('beschrijving')?.value.trim()
-  const productcode = document.getElementById('klachtProductCode')?.value.trim()
+  const productcode = document.getElementById('klachtProductCode')?.value.trim() || ''
   const statusDiv = document.getElementById('klachtStatus')
 
   if (!onderwerp || !beschrijving) {
-    statusDiv.innerHTML = '<div class="status-melding status-error">Vul onderwerp en beschrijving in.</div>'
+    if (statusDiv) statusDiv.innerHTML = '<div class="status-melding status-error">Vul het onderwerp en de beschrijving in.</div>'
     return
   }
+
+  const ticketnummer = 'VEL-' + Math.floor(Math.random() * 9000 + 1000)
 
   const { error } = await supabase
     .from('klachten')
-    .insert([{ onderwerp, beschrijving, productcode: productcode || '' }])
+    .insert([{ onderwerp, beschrijving, productcode, ticketnummer }])
 
-  if (error) {
-    statusDiv.innerHTML = '<div class="status-melding status-error">Fout: ' + error.message + '</div>'
-    return
+  if (statusDiv) {
+    if (error) {
+      statusDiv.innerHTML = `<div class="status-melding status-error">Fout bij indienen: ${error.message}</div>`
+    } else {
+      statusDiv.innerHTML = `
+        <div class="status-melding status-success">
+          ✓ Klacht ontvangen! Ons team neemt binnen 1 werkdag contact op.<br>
+          <strong>Ticketnummer: #${ticketnummer}</strong>
+        </div>`
+      document.getElementById('onderwerp').value = ''
+      document.getElementById('beschrijving').value = ''
+    }
   }
-
-  const nummer = 'VEL-' + Math.floor(Math.random() * 9000 + 1000)
-  statusDiv.innerHTML = `<div class="status-melding status-success"> Klacht ontvangen! Ticketnummer: #${nummer}</div>`
-  document.getElementById('onderwerp').value = ''
-  document.getElementById('beschrijving').value = ''
-  if (document.getElementById('klachtProductCode')) document.getElementById('klachtProductCode').value = ''
 }
 
-// --- SHOP ---
-const shopItems = [
-  { id: 'CHOC-001', naam: 'Premium Dark Chocolate', prijs: '€4,99', voorraad: 245, levertijd: '2-3 dagen', categorie: 'all', tag: 'New', voorraadLabel: 'Op voorraad', b2b: 'Next batch: 27 April 2026' },
-  { id: 'CHOC-002', naam: 'Artisan Dark Collection', prijs: '€6,99', voorraad: 42, levertijd: '1-2 dagen', categorie: 'fairtrade', tag: 'Fairtrade', voorraadLabel: 'Beperkte voorraad', b2b: 'Low stock - Next batch: 25 April 2026' },
-  { id: 'CHOC-003', naam: 'Milk Chocolate Bar', prijs: '€3,29', voorraad: 150, levertijd: '2-3 dagen', categorie: 'seasonal', tag: 'Seasonal', voorraadLabel: 'Op voorraad' },
-  { id: 'CHOC-004', naam: 'White Chocolate Truffle', prijs: '€5,49', voorraad: 0, levertijd: 'Niet op voorraad', categorie: 'limited', tag: 'Limited Edition', voorraadLabel: 'In productie' },
+// ============================================================
+//  SHOP
+// ============================================================
+
+const shopArtikelen = [
+  {
+    id: 'CHOC-001',
+    naam: 'Premium Pure Chocolade',
+    prijs: '€4,99',
+    prijsGetal: 4.99,
+    voorraad: 245,
+    levertijd: '2-3 werkdagen',
+    categorie: 'all',
+    tag: 'Nieuw',
+    voorraadLabel: 'Op voorraad',
+    b2b: 'Volgende batch: 27 april 2026',
+    afbeelding: 'images/ChatGPT Image Jun 3, 2026, 12_03_13 AM.png',
+    beschrijving: 'Intense pure chocolade met 85% cacao uit Ecuador.'
+  },
+  {
+    id: 'CHOC-002',
+    naam: 'Ambachtelijke Donkere Collectie',
+    prijs: '€6,99',
+    prijsGetal: 6.99,
+    voorraad: 42,
+    levertijd: '1-2 werkdagen',
+    categorie: 'fairtrade',
+    tag: 'Fairtrade',
+    voorraadLabel: 'Beperkte voorraad',
+    b2b: 'Lage voorraad – Volgende batch: 25 april 2026',
+    afbeelding: 'images/ChatGPT Image Jun 3, 2026, 12_04_28 AM.png',
+    beschrijving: 'Fairtrade gecertificeerde chocolade uit Ghana.'
+  },
+  {
+    id: 'CHOC-003',
+    naam: 'Melkchocolade Reep',
+    prijs: '€3,29',
+    prijsGetal: 3.29,
+    voorraad: 150,
+    levertijd: '2-3 werkdagen',
+    categorie: 'seizoen',
+    tag: 'Seizoen',
+    voorraadLabel: 'Op voorraad',
+    b2b: null,
+    afbeelding: 'images/ChatGPT Image Jun 3, 2026, 12_04_28 AM.png',
+    beschrijving: 'Romige melkchocolade, perfect voor elke gelegenheid.'
+  },
+  {
+    id: 'CHOC-004',
+    naam: 'Witte Chocolade Truffel',
+    prijs: '€5,49',
+    prijsGetal: 5.49,
+    voorraad: 0,
+    levertijd: 'Niet op voorraad',
+    categorie: 'limited',
+    tag: 'Limited Edition',
+    voorraadLabel: 'In productie',
+    b2b: 'Verwacht in productie: mei 2026',
+    afbeelding: 'images/ChatGPT Image Jun 3, 2026, 12_06_13 AM.png',
+    beschrijving: 'Exclusieve witte chocolade truffel uit Madagascar.'
+  },
 ]
 
-function filterShopItems() {
-  const query = document.getElementById('shopSearch')?.value.toLowerCase().trim() || ''
-  const activeButton = document.querySelector('.pill-filters .pill.active')
-  const category = activeButton?.dataset.filter || 'all'
-  return shopItems.filter(item =>
-    (category === 'all' || item.categorie === category) &&
-    item.naam.toLowerCase().includes(query)
+// Winkelwagen in localStorage
+function haalWinkelwagen() {
+  return JSON.parse(localStorage.getItem('winkelwagen') || '[]')
+}
+
+function slaWinkelwagenOp(wagen) {
+  localStorage.setItem('winkelwagen', JSON.stringify(wagen))
+  updateWinkelwagenTeller()
+}
+
+function updateWinkelwagenTeller() {
+  const wagen = haalWinkelwagen()
+  const totaal = wagen.reduce((s, i) => s + i.aantal, 0)
+  document.querySelectorAll('.winkelwagen-teller').forEach(el => {
+    el.textContent = totaal
+    el.style.display = totaal > 0 ? 'flex' : 'none'
+  })
+}
+
+function voegToeAanWinkelwagen(id) {
+  const artikel = shopArtikelen.find(a => a.id === id)
+  if (!artikel || artikel.voorraad === 0) return
+
+  const wagen = haalWinkelwagen()
+  const bestaand = wagen.find(i => i.id === id)
+
+  if (bestaand) {
+    bestaand.aantal++
+  } else {
+    wagen.push({ id, naam: artikel.naam, prijs: artikel.prijsGetal, aantal: 1 })
+  }
+
+  slaWinkelwagenOp(wagen)
+
+  // Visuele bevestiging
+  const knop = document.querySelector(`[data-product-id="${id}"]`)
+  if (knop) {
+    const origineel = knop.textContent
+    knop.textContent = '✓ Toegevoegd!'
+    knop.style.background = '#2d7a2d'
+    setTimeout(() => {
+      knop.textContent = origineel
+      knop.style.background = ''
+    }, 1500)
+  }
+}
+
+function filterShopArtikelen() {
+  const zoekopdracht = document.getElementById('shopZoeken')?.value.toLowerCase().trim() || ''
+  const actieveKnop = document.querySelector('.pill-filters .pill.active')
+  const categorie = actieveKnop?.dataset.filter || 'all'
+
+  return shopArtikelen.filter(artikel =>
+    (categorie === 'all' || artikel.categorie === categorie) &&
+    artikel.naam.toLowerCase().includes(zoekopdracht)
   )
 }
 
-function updateShopFilter(button) {
-  if (button) {
+function updateShopFilter(knop) {
+  if (knop) {
     document.querySelectorAll('.pill-filters .pill').forEach(btn => {
-      btn.classList.toggle('active', btn === button)
+      btn.classList.toggle('active', btn === knop)
     })
   }
   laadShop()
 }
 
 function laadShop() {
-  const div = document.getElementById('shopProducten')
-  if (!div) return
+  const container = document.getElementById('shopProducten')
+  if (!container) return
 
-  const visibleItems = filterShopItems()
-  if (visibleItems.length === 0) {
-    div.innerHTML = '<p style="color:#888;">Geen producten gevonden. Probeer een andere zoekterm of filter.</p>'
+  const zichtbaar = filterShopArtikelen()
+
+  if (zichtbaar.length === 0) {
+    container.innerHTML = '<p style="color:#888;padding:20px;">Geen producten gevonden. Probeer een andere zoekterm of filter.</p>'
     return
   }
 
-  div.innerHTML = visibleItems.map(item => `
-    <div class="product-kaart">
-      <div class="product-card-row">
-        <span class="badge">${item.tag}</span>
-        <h4>${item.naam}</h4>
-        <p style="font-size:16px; font-weight:bold; color:#c9a84c; margin:0;">${item.prijs}</p>
-        <p style="margin:8px 0 0;"><strong>${item.voorraadLabel}</strong></p>
-        <p style="margin:4px 0 0; color:#888;">${item.levertijd}</p>
-        ${item.b2b ? `<div class="section-card" style="padding:12px; margin-top:12px;"><small>📈 B2B Info</small><p style="margin:8px 0 0;">${item.b2b}</p></div>` : ''}
+  container.innerHTML = zichtbaar.map(artikel => `
+    <div class="product-shop-kaart">
+      <div class="product-shop-afbeelding">
+        <img src="${artikel.afbeelding}" alt="${artikel.naam}" onerror="this.style.display='none'">
+        <span class="product-shop-tag ${artikel.voorraad === 0 ? 'tag-uitverkocht' : ''}">${artikel.tag}</span>
       </div>
-      ${item.voorraad > 0
-        ? `<button onclick="bestelProduct('${item.id}', '${item.naam}')">Toevoegen aan winkelwagen</button>`
-        : `<button disabled style="opacity:0.4; cursor:not-allowed;">Niet beschikbaar</button>`}
-    </div>`).join('')
+      <div class="product-shop-info">
+        <h4>${artikel.naam}</h4>
+        <p class="product-shop-beschrijving">${artikel.beschrijving}</p>
+        <div class="product-shop-meta">
+          <span class="product-shop-prijs">${artikel.prijs}</span>
+          <span class="product-shop-voorraad ${artikel.voorraad === 0 ? 'uitverkocht' : artikel.voorraad < 50 ? 'laag' : ''}">${artikel.voorraadLabel}</span>
+        </div>
+        <p class="product-shop-levertijd">🚚 ${artikel.levertijd}</p>
+        ${artikel.b2b ? `<div class="b2b-info"><span>📈 B2B</span> ${artikel.b2b}</div>` : ''}
+        ${artikel.voorraad > 0
+          ? `<button class="btn-winkelwagen" data-product-id="${artikel.id}" onclick="voegToeAanWinkelwagen('${artikel.id}')">In winkelwagen</button>`
+          : `<button class="btn-winkelwagen btn-uitverkocht" disabled>Niet beschikbaar</button>`
+        }
+      </div>
+    </div>
+  `).join('')
+
+  updateWinkelwagenTeller()
 }
 
-async function bestelProduct(id, naam) {
-  const nummer = 'VEL-' + Math.floor(Math.random() * 9000 + 1000)
-  const gebruiker = localStorage.getItem('gebruiker') || 'demo@vellin.nl'
+function toonWinkelwagen() {
+  const wagen = haalWinkelwagen()
+  const overlay = document.getElementById('winkelwagenOverlay')
+  const inhoud = document.getElementById('winkelwagenInhoud')
+  if (!overlay || !inhoud) return
 
-  const { error } = await supabase
-    .from('bestellingen')
-    .insert([{ productid: id, productnaam: naam, ordernummer: nummer, gebruiker }])
-
-  const div = document.getElementById('orderResultaat')
-  if (error) {
-    div.innerHTML = '<div class="status-melding status-error">Fout bij bestellen: ' + error.message + '</div>'
-    return
+  if (wagen.length === 0) {
+    inhoud.innerHTML = '<p style="color:#888;padding:20px;text-align:center;">Je winkelwagen is leeg.</p>'
+  } else {
+    const totaal = wagen.reduce((s, i) => s + i.prijs * i.aantal, 0)
+    inhoud.innerHTML = `
+      ${wagen.map(item => `
+        <div class="wagen-item">
+          <span>${item.naam}</span>
+          <div class="wagen-item-rechts">
+            <span>€${(item.prijs * item.aantal).toFixed(2).replace('.', ',')}</span>
+            <button onclick="verwijderUitWagen('${item.id}')" class="btn-verwijder">✕</button>
+          </div>
+        </div>
+      `).join('')}
+      <div class="wagen-totaal">
+        <strong>Totaal: €${totaal.toFixed(2).replace('.', ',')}</strong>
+      </div>
+      <button class="btn-afrekenen" onclick="afrekenen()">Afrekenen</button>
+    `
   }
 
-  div.innerHTML = `
-    <div class="status-melding status-success">
-      ✓ Bestelling geplaatst voor <strong>${naam}</strong>!<br>
-      Ordernummer: <strong>#${nummer}</strong>
-    </div>`
+  overlay.classList.add('active')
 }
 
-if (document.getElementById('shopProducten')) laadShop()
+function sluitWinkelwagen() {
+  document.getElementById('winkelwagenOverlay')?.classList.remove('active')
+}
 
-// --- CHATBOT ---
-const botAntwoorden = [
-  { sleutelwoorden: ['allergeen', 'allergie', 'noten', 'melk', 'soja'],
-    antwoord: 'Onze producten kunnen sporen bevatten van melk, noten en soja. Bekijk de allergeneninformatie op de productpagina in je dashboard.' },
-  { sleutelwoorden: ['bestelling', 'bestellen', 'order', 'levering'],
-    antwoord: 'Je kunt producten bestellen via de Shop. De status volg je in je dashboard onder actieve bestellingen.' },
-  { sleutelwoorden: ['klacht', 'probleem', 'beschadigd', 'fout'],
-    antwoord: 'Wat vervelend! Dien een klacht in via de Klachten-pagina. We reageren binnen 1 werkdag.' },
-  { sleutelwoorden: ['fairtrade', 'duurzaam', 'herkomst', 'cacao'],
-    antwoord: 'Onze cacao is Fairtrade-gecertificeerd uit Ecuador en Ghana. Bekijk de Cocoa Journey in je dashboard.' },
-  { sleutelwoorden: ['houdbaar', 'datum', 'verlopen'],
-    antwoord: 'De houdbaarheidsdatum staat op je geregistreerde product in het dashboard.' },
-]
+function verwijderUitWagen(id) {
+  const wagen = haalWinkelwagen().filter(i => i.id !== id)
+  slaWinkelwagenOp(wagen)
+  toonWinkelwagen()
+}
 
-function vraagBot() {
-  const input = document.getElementById('vraag')
-  const vraag = input?.value.trim()
+function afrekenen() {
+  const wagen = haalWinkelwagen()
+  if (wagen.length === 0) return
+
+  const ordernummer = 'VEL-' + Math.floor(Math.random() * 9000 + 1000)
+  const gebruikerEmail = huidigGebruiker()?.email || 'demo@vellin.nl'
+
+  // Opslaan in Supabase
+  Promise.all(wagen.map(item =>
+    supabase.from('bestellingen').insert([{
+      productid: item.id,
+      productnaam: item.naam,
+      ordernummer,
+      gebruiker: gebruikerEmail,
+      aantal: item.aantal
+    }])
+  )).then(() => {
+    slaWinkelwagenOp([])
+    sluitWinkelwagen()
+
+    const resultaat = document.getElementById('orderResultaat')
+    if (resultaat) {
+      resultaat.innerHTML = `
+        <div class="status-melding status-success">
+          ✓ Bestelling geplaatst!<br>
+          <strong>Ordernummer: #${ordernummer}</strong><br>
+          Je ontvangt een bevestiging per e-mail.
+        </div>`
+      resultaat.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      alert(`Bestelling geplaatst! Ordernummer: #${ordernummer}`)
+    }
+  })
+}
+
+if (document.getElementById('shopProducten')) {
+  laadShop()
+  updateWinkelwagenTeller()
+}
+
+// ============================================================
+//  AI CHATBOT – Anthropic API
+// ============================================================
+
+let chatGeschiedenis = []
+
+async function stuurChatbericht() {
+  const invoer = document.getElementById('chatInvoer') || document.getElementById('userInput')
+  const vraag = invoer?.value.trim()
   if (!vraag) return
-  voegBerichtToe(vraag, 'user')
-  input.value = ''
-  setTimeout(() => {
-    const antwoord = zoekAntwoord(vraag.toLowerCase())
-    voegBerichtToe(antwoord, 'bot')
-  }, 600)
-}
 
-function zoekAntwoord(vraag) {
-  for (const item of botAntwoorden) {
-    if (item.sleutelwoorden.some(w => vraag.includes(w))) return item.antwoord
+  voegChatBerichtToe(vraag, 'gebruiker')
+  invoer.value = ''
+
+  // Laadanimatie
+  const laadId = 'laad-' + Date.now()
+  voegChatBerichtToe('...', 'bot', laadId)
+
+  // Gebruikerscontext samenstellen
+  const gebruiker = huidigGebruiker()
+  const producten = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
+    .filter(p => p.gebruiker === (gebruiker?.email || 'demo@vellin.nl'))
+  const productenTekst = producten.length > 0
+    ? producten.map(p => `${p.naam} (houdbaar: ${p.houdbaar}, herkomst: ${p.herkomst})`).join(', ')
+    : 'Geen producten geregistreerd'
+
+  const systeembericht = `Je bent Vellin, de vriendelijke klantenservice-assistent van Chocolate Firm. 
+Je helpt klanten in het Nederlands met vragen over chocoladeproducten, allergenen, bestellingen, klachten en de Cocoa Journey.
+Wees beknopt, warm en professioneel. Gebruik max 3 zinnen per antwoord.
+De klant heet ${gebruiker?.naam || 'de klant'} en heeft deze producten geregistreerd: ${productenTekst}.
+Bij klachten: verwijs naar de Klachten-pagina in de app.
+Bij bestellingen: verwijs naar de Shop-pagina.`
+
+  chatGeschiedenis.push({ role: 'user', content: vraag })
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        system: systeembericht,
+        messages: chatGeschiedenis.slice(-10) // max 10 berichten history
+      })
+    })
+
+    const data = await response.json()
+    const antwoord = data.content?.[0]?.text || 'Excuses, er is iets misgegaan. Probeer het opnieuw.'
+
+    chatGeschiedenis.push({ role: 'assistant', content: antwoord })
+
+    // Laadanimatie verwijderen en antwoord plaatsen
+    document.getElementById(laadId)?.remove()
+    voegChatBerichtToe(antwoord, 'bot')
+
+  } catch (fout) {
+    document.getElementById(laadId)?.remove()
+    voegChatBerichtToe('Excuses, ik kan momenteel niet reageren. Neem contact op via 0800-VELLIN (9:00–17:00).', 'bot')
+    console.error('Chatbot fout:', fout)
   }
-  return 'Voor meer informatie kun je contact opnemen via de Klachten-pagina of bel 0800-VELLIN (9:00–17:00).'
 }
 
-function voegBerichtToe(tekst, type) {
+function voegChatBerichtToe(tekst, type, id) {
   const chatBox = document.getElementById('chatBox')
   if (!chatBox) return
+
   const div = document.createElement('div')
-  div.className = type === 'user' ? 'chat-bericht-user' : 'chat-bericht-bot'
-  div.textContent = tekst
+  div.className = type === 'gebruiker' ? 'chat-bericht-gebruiker' : 'chat-bericht-bot'
+  if (id) div.id = id
+
+  if (tekst === '...') {
+    div.innerHTML = '<span class="chat-laadanimatie"><span>.</span><span>.</span><span>.</span></span>'
+  } else {
+    div.textContent = tekst
+  }
+
   chatBox.appendChild(div)
   chatBox.scrollTop = chatBox.scrollHeight
 }
-// Functies globaal beschikbaar maken
-window.login = login
+
+function handleChatEnter(event) {
+  if (event.key === 'Enter') stuurChatbericht()
+}
+
+// ============================================================
+//  NOTIFICATIES – verlopen producten
+// ============================================================
+
+function controleerVerlopenProducten() {
+  const banner = document.getElementById('verloopBanner')
+  if (!banner) return
+
+  const producten = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
+  const gebruikerEmail = huidigGebruiker()?.email || 'demo@vellin.nl'
+  const mijnProducten = producten.filter(p => p.gebruiker === gebruikerEmail)
+
+  const zeven_dagen_later = new Date()
+  zeven_dagen_later.setDate(zeven_dagen_later.getDate() + 7)
+
+  const bijnaVerlopen = mijnProducten.filter(p => {
+    if (!p.houdbaar || p.houdbaar === 'Onbekend') return false
+    const datum = parseerDatum(p.houdbaar)
+    return datum && datum <= zeven_dagen_later
+  })
+
+  if (bijnaVerlopen.length > 0) {
+    banner.style.display = 'flex'
+    banner.querySelector('.banner-tekst').textContent =
+      `⚠️ ${bijnaVerlopen.length} product${bijnaVerlopen.length > 1 ? 'en verlopen' : ' verloopt'} binnen 7 dagen`
+  }
+}
+
+function parseerDatum(tekst) {
+  const maanden = { jan: 0, feb: 1, mrt: 2, apr: 3, mei: 4, jun: 5, jul: 6, aug: 7, sep: 8, okt: 9, nov: 10, dec: 11 }
+  const delen = tekst.toLowerCase().split(' ')
+  if (delen.length >= 3) {
+    const dag = parseInt(delen[0])
+    const maand = maanden[delen[1].substring(0, 3)]
+    const jaar = parseInt(delen[2])
+    if (!isNaN(dag) && maand !== undefined && !isNaN(jaar)) {
+      return new Date(jaar, maand, dag)
+    }
+  }
+  return null
+}
+
+if (document.getElementById('verloopBanner')) {
+  controleerVerlopenProducten()
+}
+
+// ============================================================
+//  TOGGLE JOURNEY (mychocolate.html)
+// ============================================================
+
+function toggleJourney(id, knop) {
+  document.querySelectorAll('.journey-content').forEach(sectie => {
+    if (sectie.id !== id) sectie.classList.remove('active')
+  })
+  document.querySelectorAll('.journey-btn').forEach(btn => {
+    if (btn !== knop) btn.textContent = 'Bekijk Reis'
+  })
+
+  const sectie = document.getElementById(id)
+  if (!sectie) return
+  sectie.classList.toggle('active')
+  if (knop) knop.textContent = sectie.classList.contains('active') ? 'Verberg Reis' : 'Bekijk Reis'
+}
+
+// ============================================================
+//  GLOBALE EXPORTS (voor onclick= attributen)
+// ============================================================
+
+window.inloggen = inloggen
+window.registreren = registreren
+window.uitloggen = uitloggen
 window.registreerProduct = registreerProduct
+window.gaNaarCollectie = gaNaarCollectie
 window.verstuurKlacht = verstuurKlacht
-window.vraagBot = vraagBot
-window.bestelProduct = bestelProduct
-function toggleJourney(id){
+window.laadShop = laadShop
+window.updateShopFilter = updateShopFilter
+window.voegToeAanWinkelwagen = voegToeAanWinkelwagen
+window.toonWinkelwagen = toonWinkelwagen
+window.sluitWinkelwagen = sluitWinkelwagen
+window.verwijderUitWagen = verwijderUitWagen
+window.afrekenen = afrekenen
+window.stuurChatbericht = stuurChatbericht
+window.handleChatEnter = handleChatEnter
+window.toggleJourney = toggleJourney
 
-    const section =
-    document.getElementById(id);
-
-    section.classList.toggle('active');
-
-}
-
-window.toggleJourney = toggleJourney;
-function showSuccess(){
-
-    document
-    .getElementById("successModal")
-    .classList.add("active");
-
-}
-
-function goToCollection(){
-
-    window.location.href =
-    "mychocolate.html";
-
-}
+// Legacy aliases (voor bestaande onclick= in HTML)
+window.login = inloggen
+window.register = registreren
+window.verstuurKlacht = verstuurKlacht
+window.vraagBot = stuurChatbericht
+window.bestelProduct = (id) => voegToeAanWinkelwagen(id)
+window.showSuccess = () => document.getElementById('successModal')?.classList.add('active')
+window.goToCollection = gaNaarCollectie

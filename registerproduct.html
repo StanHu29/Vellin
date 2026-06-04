@@ -3,226 +3,434 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register Product</title>
+<title>Register Product – Chocolate Firm</title>
 
 <link rel="stylesheet" href="CSS/style.css">
 
+<!-- jsQR library for real QR code scanning -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsQR.min.js"></script>
+
 <style>
 
-.register-page{
-    padding-bottom:120px;
+.register-page {
+    padding-bottom: 120px;
 }
 
-.register-hero{
-    position:relative;
-    height:220px;
-    overflow:hidden;
-    border-radius:0 0 30px 30px;
+.register-hero {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 0 0 30px 30px;
 }
 
-.register-hero img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.register-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.register-overlay{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        to top,
-        rgba(0,0,0,.55),
-        rgba(0,0,0,.15)
-    );
+.register-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,.15));
 }
 
-.register-content{
-    position:absolute;
-    left:25px;
-    bottom:25px;
-    color:white;
+.register-content {
+    position: absolute;
+    left: 25px;
+    bottom: 25px;
+    color: white;
 }
 
-.register-content h1{
-    margin:0;
-    font-size:34px;
+.register-content h1 {
+    margin: 0;
+    font-size: 34px;
 }
 
-.register-content p{
-    margin-top:8px;
-    opacity:.9;
+.register-content p {
+    margin-top: 8px;
+    opacity: .9;
 }
 
-.scan-card{
-    background:white;
-    margin:20px;
-    border-radius:28px;
-    padding:24px;
-    text-align:center;
-    box-shadow:0 12px 30px rgba(0,0,0,.08);
+/* ── SCAN CARD ── */
+.scan-card {
+    background: white;
+    margin: 20px;
+    border-radius: 28px;
+    padding: 24px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
 }
 
-.scan-box{
-    height:240px;
-    border:3px dashed #d8c7b8;
-    border-radius:24px;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    margin-bottom:20px;
+/* Camera viewfinder */
+.scan-box {
+    position: relative;
+    height: 260px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #111;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.scan-icon{
-    font-size:60px;
-    margin-bottom:15px;
+#scanVideo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
 }
 
-.scan-btn{
-    width:100%;
-    border:none;
-    background:#6d3519;
-    color:white;
-    padding:16px;
-    border-radius:16px;
-    font-size:16px;
-    cursor:pointer;
+#scanCanvas {
+    display: none;
 }
 
-.divider{
-    text-align:center;
-    margin:30px 20px;
-    color:#999;
-    font-weight:600;
+/* Animated corner brackets */
+.scan-corners {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: none;
 }
 
-.form-card{
-    background:white;
-    margin:20px;
-    padding:24px;
-    border-radius:28px;
-    box-shadow:0 12px 30px rgba(0,0,0,.08);
+.scan-corners::before,
+.scan-corners::after,
+.scan-corners span::before,
+.scan-corners span::after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-color: #c9a84c;
+    border-style: solid;
 }
 
-.form-group{
-    margin-bottom:18px;
+.scan-corners::before  { top: 20px;    left: 20px;    border-width: 3px 0 0 3px; }
+.scan-corners::after   { top: 20px;    right: 20px;   border-width: 3px 3px 0 0; }
+.scan-corners span::before { bottom: 20px; left: 20px;  border-width: 0 0 3px 3px; }
+.scan-corners span::after  { bottom: 20px; right: 20px; border-width: 0 3px 3px 0; }
+
+/* Scanning laser line */
+.scan-laser {
+    display: none;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #c9a84c, transparent);
+    animation: laserScan 2s ease-in-out infinite;
 }
 
-.form-group label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:600;
+@keyframes laserScan {
+    0%   { top: 20%;  opacity: 1; }
+    50%  { top: 75%;  opacity: 1; }
+    100% { top: 20%;  opacity: 1; }
 }
 
-.form-group input{
-    width:100%;
-    padding:16px;
-    border:1px solid #ddd;
-    border-radius:14px;
-    box-sizing:border-box;
-    font-size:15px;
+/* Idle placeholder */
+.scan-idle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: #aaa;
+    text-align: center;
+    padding: 0 20px;
 }
 
-.register-btn{
-    width:100%;
-    border:none;
-    background:#6d3519;
-    color:white;
-    padding:18px;
-    border-radius:18px;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
+.scan-idle svg {
+    opacity: .5;
 }
 
-.register-btn:hover{
-    opacity:.95;
-}
-.success-modal{
-    position:fixed;
-    inset:0;
-
-    background:rgba(0,0,0,.45);
-
-    display:none;
-
-    justify-content:center;
-    align-items:center;
-
-    z-index:9999;
-}
-
-.success-modal.active{
-    display:flex;
+/* Scan success overlay */
+.scan-success-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(40,167,69,.85);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    gap: 10px;
+    border-radius: 20px;
 }
 
-.success-card{
+.scan-success-overlay svg { opacity: 1; }
 
-    background:white;
-
-    width:320px;
-
-    border-radius:28px;
-
-    padding:30px;
-
-    text-align:center;
-
-    box-shadow:0 20px 50px rgba(0,0,0,.15);
-
+/* Buttons */
+.scan-btn {
+    width: 100%;
+    border: none;
+    background: #6d3519;
+    color: white;
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-.success-icon{
+.scan-btn:hover { opacity: .92; }
 
-    width:70px;
-    height:70px;
-
-    margin:auto;
-
-    border-radius:50%;
-
-    background:#e8f8ed;
-
-    color:#28a745;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:34px;
-    font-weight:bold;
-
-    margin-bottom:15px;
-
+.scan-btn.scanning {
+    background: #a0522d;
 }
 
-.success-card h2{
-    margin-bottom:10px;
+.scan-status {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    min-height: 20px;
 }
 
-.success-card p{
-    color:#777;
-    margin-bottom:20px;
+/* ── PERMISSION ERROR CARD ── */
+.permission-error {
+    display: none;
+    background: #fff8f0;
+    border: 2px solid #f0c080;
+    border-radius: 20px;
+    padding: 22px;
+    margin-top: 16px;
 }
 
-.success-card button{
+.permission-error h3 {
+    margin: 0 0 8px;
+    color: #6d3519;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-    width:100%;
+.permission-error p {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 14px;
+}
 
-    border:none;
+.permission-steps {
+    background: white;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+}
 
-    background:#6d3519;
+.permission-steps h4 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #333;
+}
 
-    color:white;
+.permission-steps ol {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 14px;
+    color: #555;
+    line-height: 2;
+}
 
-    padding:14px;
+.permission-steps li strong {
+    color: #6d3519;
+}
 
-    border-radius:14px;
+/* Browser-specific instructions */
+.browser-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
 
-    cursor:pointer;
+.browser-tab {
+    background: #f0e8e0;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #6d3519;
+    transition: background .15s;
+}
 
+.browser-tab.active {
+    background: #6d3519;
+    color: white;
+}
+
+.browser-instructions {
+    display: none;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.8;
+}
+
+.browser-instructions.visible {
+    display: block;
+}
+
+.reload-btn {
+    width: 100%;
+    border: 2px solid #6d3519;
+    background: transparent;
+    color: #6d3519;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all .2s;
+}
+
+.reload-btn:hover {
+    background: #6d3519;
+    color: white;
+}
+
+.reload-btn svg {
+    transition: transform .5s;
+}
+
+.reload-btn:hover svg {
+    transform: rotate(360deg);
+}
+
+/* ── DIVIDER ── */
+.divider {
+    text-align: center;
+    margin: 28px 20px;
+    color: #bbb;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e8e0d8;
+}
+
+/* ── MANUAL FORM ── */
+.form-card {
+    background: white;
+    margin: 0 20px 20px;
+    padding: 24px;
+    border-radius: 28px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #444;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 14px;
+    box-sizing: border-box;
+    font-size: 15px;
+    transition: border-color .2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #c9a84c;
+}
+
+.register-btn {
+    width: 100%;
+    border: none;
+    background: #6d3519;
+    color: white;
+    padding: 18px;
+    border-radius: 18px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s;
+}
+
+.register-btn:hover { opacity: .92; }
+
+/* ── SUCCESS MODAL ── */
+.success-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.success-modal.active { display: flex; }
+
+.success-card {
+    background: white;
+    width: 320px;
+    border-radius: 28px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,.15);
+}
+
+.success-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: #e8f8ed;
+    color: #28a745;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.success-card h2 { margin: 0 0 10px; }
+.success-card p  { color: #777; margin-bottom: 20px; }
+
+.success-card button {
+    width: 100%;
+    border: none;
+    background: #6d3519;
+    color: white;
+    padding: 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 </style>
@@ -232,206 +440,469 @@
 
 <div class="app register-page">
 
-<header class="topbar">
+  <header class="topbar">
     <div class="brand-header">
-        <img src="images/ChatGPT Image Jun 3, 2026, 12_13_49 AM.png"
-             alt="Chocolate Firm"
-             class="logo-sm">
-
-        <h1 class="app-title">
-            Chocolate Firm
-        </h1>
+      <img src="images/ChatGPT Image Jun 3, 2026, 12_13_49 AM.png"
+           alt="Chocolate Firm" class="logo-sm">
+      <h1 class="app-title">Chocolate Firm</h1>
     </div>
-</header>
+  </header>
 
-<main>
+  <main>
 
-<section class="register-hero">
-
-    <img src="images/my_collection_hero.jpg"
-         alt="Register Product">
-
-    <div class="register-overlay"></div>
-
-    <div class="register-content">
-
+    <section class="register-hero">
+      <img src="images/my_collection_hero.jpg" alt="Register Product">
+      <div class="register-overlay"></div>
+      <div class="register-content">
         <h1>Register Product</h1>
+        <p>Add a chocolate product to your collection</p>
+      </div>
+    </section>
 
-        <p>
-            Add a chocolate product to your collection
-        </p>
+    <!-- ── QR SCAN CARD ── -->
+    <div class="scan-card">
 
-    </div>
+      <div class="scan-box" id="scanBox">
 
-</section>
+        <!-- Live camera feed -->
+        <video id="scanVideo" autoplay playsinline muted></video>
+        <canvas id="scanCanvas"></canvas>
 
-<div class="scan-card">
+        <!-- Animated UI while scanning -->
+        <div class="scan-corners" id="scanCorners"><span></span></div>
+        <div class="scan-laser"   id="scanLaser"></div>
 
-    <div class="scan-box">
-
-        <div class="scan-icon">📷</div>
-
-        <h3>Scan QR Code</h3>
-
-        <p>
-            Point your camera at the product QR code
-        </p>
-
-    </div>
-
-    <button class="scan-btn">
-        Start Scanning
-    </button>
-
-</div>
-
-<div class="divider">
-
-    ───── OR ENTER MANUALLY ─────
-
-</div>
-
-<div class="form-card">
-
-    <div class="form-group">
-
-        <label>Batch Number</label>
-
-        <input
-id="batchNumber"
-type="text"
-placeholder="Enter batch number">
-
-    </div>
-
-    <div class="form-group">
-
-        <label>Product Code</label>
-
-        <input
-id="productCode"
-type="text"
-placeholder="Enter product code">
-
-    </div>
-
-    <div class="form-group">
-
-        <label>Receipt Number</label>
-
-        <input
-         id="receiptNumber"
-         type="text"
-         placeholder="Enter receipt number">
-
-    </div>
-
-    <button
-id="registerBtn"
-class="register-btn">
-
-        + Register Product
-
-    </button>
-
-</div>
-
-</main>
-<div id="successModal" class="success-modal">
-
-    <div class="success-card">
-
-        <div class="success-icon">
-            ✓
+        <!-- Success flash -->
+        <div class="scan-success-overlay" id="scanSuccessOverlay">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+          QR Code Detected!
         </div>
 
-        <h2>Product Registered!</h2>
+        <!-- Idle placeholder -->
+        <div class="scan-idle" id="scanIdle">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none"
+               stroke="white" stroke-width="1.5">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="5" y="5" width="3" height="3" fill="white" stroke="none"/>
+            <rect x="16" y="5" width="3" height="3" fill="white" stroke="none"/>
+            <rect x="5" y="16" width="3" height="3" fill="white" stroke="none"/>
+            <line x1="14" y1="14" x2="21" y2="14"/>
+            <line x1="14" y1="17" x2="17" y2="17"/>
+            <line x1="17" y1="17" x2="17" y2="21"/>
+            <line x1="14" y1="21" x2="21" y2="21"/>
+          </svg>
+          <p>Press <strong>Start Scanning</strong> to activate your camera</p>
+        </div>
+
+      </div>
+
+      <p class="scan-status" id="scanStatus"></p>
+
+      <button class="scan-btn" id="scanBtn" onclick="toggleScanner()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <path d="M23 7V1h-6M1 7V1h6M23 17v6h-6M1 17v6h6"/>
+          <rect x="7" y="7" width="10" height="10" rx="1"/>
+        </svg>
+        Start Scanning
+      </button>
+
+      <!-- Permission error block -->
+      <div class="permission-error" id="permissionError">
+
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="#c0392b" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          Camera Access Denied
+        </h3>
 
         <p>
-            Your product has been added to your collection.
+          Your browser blocked access to the camera. You need to grant camera
+          permission for QR scanning to work. Follow the steps for your browser below.
         </p>
 
-        <button onclick="goToCollection()">
-            View Collection
+        <!-- Browser tabs -->
+        <div class="browser-tabs">
+          <button class="browser-tab active" onclick="showBrowserInstructions('chrome', this)">Chrome</button>
+          <button class="browser-tab"        onclick="showBrowserInstructions('safari', this)">Safari</button>
+          <button class="browser-tab"        onclick="showBrowserInstructions('firefox', this)">Firefox</button>
+          <button class="browser-tab"        onclick="showBrowserInstructions('edge', this)">Edge</button>
+        </div>
+
+        <div class="permission-steps">
+          <h4>How to enable camera access:</h4>
+
+          <div id="instructions-chrome" class="browser-instructions visible">
+            <ol>
+              <li>Click the <strong>camera icon</strong> in the address bar (top right of the URL)</li>
+              <li>Select <strong>"Always allow"</strong> for camera access</li>
+              <li>Or go to <strong>Settings → Privacy &amp; Security → Site Settings → Camera</strong></li>
+              <li>Find this website and change the permission to <strong>Allow</strong></li>
+              <li>Click the button below to reload the page</li>
+            </ol>
+          </div>
+
+          <div id="instructions-safari" class="browser-instructions">
+            <ol>
+              <li>Go to <strong>Safari → Settings</strong> (or Preferences on Mac)</li>
+              <li>Click the <strong>Websites</strong> tab</li>
+              <li>Select <strong>Camera</strong> from the left sidebar</li>
+              <li>Find this website and change the permission to <strong>Allow</strong></li>
+              <li>On iPhone: <strong>Settings → Safari → Camera → Allow</strong></li>
+              <li>Click the button below to reload the page</li>
+            </ol>
+          </div>
+
+          <div id="instructions-firefox" class="browser-instructions">
+            <ol>
+              <li>Click the <strong>shield or camera icon</strong> in the address bar</li>
+              <li>Click <strong>"Blocked Temporarily"</strong> next to Camera</li>
+              <li>Change it to <strong>"Allow"</strong></li>
+              <li>Or go to <strong>Settings → Privacy &amp; Security → Permissions → Camera</strong></li>
+              <li>Click the button below to reload the page</li>
+            </ol>
+          </div>
+
+          <div id="instructions-edge" class="browser-instructions">
+            <ol>
+              <li>Click the <strong>lock icon</strong> in the address bar</li>
+              <li>Find <strong>Camera</strong> and change it to <strong>Allow</strong></li>
+              <li>Or go to <strong>Settings → Cookies and site permissions → Camera</strong></li>
+              <li>Find this website and toggle on <strong>Allow</strong></li>
+              <li>Click the button below to reload the page</li>
+            </ol>
+          </div>
+
+        </div>
+
+        <button class="reload-btn" onclick="reloadPage()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+          Reload Page &amp; Try Again
         </button>
 
+      </div>
+      <!-- /permission-error -->
+
     </div>
+    <!-- /scan-card -->
+
+    <div class="divider">OR ENTER MANUALLY</div>
+
+    <!-- ── MANUAL FORM ── -->
+    <div class="form-card">
+
+      <div class="form-group">
+        <label>Batch Number</label>
+        <input id="batchNumber" type="text" placeholder="Enter batch number">
+      </div>
+
+      <div class="form-group">
+        <label>Product Code</label>
+        <input id="productCode" type="text" placeholder="Enter product code">
+      </div>
+
+      <div class="form-group">
+        <label>Receipt Number <span style="color:#aaa;font-weight:400;">(optional)</span></label>
+        <input id="receiptNumber" type="text" placeholder="Enter receipt number (optional)">
+      </div>
+
+      <button id="registerBtn" class="register-btn">
+        + Register Product
+      </button>
+
+    </div>
+
+  </main>
+
+  <!-- Success modal -->
+  <div id="successModal" class="success-modal">
+    <div class="success-card">
+      <div class="success-icon">✓</div>
+      <h2>Product Registered!</h2>
+      <p id="successMessage">Your product has been added to your collection.</p>
+      <button onclick="goToCollection()">View Collection</button>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item">
+      <img class="nav-icon" src="images/home.png" alt="Home">
+      <span class="nav-label">Home</span>
+    </a>
+    <a href="shop.html" class="nav-item">
+      <img class="nav-icon" src="images/shop.png" alt="Shop">
+      <span class="nav-label">Shop</span>
+    </a>
+    <a href="mychocolate.html" class="nav-item">
+      <img class="nav-icon" src="images/orders.png" alt="My Products">
+      <span class="nav-label">My Products</span>
+    </a>
+    <a href="klachten.html" class="nav-item">
+      <img class="nav-icon" src="images/service.png" alt="Service">
+      <span class="nav-label">Service</span>
+    </a>
+    <a href="settings.html" class="nav-item">
+      <img class="nav-icon" src="images/settings.png" alt="Settings">
+      <span class="nav-label">Settings</span>
+    </a>
+  </nav>
 
 </div>
 
 <script>
+/* ────────────────────────────────────────────
+   QR Scanner – real implementation via jsQR
+──────────────────────────────────────────── */
 
-document
-.getElementById("registerBtn")
-.addEventListener("click", function(){
+let scannerActive  = false;
+let animationFrame = null;
+let videoStream    = null;
 
-    const batch =
-    document.getElementById("batchNumber").value;
+const video          = document.getElementById('scanVideo');
+const canvas         = document.getElementById('scanCanvas');
+const ctx            = canvas.getContext('2d');
+const scanBtn        = document.getElementById('scanBtn');
+const scanIdle       = document.getElementById('scanIdle');
+const scanCorners    = document.getElementById('scanCorners');
+const scanLaser      = document.getElementById('scanLaser');
+const scanStatus     = document.getElementById('scanStatus');
+const permissionErr  = document.getElementById('permissionError');
+const successOverlay = document.getElementById('scanSuccessOverlay');
 
-    const product =
-    document.getElementById("productCode").value;
-
-    const receipt =
-    document.getElementById("receiptNumber").value;
-
-    if(
-        !batch ||
-        !product ||
-        !receipt
-    ){
-        showError("Please fill in all fields.");
-        return;
-    }
-
-    const newProduct = {
-
-        name: product,
-
-        batch: batch,
-
-        receipt: receipt,
-
-        expiry: "New Product",
-
-        origin: "Registered Product"
-
-    };
-
-    let products =
-    JSON.parse(
-        localStorage.getItem("products")
-    ) || [];
-
-    products.push(newProduct);
-
-    localStorage.setItem(
-        "products",
-        JSON.stringify(products)
-    );
-    function showError(message){
-
-    alert(message);
-
+async function toggleScanner() {
+  if (scannerActive) {
+    stopScanner();
+  } else {
+    await startScanner();
+  }
 }
-    showSuccess();
+
+async function startScanner() {
+  permissionErr.style.display = 'none';
+  scanStatus.textContent = 'Requesting camera access…';
+
+  try {
+    videoStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } }
+    });
+  } catch (err) {
+    handlePermissionError(err);
+    return;
+  }
+
+  video.srcObject = videoStream;
+  await video.play();
+
+  scannerActive = true;
+  video.style.display       = 'block';
+  scanIdle.style.display    = 'none';
+  scanCorners.style.display = 'block';
+  scanLaser.style.display   = 'block';
+  scanStatus.textContent    = 'Point your camera at a QR code…';
+
+  scanBtn.classList.add('scanning');
+  scanBtn.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="18" height="18" rx="2"/>
+      <line x1="9" y1="9" x2="15" y2="15"/>
+      <line x1="15" y1="9" x2="9" y2="15"/>
+    </svg>
+    Stop Scanning`;
+
+  scanFrame();
+}
+
+function scanFrame() {
+  if (!scannerActive) return;
+
+  if (video.readyState === video.HAVE_ENOUGH_DATA) {
+    canvas.width  = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code      = jsQR(imageData.data, imageData.width, imageData.height, {
+      inversionAttempts: 'dontInvert'
+    });
+
+    if (code) {
+      handleQRDetected(code.data);
+      return; // stop loop after detection
+    }
+  }
+
+  animationFrame = requestAnimationFrame(scanFrame);
+}
+
+function handleQRDetected(data) {
+  // Show success flash
+  successOverlay.style.display = 'flex';
+  scanStatus.textContent = `Detected: ${data}`;
+
+  // Try to fill the form with QR data
+  // Expected format: CHOC-001 or batch:BATCH-42|code:CHOC-001|receipt:REC-99
+  const parsed = parseQRData(data);
+  if (parsed.productCode) {
+    document.getElementById('productCode').value  = parsed.productCode;
+  }
+  if (parsed.batchNumber) {
+    document.getElementById('batchNumber').value  = parsed.batchNumber;
+  }
+  if (parsed.receiptNumber) {
+    document.getElementById('receiptNumber').value = parsed.receiptNumber;
+  }
+
+  // Scroll down to form
+  setTimeout(() => {
+    successOverlay.style.display = 'none';
+    stopScanner();
+    document.querySelector('.divider').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scanStatus.textContent = '✓ QR code filled in below — verify and confirm.';
+    scanStatus.style.color = '#28a745';
+  }, 1800);
+}
+
+function parseQRData(raw) {
+  // Simple key|value format: batch:B001|code:CHOC-001|receipt:R123
+  const result = {};
+  if (raw.includes('|')) {
+    raw.split('|').forEach(part => {
+      const [k, v] = part.split(':');
+      if (k === 'batch')   result.batchNumber   = v;
+      if (k === 'code')    result.productCode   = v;
+      if (k === 'receipt') result.receiptNumber = v;
+    });
+  } else {
+    // Plain product code (most common)
+    result.productCode = raw.trim();
+  }
+  return result;
+}
+
+function stopScanner() {
+  scannerActive = false;
+  cancelAnimationFrame(animationFrame);
+
+  if (videoStream) {
+    videoStream.getTracks().forEach(t => t.stop());
+    videoStream = null;
+  }
+
+  video.style.display       = 'none';
+  scanCorners.style.display = 'none';
+  scanLaser.style.display   = 'none';
+  scanIdle.style.display    = 'flex';
+
+  scanBtn.classList.remove('scanning');
+  scanBtn.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2">
+      <path d="M23 7V1h-6M1 7V1h6M23 17v6h-6M1 17v6h6"/>
+      <rect x="7" y="7" width="10" height="10" rx="1"/>
+    </svg>
+    Start Scanning`;
+
+  if (!scanStatus.style.color.includes('28a745')) {
+    scanStatus.textContent = '';
+  }
+}
+
+function handlePermissionError(err) {
+  scanStatus.textContent = '';
+
+  const isDenied = err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError';
+  const isNoCamera = err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError';
+
+  permissionErr.style.display = 'block';
+
+  if (isNoCamera) {
+    permissionErr.querySelector('h3').innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="#c0392b" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      No Camera Found`;
+    permissionErr.querySelector('p').textContent =
+      'No camera was detected on your device. Please use the manual form below to enter your product details.';
+    permissionErr.querySelector('.permission-steps').style.display = 'none';
+    permissionErr.querySelector('.browser-tabs').style.display     = 'none';
+  } else if (isDenied) {
+    // Already shown
+  } else {
+    permissionErr.querySelector('p').textContent =
+      `Camera error: ${err.message}. Please try reloading the page or use the manual form below.`;
+  }
+}
+
+/* ── Browser instruction tabs ── */
+function showBrowserInstructions(browser, btn) {
+  document.querySelectorAll('.browser-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.browser-instructions').forEach(d => d.classList.remove('visible'));
+  btn.classList.add('active');
+  document.getElementById('instructions-' + browser).classList.add('visible');
+}
+
+/* ── Reload helper ── */
+function reloadPage() {
+  window.location.reload();
+}
+
+/* ────────────────────────────────────────────
+   Manual form registration
+──────────────────────────────────────────── */
+document.getElementById('registerBtn').addEventListener('click', function () {
+  const batch   = document.getElementById('batchNumber').value.trim();
+  const product = document.getElementById('productCode').value.trim();
+  const receipt = document.getElementById('receiptNumber').value.trim(); // optional
+
+  if (!batch || !product) {
+    alert('Please fill in Batch Number and Product Code.');
+    return;
+  }
+
+  const newProduct = {
+    name:    product,
+    batch:   batch,
+    receipt: receipt,
+    expiry:  'New Product',
+    origin:  'Registered Product'
+  };
+
+  const products = JSON.parse(localStorage.getItem('products') || '[]');
+  products.push(newProduct);
+  localStorage.setItem('products', JSON.stringify(products));
+
+  document.getElementById('successMessage').textContent =
+    `"${product}" has been added to your collection.`;
+  showSuccess();
 });
 
-
-function showSuccess(){
-
-    document
-    .getElementById("successModal")
-    .classList.add("active");
-
+function showSuccess() {
+  document.getElementById('successModal').classList.add('active');
 }
 
-function goToCollection(){
-
-    window.location.href =
-    "mychocolate.html";
-
+function goToCollection() {
+  window.location.href = 'mychocolate.html';
 }
-
 </script>
+
 </body>
 </html>

@@ -1,40 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chocolate Firm Login</title>
+<title>Vellin – Inloggen</title>
 <link rel="stylesheet" href="CSS/style.css">
 <script type="module" src="js/app.js" defer></script>
 </head>
 
 <body>
-
 <div class="container">
   <main class="hero-section">
     <div class="hero-copy">
-      <span class="hero-eyebrow">Welcome Back, Chocolate Lover</span>
-      <h1 class="hero-title">Access your registered products, cocoa journeys and exclusive deals.</h1>
+      <span class="hero-eyebrow">Welkom terug, Chocoladeliefhebber</span>
+      <h1 class="hero-title">Toegang tot jouw geregistreerde producten, cacaoreizen en exclusieve aanbiedingen.</h1>
     </div>
 
     <aside class="login-card">
       <div class="panel-head">
-        <p class="panel-label">Log in</p>
-        <h2>Login</h2>
+        <p class="panel-label">Inloggen</p>
+        <h2>Inloggen</h2>
       </div>
       <div class="auth-card">
-        <input type="email" id="email" placeholder="Email address">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="login()">Login</button>
+        <div id="foutmelding" style="display:none;background:#fff0f0;color:#c0392b;padding:12px 16px;border-radius:12px;font-size:0.9rem;margin-bottom:4px;"></div>
+        <input type="email" id="email" placeholder="E-mailadres" autocomplete="email">
+        <input type="password" id="password" placeholder="Wachtwoord" autocomplete="current-password"
+               onkeydown="if(event.key==='Enter') inloggen()">
+        <button onclick="inloggen()" class="btn-secondary">Inloggen</button>
         <div class="form-row">
-          <label><input type="checkbox"> Remember me</label>
-          <a href="#">Forgot password?</a>
+          <label><input type="checkbox"> Onthoud mij</label>
+          <a href="#">Wachtwoord vergeten?</a>
         </div>
-        <p class="auth-footer">Don't have an account? <a href="register.html">Register here</a></p>
+      </div>
+      <div class="auth-footer">
+        Nog geen account? <a href="register.html">Registreer hier</a>
       </div>
     </aside>
   </main>
 </div>
-
 </body>
 </html>

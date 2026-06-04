@@ -1,315 +1,500 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Service - Chocolate Firm</title>
-
+<title>Vellin – Service & Ondersteuning</title>
 <link rel="stylesheet" href="CSS/style.css">
-
 <style>
-
-.chat-container{
-    padding:20px;
-    padding-bottom:120px;
+.service-container {
+  padding: 0 0 120px;
 }
 
-.chat-hero{
-    background:white;
-    border-radius:24px;
-    padding:24px;
-    margin-bottom:20px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+/* Tabs */
+.service-tabs {
+  display: flex;
+  gap: 0;
+  margin: 16px 16px 0;
+  background: #f5f0eb;
+  border-radius: 16px;
+  padding: 4px;
+}
+.service-tab {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.service-tab.active {
+  background: white;
+  color: var(--primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.chat-hero h1{
-    margin:0;
-    color:#5c2c16;
+/* Tab inhoud */
+.tab-inhoud {
+  display: none;
+}
+.tab-inhoud.active {
+  display: block;
 }
 
-.chat-hero p{
-    color:#777;
-    margin-top:8px;
+/* Chatbot */
+.chatbot-sectie {
+  padding: 16px;
+}
+.chatbot-header {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+.chatbot-header h2 {
+  margin: 0 0 6px;
+  font-family: 'Playfair Display', serif;
+  color: var(--primary);
+  font-size: 1.3rem;
+}
+.chatbot-header p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+.chatbot-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #2d7a2d;
+  background: #e8f5e9;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-top: 8px;
+}
+.chatbot-live-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2d7a2d;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
-.chat-box{
-    background:white;
-    border-radius:24px;
-    padding:20px;
-    min-height:350px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-    display:flex;
-    flex-direction:column;
-    gap:12px;
+.chat-box {
+  background: white;
+  border-radius: 20px;
+  padding: 16px;
+  min-height: 320px;
+  max-height: 420px;
+  overflow-y: auto;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.chat-bericht-bot,
+.chat-bericht-gebruiker {
+  padding: 12px 16px;
+  border-radius: 18px;
+  max-width: 85%;
+  line-height: 1.55;
+  font-size: 0.9rem;
+  animation: inFade 0.2s ease;
+}
+@keyframes inFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.chat-bericht-bot {
+  background: #f7f2ee;
+  color: var(--text-primary);
+  align-self: flex-start;
+  border-bottom-left-radius: 6px;
+}
+.chat-bericht-gebruiker {
+  background: var(--primary);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 6px;
+}
+.chat-laadanimatie {
+  display: inline-flex;
+  gap: 4px;
+}
+.chat-laadanimatie span {
+  animation: laadDots 1.4s infinite;
+  font-size: 1.2rem;
+}
+.chat-laadanimatie span:nth-child(2) { animation-delay: 0.2s; }
+.chat-laadanimatie span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes laadDots {
+  0%, 80%, 100% { opacity: 0.2; }
+  40% { opacity: 1; }
 }
 
-.message{
-    padding:14px;
-    border-radius:18px;
-    max-width:80%;
-    line-height:1.5;
+.chat-invoer-rij {
+  display: flex;
+  gap: 10px;
+}
+.chat-invoer-rij input {
+  flex: 1;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+  background: white;
+}
+.chat-invoer-rij input:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(255,237,205,0.6);
+}
+.chat-verstuur-knop {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.chat-verstuur-knop:hover { background: #5a3e2a; }
+
+.snelle-vragen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.snelle-vraag-knop {
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--primary);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+.snelle-vraag-knop:hover {
+  background: var(--primary);
+  color: white;
 }
 
-.bot{
-    background:#f7f2ee;
-    color:#333;
+/* Live chat info */
+.live-chat-kaart {
+  margin-top: 12px;
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-
-.user{
-    background:#6d3519;
-    color:white;
-    margin-left:auto;
+.live-chat-icoon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f5f0eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
 }
+.live-chat-tekst h4 { margin: 0 0 2px; font-size: 0.9rem; color: var(--primary); }
+.live-chat-tekst p { margin: 0; font-size: 0.78rem; color: var(--text-secondary); }
 
-.chat-input{
-    display:flex;
-    gap:10px;
-    margin-top:20px;
+/* Klachtenformulier */
+.klacht-sectie {
+  padding: 16px;
 }
-
-.chat-input input{
-    flex:1;
-    padding:14px;
-    border-radius:14px;
-    border:1px solid #ddd;
-    font-size:15px;
+.formulier-kaart {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
-
-.chat-input button{
-    border:none;
-    background:#6d3519;
-    color:white;
-    padding:14px 20px;
-    border-radius:14px;
-    cursor:pointer;
+.formulier-kaart h2 {
+  margin: 0 0 4px;
+  font-family: 'Playfair Display', serif;
+  color: var(--primary);
+  font-size: 1.3rem;
 }
-
-.quick-questions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:20px;
+.formulier-kaart p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
 }
-
-.quick-btn{
-    border:none;
-    background:#f7f2ee;
-    color:#6d3519;
-    padding:10px 14px;
-    border-radius:14px;
-    cursor:pointer;
-    font-weight:600;
+.formulier-groep {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
+.formulier-groep label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.formulier-groep input,
+.formulier-groep textarea,
+.formulier-groep select {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: #fdfbf7;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.formulier-groep input:focus,
+.formulier-groep textarea:focus,
+.formulier-groep select:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(255,237,205,0.6);
+}
+.formulier-groep textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+.upload-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px dashed var(--border);
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: #fdfbf7;
+  transition: border-color 0.2s;
+}
+.upload-label:hover {
+  border-color: var(--secondary);
+}
+.upload-label input { display: none; }
+.upload-preview {
+  font-size: 0.8rem;
+  color: var(--secondary);
+  font-weight: 600;
+}
+.btn-klacht-indienen {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary), #5a3e2a);
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.2s;
+}
+.btn-klacht-indienen:active { transform: scale(0.98); }
 
+.status-melding {
+  padding: 16px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.status-success {
+  background: #e8f5e9;
+  color: #2d7a2d;
+  border: 1px solid #a5d6a7;
+}
+.status-error {
+  background: #fff0f0;
+  color: #c0392b;
+  border: 1px solid #ffcdd2;
+}
 </style>
-
+<script type="module" src="js/app.js" defer></script>
 </head>
-
 <body>
-
 <div class="app">
-
-<header class="topbar">
+  <header class="topbar">
     <div class="brand-header">
-        <img src="images/ChatGPT Image Jun 3, 2026, 12_13_49 AM.png"
-             alt="Chocolate Firm"
-             class="logo-sm">
+      <img src="images/ChatGPT Image Jun 3, 2026, 12_13_49 AM.png" alt="Vellin" class="logo-sm">
+      <h1 class="app-title">Vellin</h1>
+    </div>
+  </header>
 
-```
-    <h1 class="app-title">
-        Chocolate Firm
-    </h1>
-</div>
-```
-
-</header>
-
-<main class="feed">
-
-<div class="chat-container">
-
-```
-<div class="chat-hero">
-
-    <h1>💬 Vellin Service Assistant</h1>
-
-    <p>
-        Need help with your products,
-        cocoa journey, expiry dates or support requests?
-        Vellin is here to assist you.
-    </p>
-
-</div>
-
-<div class="chat-box" id="chatBox">
-
-    <div class="message bot">
-        Hi Sarah 👋<br><br>
-        I'm Vellin, your chocolate service assistant.
-        How can I help you today?
+  <main class="feed service-container">
+    <!-- Tabs: Chatbot / Klacht indienen -->
+    <div class="service-tabs">
+      <button class="service-tab active" onclick="wisselTab('chatbot', this)">💬 AI-Assistent</button>
+      <button class="service-tab" onclick="wisselTab('klacht', this)">📋 Klacht Indienen</button>
     </div>
 
-</div>
+    <!-- TAB 1: AI Chatbot -->
+    <div id="tab-chatbot" class="tab-inhoud active">
+      <div class="chatbot-sectie">
+        <div class="chatbot-header">
+          <h2>Vellin Assistent</h2>
+          <p>Stel 24/7 vragen over producten, allergenen, bestellingen en klachten.</p>
+          <div class="chatbot-live-badge">Online – Altijd beschikbaar</div>
+        </div>
 
-<div class="chat-input">
+        <div class="chat-box" id="chatBox">
+          <div class="chat-bericht-bot">
+            Hallo! Ik ben Vellin, jouw chocolade-assistent. 🍫<br><br>
+            Waarmee kan ik je helpen? Je kunt vragen stellen over producten, allergenen, bestellingen of klachten.
+          </div>
+        </div>
 
-    <input
-    id="userInput"
-    type="text"
-    placeholder="Ask Vellin a question...">
+        <div class="chat-invoer-rij">
+          <input type="text" id="chatInvoer" placeholder="Typ je vraag..." onkeydown="handleChatEnter(event)" autocomplete="off">
+          <button class="chat-verstuur-knop" onclick="stuurChatbericht()" aria-label="Versturen">➤</button>
+        </div>
 
-    <button onclick="sendMessage()">
-        Send
-    </button>
+        <div class="snelle-vragen">
+          <button class="snelle-vraag-knop" onclick="stelSnelleVraag('Wat zijn de allergenen van mijn product?')">Allergenen</button>
+          <button class="snelle-vraag-knop" onclick="stelSnelleVraag('Hoe kan ik een bestelling plaatsen?')">Bestellen</button>
+          <button class="snelle-vraag-knop" onclick="stelSnelleVraag('Mijn product is beschadigd, wat nu?')">Beschadigd product</button>
+          <button class="snelle-vraag-knop" onclick="stelSnelleVraag('Vertel me over de Cocoa Journey')">Cocoa Journey</button>
+        </div>
 
-</div>
-```
+        <div class="live-chat-kaart">
+          <div class="live-chat-icoon">👤</div>
+          <div class="live-chat-tekst">
+            <h4>Live chat met medewerker</h4>
+            <p>Beschikbaar maandag t/m vrijdag 9:00–17:00</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-</div>
+    <!-- TAB 2: Klacht indienen -->
+    <div id="tab-klacht" class="tab-inhoud">
+      <div class="klacht-sectie">
+        <div class="formulier-kaart">
+          <div>
+            <h2>Klacht Indienen</h2>
+            <p>Vul het formulier in en wij nemen binnen 1 werkdag contact op.</p>
+          </div>
 
-</main>
+          <div class="formulier-groep">
+            <label>Onderwerp *</label>
+            <select id="onderwerp">
+              <option value="">Kies een categorie...</option>
+              <option value="Beschadig product">Beschadigd product</option>
+              <option value="Verkeerde levering">Verkeerde levering</option>
+              <option value="Te late levering">Te late levering</option>
+              <option value="Kwaliteitsprobleem">Kwaliteitsprobleem</option>
+              <option value="Anders">Anders</option>
+            </select>
+          </div>
 
-<nav class="bottom-nav">
+          <div class="formulier-groep">
+            <label>Productcode (optioneel)</label>
+            <input type="text" id="klachtProductCode" placeholder="bijv. CHOC-001">
+          </div>
 
-```
-<a href="dashboard.html" class="nav-item">
-    <img class="nav-icon" src="images/home.png" alt="Home">
-    <span class="nav-label">Home</span>
-</a>
+          <div class="formulier-groep">
+            <label>Beschrijving *</label>
+            <textarea id="beschrijving" placeholder="Beschrijf jouw probleem zo duidelijk mogelijk..."></textarea>
+          </div>
 
-<a href="shop.html" class="nav-item">
-    <img class="nav-icon" src="images/shop.png" alt="Shop">
-    <span class="nav-label">Shop</span>
-</a>
+          <div class="formulier-groep">
+            <label>Foto of video bijvoegen</label>
+            <label class="upload-label">
+              📎 Klik om een bestand te uploaden
+              <input type="file" id="bijlage" accept="image/*,video/*" onchange="toonBestandsnaam(this)">
+            </label>
+            <span class="upload-preview" id="bestandsnaam"></span>
+          </div>
 
-<a href="mychocolate.html" class="nav-item">
-    <img class="nav-icon" src="images/orders.png" alt="My Products">
-    <span class="nav-label">My Products</span>
-</a>
+          <div id="klachtStatus"></div>
 
-<a href="service.html" class="nav-item active">
-    <img class="nav-icon" src="images/service.png" alt="Service">
-    <span class="nav-label">Service</span>
-</a>
+          <button class="btn-klacht-indienen" onclick="verstuurKlacht()">
+            Klacht Indienen
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
 
-<a href="settings.html" class="nav-item">
-    <img class="nav-icon" src="images/settings.png" alt="Settings">
-    <span class="nav-label">Settings</span>
-</a>
-```
-
-</nav>
-
+  <!-- Onderste navigatie -->
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item">
+      <img class="nav-icon" src="images/home.png" alt="Home">
+      <span class="nav-label">Home</span>
+    </a>
+    <a href="shop.html" class="nav-item">
+      <img class="nav-icon" src="images/shop.png" alt="Winkel">
+      <span class="nav-label">Winkel</span>
+    </a>
+    <a href="mychocolate.html" class="nav-item">
+      <img class="nav-icon" src="images/orders.png" alt="Mijn Producten">
+      <span class="nav-label">Mijn Producten</span>
+    </a>
+    <a href="klachten.html" class="nav-item active">
+      <img class="nav-icon" src="images/service.png" alt="Service">
+      <span class="nav-label">Service</span>
+    </a>
+    <a href="settings.html" class="nav-item">
+      <img class="nav-icon" src="images/settings.png" alt="Instellingen">
+      <span class="nav-label">Instellingen</span>
+    </a>
+  </nav>
 </div>
 
 <script>
-
-function askQuestion(question){
-
-    document.getElementById("userInput").value = question;
-    sendMessage();
-
+function wisselTab(naam, knop) {
+  document.querySelectorAll('.tab-inhoud').forEach(t => t.classList.remove('active'))
+  document.querySelectorAll('.service-tab').forEach(k => k.classList.remove('active'))
+  document.getElementById('tab-' + naam).classList.add('active')
+  knop.classList.add('active')
 }
 
-function sendMessage(){
-
-    const input =
-    document.getElementById("userInput");
-
-    const question =
-    input.value.trim();
-
-    if(!question) return;
-
-    const chat =
-    document.getElementById("chatBox");
-
-    chat.innerHTML +=
-    `<div class="message user">${question}</div>`;
-
-    const q =
-    question.toLowerCase();
-
-    let answer =
-    "I'm sorry, I couldn't understand your question. Please try again.";
-
-    if(
-        q.includes("origin") ||
-        q.includes("come from")
-    ){
-        answer =
-        "Your Dark Chocolate 85% originates from Ecuador and was processed in Quito before arriving at your home.";
-    }
-
-    else if(
-        q.includes("expire")
-    ){
-        answer =
-        "Milk Chocolate Classic expires first on May 12, 2026.";
-    }
-
-    else if(
-        q.includes("recipe")
-    ){
-        answer =
-        "You can make Chocolate Brownies, Chocolate Mousse or Hot Chocolate using products from your collection.";
-    }
-
-    else if(
-        q.includes("damaged") ||
-        q.includes("issue") ||
-        q.includes("problem")
-    ){
-        answer =
-        "I'm sorry to hear that. Please provide your product name and batch number so our support team can assist you.";
-    }
-
-    else if(
-        q.includes("journey")
-    ){
-        answer =
-        "You can view the full cocoa journey from the My Products page by clicking View Journey.";
-    }
-if(
-    q.includes("damaged") ||
-    q.includes("issue") ||
-    q.includes("problem") ||
-    q.includes("complaint")
-){
-    answer =
-    "Thank you for contacting Chocolate Firm Support. Your issue has been received successfully. Our team will review your request and respond within 1 business day.";
-}
-else if(
-    q.includes("wrong") ||
-    q.includes("delivery")
-)
-{
-    answer =
-    "Your delivery issue has been recorded. Please keep your order information available in case our support team needs additional details.";
-}
-else if(
-    q.includes("broken")
-)
-{
-    answer =
-    "We're sorry your product arrived damaged. Your report has been submitted successfully and our support team will contact you shortly.";
-}
-    setTimeout(() => {
-
-        chat.innerHTML +=
-        `<div class="message bot">${answer}</div>`;
-
-        chat.scrollTop =
-        chat.scrollHeight;
-
-    }, 500);
-
-    input.value = "";
-
+function stelSnelleVraag(vraag) {
+  const invoer = document.getElementById('chatInvoer')
+  if (invoer) {
+    invoer.value = vraag
+    if (typeof stuurChatbericht === 'function') stuurChatbericht()
+  }
 }
 
+function toonBestandsnaam(input) {
+  const bestandsnaam = document.getElementById('bestandsnaam')
+  if (input.files && input.files[0]) {
+    bestandsnaam.textContent = `✓ ${input.files[0].name}`
+  }
+}
 </script>
-
 </body>
 </html>

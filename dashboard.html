@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chocolate Firm – Dashboard</title>
+<title>Vellin – Dashboard</title>
 <link rel="stylesheet" href="CSS/style.css">
 <script type="module" src="js/app.js" defer></script>
 </head>
@@ -11,148 +11,168 @@
 <div class="app">
   <header class="topbar">
     <div class="brand-header">
-      <img src="images/ChatGPT Image Jun 3, 2026, 12_13_49 AM.png" alt="Chocolate Firm" class="logo-sm">
-      <h1 class="app-title">Chocolate Firm</h1>
+      <img src="images/ChatGPT Image Jun 3, 2026, 12_13_49 AM.png" alt="Vellin" class="logo-sm">
+      <h1 class="app-title">Vellin</h1>
     </div>
   </header>
 
   <main class="feed">
-    <!-- Welcome Hero Section -->
+    <!-- Welkom Hero -->
     <section class="hero-welcome">
       <div class="hero-overlay"></div>
-      <img class="hero-bg" src="images/hero-chocolate.png" alt="Premium Chocolate Firm">
+      <img class="hero-bg" src="images/hero-chocolate.png" alt="Premium Chocolade Vellin">
       <div class="hero-content">
-        <p class="hero-sub">Welcome back</p>
+        <p class="hero-sub">Welkom terug</p>
         <h2 class="hero-title">Sarah</h2>
-        <p class="hero-caption">Your chocolate inventory awaits</p>
+        <p class="hero-caption">Jouw chocolade-collectie wacht</p>
       </div>
-      <div class="card status-card">
+
+      <!-- Verlopen producten banner -->
+      <div id="verloopBanner" class="card status-card" style="display:none;">
         <div class="status-content">
           <div class="status-main">
-              <p class="status-label">EXPIRING SOON</p>
-            </div>
-          <button class="btn-status">View</button>
+            <p class="status-label">VERLOOPT BINNENKORT</p>
+            <p class="banner-tekst" style="margin:0;color:white;font-size:0.9rem;"></p>
+          </div>
+          <a href="mychocolate.html" class="btn-status">Bekijken</a>
         </div>
       </div>
+
+      <!-- Statische banner als geen verlopen producten -->
+      <div id="promoBanner" class="card status-card">
+        <div class="status-content">
+          <div class="status-main">
+            <p class="status-label">BINNENKORT VERLOPEN</p>
+            <p style="margin:0;color:white;font-size:0.9rem;">1 product verloopt binnen 7 dagen</p>
+          </div>
+          <a href="mychocolate.html" class="btn-status">Bekijken</a>
+        </div>
+      </div>
+
       <div class="hero-feature-card">
         <div class="feature-copy">
-          <span class="feature-pill">Exclusive Deal</span>
-          <h3>Chocolate Lovers Weekend!</h3>
-          <p>Get 20% off on all premium chocolates this weekend.</p>
-          <button class="btn-feature btn-primary">Shop Now</button>
+          <span class="feature-pill">Exclusieve Aanbieding</span>
+          <h3>Chocoladeliefhebbers Weekend!</h3>
+          <p>Ontvang 20% korting op alle premium chocolades dit weekend.</p>
+          <a href="shop.html" class="btn-feature btn-primary" style="text-decoration:none;display:inline-block;padding:14px 24px;border-radius:999px;font-weight:700;color:white;border:none;cursor:pointer;">Nu Winkelen</a>
         </div>
         <div class="feature-image-wrap">
-          <img src="images/ChatGPT Image Jun 3, 2026, 12_03_13 AM.png" alt="Exclusive deal chocolate" />
+          <img src="images/ChatGPT Image Jun 3, 2026, 12_03_13 AM.png" alt="Exclusieve aanbieding chocolade" />
         </div>
       </div>
     </section>
 
-    <!-- Featured Product removed — showing user's products only -->
-
-    <!-- Section Divider -->
+    <!-- Mijn Producten sectie -->
     <div class="section-divider">
       <h2>
-  <a 
-  style = "color:#ffffff;">
-  My Products
-</a>
-  <a href="mychocolate.html"
-     style="font-size:16px;margin-left:230px;text-decoration:none;color:#e9e9e9;">
-     View All
-  </a>
-</h2>
+        <span style="color:#3D2817;">Mijn Producten</span>
+        <a href="mychocolate.html" style="font-size:14px;margin-left:auto;text-decoration:none;color:var(--secondary);font-weight:600;display:inline-block;">Alle bekijken →</a>
+      </h2>
     </div>
 
     <!-- Product Grid -->
     <div class="product-grid" id="producten">
       <article class="card product-card">
-        <img class="product-card-img" src="images/ChatGPT Image Jun 3, 2026, 12_04_28 AM.png" alt="Milk Chocolate">
+        <img class="product-card-img" src="images/ChatGPT Image Jun 3, 2026, 12_04_28 AM.png" alt="Melkchocolade">
         <div class="product-card-badge">Ecuador</div>
-        <h4 class="product-card-name">Milk Chocolate Classic</h4>
-        <p class="product-card-origin">Ecuador origin</p>
-        <p class="product-card-expiry">May 12, 2026</p>
-        <button class="product-card-action">›</button>
+        <h4 class="product-card-name">Melkchocolade Classic</h4>
+        <p class="product-card-origin">Herkomst Ecuador</p>
+        <p class="product-card-expiry">Houdbaar: 12 mei 2026</p>
       </article>
 
       <article class="card product-card">
-        <img class="product-card-img" src="images/ChatGPT Image Jun 3, 2026, 12_06_13 AM.png" alt="White Chocolate">
+        <img class="product-card-img" src="images/ChatGPT Image Jun 3, 2026, 12_06_13 AM.png" alt="Witte Chocolade">
         <div class="product-card-badge">Madagascar</div>
-        <h4 class="product-card-name">White Chocolate Delight</h4>
-        <p class="product-card-origin">Madagascar origin</p>
-        <p class="product-card-expiry">Jun 8, 2026</p>
-        <button class="product-card-action">›</button>
+        <h4 class="product-card-name">Witte Chocolade Delight</h4>
+        <p class="product-card-origin">Herkomst Madagascar</p>
+        <p class="product-card-expiry">Houdbaar: 8 jun 2026</p>
       </article>
 
       <article class="card product-card">
-        <img class="product-card-img" src="images/ChatGPT Image Jun 3, 2026, 12_03_13 AM.png" alt="Dark Chocolate">
+        <img class="product-card-img" src="images/ChatGPT Image Jun 3, 2026, 12_03_13 AM.png" alt="Pure Chocolade">
         <div class="product-card-badge">Ghana</div>
-        <h4 class="product-card-name">Dark Chocolate</h4>
+        <h4 class="product-card-name">Pure Chocolade 85%</h4>
         <p class="product-card-origin">Single Origin</p>
-        <p class="product-card-expiry">May 30, 2026</p>
+        <p class="product-card-expiry">Houdbaar: 30 mei 2026</p>
       </article>
     </div>
 
-    <!-- Quick Actions Section -->
+    <!-- Snelle Toegang -->
     <div class="section-divider">
-      <h2>Quick Access</h2>
+      <h2 style="color:#3D2817;">Snelle Toegang</h2>
     </div>
 
     <div class="quick-actions">
-      <button class="action-tile">
-        <img class="action-icon" src="images/recipe.png" alt="Recipes">
-        <span class="action-label">Recipes</span>
-        <span class="action-arrow">›</span>
-      
-      </button>
-      <button class="action-tile">
-        <img class="action-icon" src="images/orders.png" alt="Orders">
-        <span class="action-label">Orders</span>
-        <span class="action-arrow">›</span>
-      </button>
-      <button class="action-tile">
-        <img class="action-icon" src="images/shop.png" alt="Shop">
-        <span class="action-label">Shop</span>
-        <span class="action-arrow">›</span>
-      </button>
-    </div>
-
-    <!-- CTA Section -->
-    <div class="cta-section">
-      <a href="registerproduct.html"
-   class="btn-primary btn-lg">
-        <span class="plus-icon">+</span>
-        Register New Product
+      <a href="mychocolate.html" class="action-tile" style="text-decoration:none;">
+        <img class="action-icon" src="images/recipe.png" alt="Recepten">
+        <span class="action-label">Recepten</span>
+      </a>
+      <a href="shop.html" class="action-tile" style="text-decoration:none;">
+        <img class="action-icon" src="images/orders.png" alt="Bestellingen">
+        <span class="action-label">Bestellingen</span>
+      </a>
+      <a href="shop.html" class="action-tile" style="text-decoration:none;">
+        <img class="action-icon" src="images/shop.png" alt="Winkel">
+        <span class="action-label">Winkel</span>
       </a>
     </div>
 
-    <!-- Spacer for bottom nav -->
+    <!-- Product registreren CTA -->
+    <div class="cta-section">
+      <a href="registerproduct.html" class="btn-primary btn-lg" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:10px;">
+        <span class="plus-icon">+</span>
+        Product Registreren
+      </a>
+    </div>
+
     <div class="spacer"></div>
   </main>
 
-  <!-- Bottom Navigation -->
+  <!-- Onderste navigatie -->
   <nav class="bottom-nav">
     <a href="dashboard.html" class="nav-item active">
       <img class="nav-icon" src="images/home.png" alt="Home">
       <span class="nav-label">Home</span>
     </a>
     <a href="shop.html" class="nav-item">
-      <img class="nav-icon" src="images/shop.png" alt="Shop">
-      <span class="nav-label">Shop</span>
+      <img class="nav-icon" src="images/shop.png" alt="Winkel">
+      <span class="nav-label">Winkel</span>
     </a>
     <a href="mychocolate.html" class="nav-item">
-       <img class="nav-icon" src="images/orders.png" alt="My Products">
-       <span class="nav-label">My Products</span>
+      <img class="nav-icon" src="images/orders.png" alt="Mijn Producten">
+      <span class="nav-label">Mijn Producten</span>
     </a>
     <a href="klachten.html" class="nav-item">
       <img class="nav-icon" src="images/service.png" alt="Service">
       <span class="nav-label">Service</span>
     </a>
     <a href="settings.html" class="nav-item">
-      <img class="nav-icon" src="images/settings.png" alt="Settings">
-      <span class="nav-label">Settings</span>
+      <img class="nav-icon" src="images/settings.png" alt="Instellingen">
+      <span class="nav-label">Instellingen</span>
     </a>
   </nav>
 </div>
 
+<script>
+// Verloop-banner tonen op basis van localStorage producten
+document.addEventListener('DOMContentLoaded', () => {
+  const producten = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
+  const zeven = new Date(); zeven.setDate(zeven.getDate() + 7)
+  const maanden = { jan:0,feb:1,mrt:2,apr:3,mei:4,jun:5,jul:6,aug:7,sep:8,okt:9,nov:10,dec:11 }
+  const bijnaVerlopen = producten.filter(p => {
+    const delen = (p.houdbaar || '').toLowerCase().split(' ')
+    if (delen.length < 3) return false
+    const d = new Date(parseInt(delen[2]), maanden[delen[1]?.substring(0,3)], parseInt(delen[0]))
+    return !isNaN(d) && d <= zeven
+  })
+  if (bijnaVerlopen.length > 0) {
+    document.getElementById('promoBanner').style.display = 'none'
+    const banner = document.getElementById('verloopBanner')
+    banner.style.display = 'flex'
+    banner.querySelector('.banner-tekst').textContent =
+      `${bijnaVerlopen.length} product${bijnaVerlopen.length > 1 ? 'en verlopen' : ' verloopt'} binnen 7 dagen`
+  }
+})
+</script>
 </body>
 </html>
