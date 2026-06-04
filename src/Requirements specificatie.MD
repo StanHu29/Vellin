@@ -1,14 +1,22 @@
+# Chocolate Firm Requirement specificatie
+
+**Team Vellin**
+
+---
+
 # Inhoudsopgave
 
-1. Organisatorische Context  
-2. Actoren  
-3. Bedrijfsprocesanalyse  
-4. Productvisie  
-5. User Stories  
-6. Definition of Ready & Definition of Done  
-7. Sitemap  
-8. Wireframes  
+1. Organisatorische Context
+2. Actoren
+3. Bedrijfsprocesanalyse
+4. Productvisie
+5. User Stories
+6. Definition of Ready & Definition of Done
+7. Sitemap
+8. Wireframes
 9. MMM-labels
+
+---
 
 # 1. Organisatorische Context
 
@@ -39,21 +47,17 @@ De Chocolate Firm richt zich op drie strategische punten, elk direct gekoppeld a
 De Chocolate Firm stelt vier concrete doelstellingen:
 
 - Binnen twaalf maanden na de lancering van de mobiele app heeft minimaal 30% van de actieve klanten hun producten geregistreerd in de app.
-
 - Binnen zes maanden na implementatie van het nieuwe orderverwerkingssysteem zijn handmatige orderfouten met 50% verminderd ten opzichte van de huidige situatie.
-
 - De klantentevredenheid, gemeten via de Net Promoter Score, stijgt van de huidige baseline naar een score van minimaal +30 aan het einde van 2026.
-
 - Binnen achttien maanden na het uitbrengen van de app wordt minimaal 15% van alle orders via het digitale app-kanaal geplaatst.
 
 ## 1.5 Organogram
 
 Onderstaand organogram toont de structuur van de Chocolate Firm.
 
-|     |     |     |     |     |
+|  |  | Raad van Commissarissen |  |  |
 | --- | --- | --- | --- | --- |
-|     |     | Raad van Commissarissen |     |     |
-|     |     | Managementteam (CEO) |     |     |
+|  |  | Managementteam (CEO) |  |  |
 | Verkoop en marketing | Productie en logistiek | Inkoop en Voorraad | Klantenservice | Financiën |
 
 ## 1.6 Stakeholderanalyse
@@ -90,7 +94,7 @@ Bron: https://husite.nl/open-ict/sdgs-bij-open-ict/sdg-toolbox/stakeholderanalys
 
 ## UI-model
 
-![Ui-model](documenten/Stakeholder%20ui-model.png)
+![UI-model](documenten/Stakeholder%20ui-model.png)
 
 ---
 
@@ -130,13 +134,9 @@ Dit hoofdstuk beschrijft alle actoren die een rol spelen in de mobiele applicati
 ### Grootste problemen die de app oplost voor de actoren
 
 - B2C- en B2B-klanten hadden geen centraal platform voor productinformatie, bestellingen en klachten.
-
 - Klantenservicemedewerkers hadden geen klantoverzicht waardoor ze inefficiënt werkten.
-
 - Verkoopmedewerkers werkten met losse Excel-bestanden zonder vaste afspraken.
-
 - Productieplanners werkten met verouderde en incomplete orderdata.
-
 - Magazijnmedewerkers hadden geen real-time inzicht in de voorraad.
 
 ---
@@ -166,17 +166,11 @@ De klantenservice ontvangt dagelijks vragen en klachten over te late leveringen,
 ## 3.2 Knelpunten
 
 - **Geen centrale orderverwerking:** Bestellingen komen binnen via e-mail, telefoon en Excel-bestanden zonder vaste afspraken. Dit zorgt voor verwarring, dubbele versies en fouten in de verwerking.
-
 - **Onbetrouwbare informatiedoorstroming:** Bestanden worden niet altijd op tijd doorgestuurd naar de productieafdeling. Hierdoor werkt de planner met incomplete of verouderde informatie.
-
 - **Geen real-time voorraadinzicht:** Het voorraadbeheer loopt via handmatige logboeken die niet altijd actueel zijn. Dit leidt tot tekorten op de productielijn of juist overproductie.
-
 - **Gebrekkige kwaliteitscontrole:** Door tijdsdruk wordt de kwaliteitscontrole soms overgeslagen. Fouten worden pas ontdekt nadat producten al zijn verstuurd.
-
 - **Foutgevoelig logistiek proces:** Handmatig geschreven verzendlabels leiden tot verkeerde leveringen. Klanten hebben geen inzicht in de status van hun bestelling.
-
 - **Handmatige facturatie zonder opvolging:** Facturen worden handmatig opgesteld en er is geen systeem dat bijhoudt of ze zijn betaald. Hierdoor blijven openstaande facturen te lang liggen.
-
 - **Geen centraal klantoverzicht:** De klantenservice heeft geen toegang tot klantgeschiedenis of eerdere interacties. Klanten worden daardoor niet consistent geholpen en klachten worden niet structureel opgelost.
 
 ## 3.3 SOLL-situatie
@@ -211,8 +205,7 @@ Een AI-chatbot is 24/7 beschikbaar voor vragen over producten, allergenen, beste
 
 | Suppliers | Inputs | Process | Outputs | Customers |
 | --- | --- | --- | --- | --- |
-| Klant, ERP, CRM | Klachtomschrijving, foto/video, productcode, aankoopgegevens | 1. Klant dient klacht in via app 2. App herkent het probleemtype 3. Directe oplossing of doorverwijzing 4. Medewerker beoordeelt indien nodig 5. Klant krijgt statusupdates 6. Klacht wordt afgehandeld | Opgeloste klacht, statusupdates, compensatie of vervanging, data voor kwaliteitsverbetering | Klant, klantenservice, kwaliteitsafdeling, productontwikkeling |
-
+| Klant, ERP, CRM | Klachtomschrijving, foto/video, productcode, aankoopgegevens | 1. Klant dient klacht in via app<br>2. App herkent het probleemtype<br>3. Directe oplossing of doorverwijzing<br>4. Medewerker beoordeelt indien nodig<br>5. Klant krijgt statusupdates<br>6. Klacht wordt afgehandeld | Opgeloste klacht, statusupdates, compensatie of vervanging, data voor kwaliteitsverbetering | Klant, klantenservice, kwaliteitsafdeling, productontwikkeling |
 
 ---
 
@@ -228,95 +221,115 @@ In dit hoofdstuk worden de functionele en niet-functionele eisen van de mobiele 
 
 De inschatting wordt gedaan in story points. Story points geven aan hoe complex en tijdrovend een taak is. Als richtlijn hanteert het team het volgende:
 
-- 1 story point = zeer eenvoudige taak ongeveer 2 uur werk
-- 2 story points = eenvoudige taak ongeveer 4 uur werk
-- 3 story points = gemiddelde taak ongeveer 1 dag werk
-- 5 story points = complexe taak ongeveer 2-3 dagen werk
-- 8 story points = zeer complexe taak ongeveer 1 week werk
+- 1 story point = zeer eenvoudige taak, ongeveer 2 uur werk
+- 2 story points = eenvoudige taak, ongeveer 4 uur werk
+- 3 story points = gemiddelde taak, ongeveer 1 dag werk
+- 5 story points = complexe taak, ongeveer 2–3 dagen werk
+- 8 story points = zeer complexe taak, ongeveer 1 week werk
 
 De prioriteit wordt bepaald aan de hand van de MoSCoW-methode.
 
 User stories gemarkeerd met een ★ maken deel uit van het MVP. Functionele MVP stories (F01, F02, F03, F04 en F06) zijn uitgewerkt in wireframes. Niet-functionele MVP stories (NF08 en NF09) zijn ook onderdeel van het MVP maar krijgen geen wireframe omdat het technische eisen zijn die op de achtergrond werken en niet zichtbaar zijn als scherm. De overige stories worden in een latere versie opgepakt.
 
-| ID | F01 |
-| --- | --- |
-| Naam | Productregistratie via QR-code |
-| Omschrijving | Als klant wil ik mijn chocoladeproduct registreren via een QR-code op de verpakking zodat ik direct toegang heb tot alle productinformatie in de app. |
-| Acceptatiecriteria | - De camera van de app herkent de QR-code op de verpakking<br>- Na scannen wordt het product automatisch toegevoegd aan het dashboard<br>- Als de QR-code niet werkt kan de klant handmatig een batchnummer of productcode invoeren<br>- Het geregistreerde product toont aankoopdatum, houdbaarheid, allergenen, herkomst en certificeringen |
-| Inschatting | 5 story points |
-| Prioriteit | Must have |
+---
 
-| ID | F02 |
+| **ID** | **F01** ★ |
 | --- | --- |
-| Naam | Persoonlijk dashboard |
-| Omschrijving | Als klant wil ik een persoonlijk dashboard zien met al mijn geregistreerde producten zodat ik snel alle productinformatie op één plek kan vinden. |
-| Acceptatiecriteria | - Het dashboard toont alle geregistreerde producten met aankoopdatum en houdbaarheid<br>- De klant ziet per product de allergenen, herkomst en certificeringen zoals Fairtrade<br>- Het dashboard is beschikbaar in Nederlands en Engels<br>- Het dashboard werkt zowel in lichte als donkere modus |
-| Inschatting | 5 story points |
-| Prioriteit | Must have |
+| **Naam** | Productregistratie via QR-code |
+| **Omschrijving** | Als klant wil ik mijn chocoladeproduct registreren via een QR-code op de verpakking zodat ik direct toegang heb tot alle productinformatie in de app. |
+| **Acceptatiecriteria** | - De camera van de app herkent de QR-code op de verpakking<br>- Na scannen wordt het product automatisch toegevoegd aan het dashboard<br>- Als de QR-code niet werkt kan de klant handmatig een batchnummer of productcode invoeren<br>- Het geregistreerde product toont aankoopdatum, houdbaarheid, allergenen, herkomst en certificeringen |
+| **Inschatting** | 5 story points |
+| **Prioriteit** | Must have |
 
-| ID | F03 |
-| --- | --- |
-| Naam | Klacht indienen via de app |
-| Omschrijving | Als klant wil ik een klacht indienen via een formulier in de app zodat ik snel en eenvoudig een probleem kan melden zonder te hoeven bellen of mailen. |
-| Acceptatiecriteria | - De klant kan een klacht indienen via een formulier met foto of video als bijlage<br>- De app herkent automatisch veelvoorkomende problemen zoals smeltschade of breukschade<br>- De klant ontvangt direct een bevestiging van de melding<br>- De klant kan de status van de klacht live volgen in de app<br>- De klant krijgt een pushbericht bij elke statuswijziging |
-| Inschatting | 8 story points |
-| Prioriteit | Must have |
+---
 
-| ID | F04 |
+| **ID** | **F02** ★ |
 | --- | --- |
-| Naam | Direct bestellen via de app |
-| Omschrijving | Als klant wil ik nieuwe producten direct bestellen via de app zodat ik niet afhankelijk ben van een verkoopmedewerker of extern portaal |
-| Acceptatiecriteria | - De klant kan producten bestellen via de app<br>- De voorraad en levertijden zijn altijd actueel dankzij de koppeling met het ERP-systeem<br>- B2B-klanten zien aanvullende informatie over productieplanning en voorraadstatus<br>- De klant ontvangt een orderbevestiging via de app na het plaatsen van een bestelling |
-| Inschatting | 8 story points |
-| Prioriteit | Must have |
+| **Naam** | Persoonlijk dashboard |
+| **Omschrijving** | Als klant wil ik een persoonlijk dashboard zien met al mijn geregistreerde producten zodat ik snel alle productinformatie op één plek kan vinden. |
+| **Acceptatiecriteria** | - Het dashboard toont alle geregistreerde producten met aankoopdatum en houdbaarheid<br>- De klant ziet per product de allergenen, herkomst en certificeringen zoals Fairtrade<br>- Het dashboard is beschikbaar in Nederlands en Engels<br>- Het dashboard werkt zowel in lichte als donkere modus |
+| **Inschatting** | 5 story points |
+| **Prioriteit** | Must have |
 
-| ID | F05 |
-| --- | --- |
-| Naam | Persoonlijke pushberichten ontvangen |
-| Omschrijving | Als klant wil ik persoonlijke pushberichten ontvangen over producten die bij mij passen zodat ik relevante aanbiedingen en nieuwe producten niet mis |
-| Acceptatiecriteria | - De app stuurt pushberichten op basis van aankoopgeschiedenis en voorkeuren<br>- De klant kan zelf instellen welk type berichten hij wil ontvangen zoals alleen duurzame producten of alleen nieuwe smaken<br>- De klant kan niet-storenperiodes instellen<br>- Berichten worden verstuurd bij nieuwe smaken, limited editions en seizoensproducten |
-| Inschatting | 5 story points |
-| Prioriteit | Should have |
+---
 
-| ID | F06 |
+| **ID** | **F03** ★ |
 | --- | --- |
-| Naam | AI-chatbot gebruiken voor vragen |
-| Omschrijving | Als klant wil ik 24/7 vragen stellen via een AI-chatbot zodat ik altijd snel antwoord krijg zonder te hoeven wachten op een medewerker |
-| Acceptatiecriteria | - De chatbot is 24/7 beschikbaar en beantwoordt vragen over producten, allergenen, bestellingen en klachten<br>- Antwoorden zijn gepersonaliseerd op basis van CRM-gegevens van de klant<br>- Bij complexere vragen kan de klant doorverbonden worden met een live medewerker tijdens openingstijden<br>- De klant kan ook een terugbelverzoek indienen via de app |
-| Inschatting | 8 story points |
-| Prioriteit | Should have |
+| **Naam** | Klacht indienen via de app |
+| **Omschrijving** | Als klant wil ik een klacht indienen via een formulier in de app zodat ik snel en eenvoudig een probleem kan melden zonder te hoeven bellen of mailen. |
+| **Acceptatiecriteria** | - De klant kan een klacht indienen via een formulier met foto of video als bijlage<br>- De app herkent automatisch veelvoorkomende problemen zoals smeltschade of breukschade<br>- De klant ontvangt direct een bevestiging van de melding<br>- De klant kan de status van de klacht live volgen in de app<br>- De klant krijgt een pushbericht bij elke statuswijziging |
+| **Inschatting** | 8 story points |
+| **Prioriteit** | Must have |
 
-| ID | F07 |
-| --- | --- |
-| Naam | Notificatie bij bijna verlopen product |
-| Omschrijving | Als klant wil ik automatisch een melding ontvangen als een product bijna over de datum raakt zodat ik het product op tijd kan gebruiken en verspilling voorkom |
-| Acceptatiecriteria | - De app stuurt automatisch een pushbericht wanneer een product binnen 7 dagen over de datum raakt<br>- De melding toont de productnaam en de houdbaarheidsdatum<br>- De klant kan instellen of hij dit soort meldingen wil ontvangen<br>- De melding is beschikbaar in de taal die de klant heeft ingesteld |
-| Inschatting | 3 story points |
-| Prioriteit | Could have |
+---
 
-| ID | NF08 |
+| **ID** | **F04** ★ |
 | --- | --- |
-| Naam | Beveiliging en privacy |
-| Omschrijving | Als klant wil ik dat mijn gegevens veilig worden opgeslagen en verwerkt zodat ik erop kan vertrouwen dat mijn persoonlijke informatie niet in verkeerde handen valt |
-| Acceptatiecriteria | - Alle dataoverdracht is beveiligd met end-to-end encryptie<br>- De klant kan inloggen met tweefactorauthenticatie<br>- De klant kan zelf instellen welke gegevens worden verzameld en hoe deze worden gebruikt<br>- De klant wordt transparant geïnformeerd over wijzigingen in het privacybeleid |
-| Inschatting | 8 story points |
-| Prioriteit | Must have |
+| **Naam** | Direct bestellen via de app |
+| **Omschrijving** | Als klant wil ik nieuwe producten direct bestellen via de app zodat ik niet afhankelijk ben van een verkoopmedewerker of extern portaal. |
+| **Acceptatiecriteria** | - De klant kan producten bestellen via de app<br>- De voorraad en levertijden zijn altijd actueel dankzij de koppeling met het ERP-systeem<br>- B2B-klanten zien aanvullende informatie over productieplanning en voorraadstatus<br>- De klant ontvangt een orderbevestiging via de app na het plaatsen van een bestelling |
+| **Inschatting** | 8 story points |
+| **Prioriteit** | Must have |
 
-| ID | NF09 |
-| --- | --- |
-| Naam | Prestaties en betrouwbaarheid |
-| Omschrijving | Als klant wil ik dat de app snel laadt en weinig uitvalt zodat ik altijd gebruik kan maken van de app zonder frustratie |
-| Acceptatiecriteria | - Pagina's laden binnen 2 seconden<br>- De app heeft minimale downtime en is vrijwel altijd beschikbaar<br>- Bij een fout krijgt de klant een duidelijke foutmelding en geen lege pagina<br>- De app werkt stabiel op zowel iOS als Android |
-| Inschatting | 5 story points |
-| Prioriteit | Must have |
+---
 
-| ID | NF10 |
+| **ID** | **F05** |
 | --- | --- |
-| Naam | Toegankelijkheid |
-| Omschrijving | Als klant met een visuele beperking wil ik de app kunnen gebruiken met een schermlezer en grotere letters zodat ik dezelfde ervaring heb als andere gebruikers |
-| Acceptatiecriteria | - De app ondersteunt schermlezers voor slechtzienden<br>- Lettergroottes zijn aanpasbaar door de klant<br>- Alle video's in de app hebben ondertiteling |
-| Inschatting | 5 story points |
-| Prioriteit | Should have |
+| **Naam** | Persoonlijke pushberichten ontvangen |
+| **Omschrijving** | Als klant wil ik persoonlijke pushberichten ontvangen over producten die bij mij passen zodat ik relevante aanbiedingen en nieuwe producten niet mis. |
+| **Acceptatiecriteria** | - De app stuurt pushberichten op basis van aankoopgeschiedenis en voorkeuren<br>- De klant kan zelf instellen welk type berichten hij wil ontvangen, zoals alleen duurzame producten of alleen nieuwe smaken<br>- De klant kan niet-storenperiodes instellen<br>- Berichten worden verstuurd bij nieuwe smaken, limited editions en seizoensproducten |
+| **Inschatting** | 5 story points |
+| **Prioriteit** | Should have |
+
+---
+
+| **ID** | **F06** ★ |
+| --- | --- |
+| **Naam** | AI-chatbot gebruiken voor vragen |
+| **Omschrijving** | Als klant wil ik 24/7 vragen stellen via een AI-chatbot zodat ik altijd snel antwoord krijg zonder te hoeven wachten op een medewerker. |
+| **Acceptatiecriteria** | - De chatbot is 24/7 beschikbaar en beantwoordt vragen over producten, allergenen, bestellingen en klachten<br>- Antwoorden zijn gepersonaliseerd op basis van CRM-gegevens van de klant<br>- Bij complexere vragen kan de klant doorverbonden worden met een live medewerker tijdens openingstijden<br>- De klant kan ook een terugbelverzoek indienen via de app |
+| **Inschatting** | 8 story points |
+| **Prioriteit** | Should have |
+
+---
+
+| **ID** | **F07** |
+| --- | --- |
+| **Naam** | Notificatie bij bijna verlopen product |
+| **Omschrijving** | Als klant wil ik automatisch een melding ontvangen als een product bijna over de datum raakt zodat ik het product op tijd kan gebruiken en verspilling voorkom. |
+| **Acceptatiecriteria** | - De app stuurt automatisch een pushbericht wanneer een product binnen 7 dagen over de datum raakt<br>- De melding toont de productnaam en de houdbaarheidsdatum<br>- De klant kan instellen of hij dit soort meldingen wil ontvangen<br>- De melding is beschikbaar in de taal die de klant heeft ingesteld |
+| **Inschatting** | 3 story points |
+| **Prioriteit** | Could have |
+
+---
+
+| **ID** | **NF08** ★ |
+| --- | --- |
+| **Naam** | Beveiliging en privacy |
+| **Omschrijving** | Als klant wil ik dat mijn gegevens veilig worden opgeslagen en verwerkt zodat ik erop kan vertrouwen dat mijn persoonlijke informatie niet in verkeerde handen valt. |
+| **Acceptatiecriteria** | - Alle dataoverdracht is beveiligd met end-to-end encryptie<br>- De klant kan inloggen met tweefactorauthenticatie<br>- De klant kan zelf instellen welke gegevens worden verzameld en hoe deze worden gebruikt<br>- De klant wordt transparant geïnformeerd over wijzigingen in het privacybeleid |
+| **Inschatting** | 8 story points |
+| **Prioriteit** | Must have |
+
+---
+
+| **ID** | **NF09** ★ |
+| --- | --- |
+| **Naam** | Prestaties en betrouwbaarheid |
+| **Omschrijving** | Als klant wil ik dat de app snel laadt en weinig uitvalt zodat ik altijd gebruik kan maken van de app zonder frustratie. |
+| **Acceptatiecriteria** | - Pagina's laden binnen 2 seconden<br>- De app heeft minimale downtime en is vrijwel altijd beschikbaar<br>- Bij een fout krijgt de klant een duidelijke foutmelding en geen lege pagina<br>- De app werkt stabiel op zowel iOS als Android |
+| **Inschatting** | 5 story points |
+| **Prioriteit** | Must have |
+
+---
+
+| **ID** | **NF10** |
+| --- | --- |
+| **Naam** | Toegankelijkheid |
+| **Omschrijving** | Als klant met een visuele beperking wil ik de app kunnen gebruiken met een schermlezer en grotere letters zodat ik dezelfde ervaring heb als andere gebruikers. |
+| **Acceptatiecriteria** | - De app ondersteunt schermlezers voor slechtzienden<br>- Lettergroottes zijn aanpasbaar door de klant<br>- Alle video's in de app hebben ondertiteling |
+| **Inschatting** | 5 story points |
+| **Prioriteit** | Should have |
 
 ---
 
@@ -348,7 +361,7 @@ Wanneer is een User Story afgerond en klaar om aan de klant op te leveren?
 
 # 7. Sitemap
 
-De sitemap hieronder toont de structuur van de app. De pagina's zijn gebaseerd op de must have en should have user stories. Pagina's die vallen onder could have zijn wel opgenomen in de sitemap maar worden later ontwikkeld.
+De sitemap hieronder toont de structuur van de Chocolate Firm app. De pagina's zijn gebaseerd op de MoSCoW-prioritering uit de user stories. Pagina's gemarkeerd met een ★ maken deel uit van het MVP en zijn voorzien van wireframes. Dit zijn de pagina's die voortkomen uit de must have user stories F01, F02, F03, F04, F06, NF08 en NF09. Pagina's zonder ★ vallen onder de should have of could have categorie en worden in een latere versie van de app ontwikkeld.
 
 ![Sitemap Chocolate Firm App](documenten/Sitemap.png)
 
@@ -356,9 +369,9 @@ De sitemap hieronder toont de structuur van de app. De pagina's zijn gebaseerd o
 
 # 8. Wireframes
 
-Hieronder worden de belangrijkste schermen van de app weergegeven. De wireframes dekken de must have user stories F01, F02, F03, F04 en F06. Dit vormt het MVP van de app. De overige pagina's uit de sitemap zoals de productbibliotheek, community, instellingen en notificaties vallen buiten het MVP en worden in een latere versie uitgewerkt.
+Hieronder worden de belangrijkste schermen van de Vellin app weergegeven. De wireframes dekken de must have user stories F01, F02, F03, F04 en F06. Dit vormt het MVP van de app. De overige pagina's uit de sitemap zoals de productbibliotheek, community, instellingen en notificaties vallen buiten het MVP en worden in een latere versie uitgewerkt.
 
-## 1. Dashboard & Productregistratie
+## 1. Dashboard & Productregistratie ★
 
 Dashboard met notificaties, geregistreerde producten en snelle toegang tot recepten en bestellingen. Producten kunnen via QR-code of handmatig worden geregistreerd.
 
@@ -370,7 +383,7 @@ Dashboard met notificaties, geregistreerde producten en snelle toegang tot recep
 
 ---
 
-## 2. Mijn Chocolade & Productinformatie
+## 2. Mijn Chocolade & Productinformatie ★
 
 Toont productinformatie, allergenen, certificeringen en de herkomst van cacao. Via de Cocoa Journey ziet de klant de volledige reis van het product en duurzaamheidsgegevens.
 
@@ -381,7 +394,7 @@ Toont productinformatie, allergenen, certificeringen en de herkomst van cacao. V
 
 ---
 
-## 3. Support & Klachten (AI Chatbot)
+## 3. Support & Klachten (AI Chatbot) ★
 
 Supportpagina met AI-chat en live chat voor vragen en klachten.
 
@@ -391,7 +404,7 @@ Supportpagina met AI-chat en live chat voor vragen en klachten.
 
 ---
 
-## 4. Shop (B2C & B2B)
+## 4. Shop (B2C & B2B) ★
 
 Shop met zoekfunctie, filters en productoverzicht. De B2B-versie toont extra informatie zoals voorraad en levertijd.
 
