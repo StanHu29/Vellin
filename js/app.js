@@ -72,7 +72,7 @@ function registreren() {
 
   const nieuweGebruiker = { naam, email, wachtwoord }
   gebruikers.push(nieuweGebruiker)
-  localStorage.setItem('gebruikers', JSON.stringify(gebruikers))
+  localStorage.setItem('gebruikers', JSON.stringify(nieuweGebruiker))
   localStorage.setItem('huidigGebruiker', JSON.stringify(nieuweGebruiker))
   window.location.href = 'dashboard.html'
 }
@@ -468,16 +468,83 @@ if (document.getElementById('shopProducten')) {
 }
 
 // ============================================================
-//  AI CHATBOT – via beveiligde backend proxy
+//  AI CHATBOT – slimme voorgedefinieerde antwoorden
 // ============================================================
 
 let chatGeschiedenis = []
 
-// Pas deze URL aan zodra je weet waar je host:
-//   Netlify:  '/.netlify/functions/chat'
-//   Vercel:   '/api/chat'
-//   Eigen server: 'https://jouwserver.nl/api/chat'
-const CHAT_PROXY_URL = '/.netlify/functions/chat'
+const chatAntwoorden = [
+  {
+    sleutelwoorden: ['allergeen', 'allergie', 'melk', 'noten', 'soja', 'gluten'],
+    antwoord: 'Onze chocoladeproducten kunnen melk, noten en soja bevatten. Op elke verpakking vind je een volledig allergeenoverzicht. Heb je een specifiek product? Registreer het dan en ik zoek de informatie voor je op.'
+  },
+  {
+    sleutelwoorden: ['bestell', 'kopen', 'winkel', 'shop', 'bestel'],
+    antwoord: 'Je kunt onze chocolades bestellen via de Winkel-pagina in de app. We leveren binnen 1-3 werkdagen. Heb je vragen over een specifieke bestelling?'
+  },
+  {
+    sleutelwoorden: ['beschadigd', 'kapot', 'stuk', 'gebroken', 'fout'],
+    antwoord: 'Wat vervelend dat je product beschadigd is aangekomen! Ga naar de Service-pagina en dien een klacht in met je ticketnummer. Ons team neemt binnen 1 werkdag contact op.'
+  },
+  {
+    sleutelwoorden: ['cocoa', 'cacao', 'journey', 'reis', 'herkomst', 'origine'],
+    antwoord: 'De Cocoa Journey laat zien waar jouw chocolade vandaan komt — van cacaoboon tot reep. Je vindt de volledige reis bij elk geregistreerd product onder "Mijn Producten".'
+  },
+  {
+    sleutelwoorden: ['houdbaar', 'datum', 'verlopen', 'tht', 'exp'],
+    antwoord: 'De houdbaarheidsdatum vind je op de verpakking en in je geregistreerde producten. Producten die bijna verlopen staan bovenaan je overzicht met een waarschuwing.'
+  },
+  {
+    sleutelwoorden: ['klacht', 'probleem', 'feedback', 'melden'],
+    antwoord: 'Je kunt een klacht indienen via het tabblad "Klacht Indienen" op deze pagina. Je ontvangt direct een ticketnummer en ons team reageert binnen 1 werkdag.'
+  },
+  {
+    sleutelwoorden: ['fairtrade', 'biologisch', 'duurzaam', 'certif'],
+    antwoord: 'Vellin werkt samen met Fairtrade en biologisch gecertificeerde cacaoboeren. Je ziet de certificeringen bij elk product in je collectie.'
+  },
+  {
+    sleutelwoorden: ['levering', 'leveren', 'verzend', 'bezorg', 'thuis'],
+    antwoord: 'We bezorgen binnen 1-3 werkdagen aan huis. Bij beperkte voorraad kan de levertijd iets langer zijn — dit staat altijd vermeld in de Winkel.'
+  },
+  {
+    sleutelwoorden: ['prijs', 'kosten', 'betalen', 'euro', 'goedkoop'],
+    antwoord: 'Onze prijzen variëren van €3,29 tot €6,99 per reep. Alle actuele prijzen en aanbiedingen vind je in de Winkel-pagina.'
+  },
+  {
+    sleutelwoorden: ['registreer', 'scannen', 'code', 'batch', 'product toevoegen'],
+    antwoord: 'Je kunt een product registreren via de Home-pagina. Voer de productcode of het batchnummer in van je verpakking en het product wordt toegevoegd aan jouw collectie.'
+  },
+  {
+    sleutelwoorden: ['hoi', 'hallo', 'hey', 'goedemorgen', 'goedemiddag', 'dag'],
+    antwoord: 'Hallo! Fijn dat je er bent. Waarmee kan ik je vandaag helpen? Je kunt vragen stellen over producten, allergenen, bestellingen of klachten.'
+  },
+  {
+    sleutelwoorden: ['dank', 'bedankt', 'thanks', 'merci'],
+    antwoord: 'Graag gedaan! Heb je nog andere vragen? Ik sta altijd voor je klaar.'
+  },
+]
+
+const standaardAntwoord = 'Bedankt voor je vraag! Voor gedetailleerde informatie kun je terecht op onze Service-pagina of contact opnemen via 0800-VELLIN (ma-vr 9:00-17:00). Kan ik je ergens anders mee helpen?'
+
+function zoekAntwoord(vraag) {
+  const lowerVraag = vraag.toLowerCase()
+
+  const gebruiker = huidigGebruiker()
+  const producten = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
+    .filter(p => p.gebruiker === (gebruiker?.email || 'demo@vellin.nl'))
+
+  for (const item of chatAntwoorden) {
+    if (item.sleutelwoorden.some(woord => lowerVraag.includes(woord))) {
+      if (producten.length > 0 && (lowerVraag.includes('mijn') || lowerVraag.includes('product'))) {
+        const productnamen = producten.map(p => p.naam).join(', ')
+        return `${item.antwoord}\n\nJouw geregistreerde producten: ${productnamen}.`
+      }
+      return item.antwoord
+    }
+  }
+
+  return standaardAntwoord
+}
 
 async function stuurChatbericht() {
   const invoer = document.getElementById('chatInvoer') || document.getElementById('userInput')
@@ -490,53 +557,12 @@ async function stuurChatbericht() {
   const laadId = 'laad-' + Date.now()
   voegChatBerichtToe('...', 'bot', laadId)
 
-  const gebruiker      = huidigGebruiker()
-  const producten      = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
-    .filter(p => p.gebruiker === (gebruiker?.email || 'demo@vellin.nl'))
-  const productenTekst = producten.length > 0
-    ? producten.map(p => `${p.naam} (houdbaar: ${p.houdbaar}, herkomst: ${p.herkomst})`).join(', ')
-    : 'Geen producten geregistreerd'
+  await new Promise(resolve => setTimeout(resolve, 800))
 
-  const klantNaam = gebruiker?.naam || 'de klant'
+  const antwoord = zoekAntwoord(vraag)
 
-  const systeembericht = `Je bent Vellin, de vriendelijke klantenservice-assistent van Chocolate Firm.
-Je helpt klanten uitsluitend in het Nederlands met vragen over chocoladeproducten, allergenen, bestellingen, klachten en de Cocoa Journey.
-Antwoord altijd in het Nederlands, ook als de klant in een andere taal schrijft.
-Wees beknopt, warm en professioneel. Gebruik maximaal 3 zinnen per antwoord.
-De klant heet ${klantNaam} en heeft deze producten geregistreerd: ${productenTekst}.
-Bij klachten: verwijs naar de Klachten-pagina in de app.
-Bij bestellingen: verwijs naar de Winkel-pagina.`
-
-  chatGeschiedenis.push({ role: 'user', content: vraag })
-
-  try {
-    const response = await fetch(CHAT_PROXY_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages: chatGeschiedenis.slice(-10),
-        systeembericht
-      })
-    })
-
-    if (!response.ok) throw new Error(`HTTP ${response.status}`)
-
-    const data     = await response.json()
-    const antwoord = data.content?.[0]?.text || 'Excuses, ik kon geen antwoord genereren. Probeer het opnieuw.'
-
-    chatGeschiedenis.push({ role: 'assistant', content: antwoord })
-
-    document.getElementById(laadId)?.remove()
-    voegChatBerichtToe(antwoord, 'bot')
-
-  } catch (fout) {
-    document.getElementById(laadId)?.remove()
-    voegChatBerichtToe(
-      'Excuses, ik kan momenteel niet reageren. Neem contact op via de Service-pagina of bel 0800-VELLIN (9:00–17:00).',
-      'bot'
-    )
-    console.error('Chatbot fout:', fout)
-  }
+  document.getElementById(laadId)?.remove()
+  voegChatBerichtToe(antwoord, 'bot')
 }
 
 function voegChatBerichtToe(tekst, type, id) {
@@ -649,9 +675,9 @@ window.handleChatEnter       = handleChatEnter
 window.toggleJourney         = toggleJourney
 
 // Legacy aliassen
-window.login         = inloggen
-window.register      = registreren
-window.vraagBot      = stuurChatbericht
-window.bestelProduct = (id) => voegToeAanWinkelwagen(id)
-window.showSuccess   = () => document.getElementById('successModal')?.classList.add('active')
+window.login          = inloggen
+window.register       = registreren
+window.vraagBot       = stuurChatbericht
+window.bestelProduct  = (id) => voegToeAanWinkelwagen(id)
+window.showSuccess    = () => document.getElementById('successModal')?.classList.add('active')
 window.goToCollection = gaNaarCollectie

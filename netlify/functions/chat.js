@@ -41,12 +41,17 @@ exports.handler = async (event) => {
 
   const data = await response.json()
 
+  // Stuur altijd de volledige response terug inclusief eventuele fouten
   return {
     statusCode: 200,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify({
+      debug_status: response.status,
+      debug_data: data,
+      content: data.content
+    })
   }
 }
