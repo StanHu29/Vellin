@@ -27,7 +27,7 @@
         <p class="hero-caption">Jouw chocolade-collectie wacht</p>
       </div>
 
-      <!-- Verlopen producten banner (dynamisch) -->
+      <!-- [FIX] Verloopbanner – alleen tonen als er bijna verlopen producten zijn -->
       <div id="verloopBanner" class="card status-card" style="display:none;">
         <div class="status-content">
           <div class="status-main">
@@ -38,14 +38,14 @@
         </div>
       </div>
 
-      <!-- Statische banner als er geen verlopen producten zijn -->
-      <div id="promoBanner" class="card status-card">
+      <!-- Promobanner – verborgen als er verlopende producten zijn -->
+      <div id="promoBanner" class="card status-card" style="display:flex;">
         <div class="status-content">
           <div class="status-main">
-            <p class="status-label">BINNENKORT VERLOPEN</p>
-            <p style="margin:0;color:white;font-size:0.9rem;">1 product verloopt binnen 7 dagen</p>
+            <p class="status-label">EXCLUSIEVE AANBIEDING</p>
+            <p style="margin:0;color:white;font-size:0.9rem;">20% korting op alle premium chocolades dit weekend</p>
           </div>
-          <a href="mychocolate.html" class="btn-status">Bekijken</a>
+          <a href="shop.html" class="btn-status">Bekijken</a>
         </div>
       </div>
 
@@ -66,35 +66,13 @@
     <div class="section-divider">
       <h2>
         <span style="color:#3D2817;">Mijn Producten</span>
-        <a href="mychocolate.html" style="font-size:14px;margin-left:auto;text-decoration:none;color:var(--secondary);font-weight:600;display:inline-block;">Alle bekijken →</a>
+        <a href="mychocolate.html" style="font-size:14px;margin-left:auto;text-decoration:none;color:var(--secondary);font-weight:600;display:inline-block;">Alle bekijken &rsaquo;</a>
       </h2>
     </div>
 
-    <!-- Product Grid -->
+    <!-- [FIX] Product Grid – dynamisch geladen vanuit app.js (laadDashboardProducten) -->
     <div class="product-grid" id="producten">
-      <article class="card product-card">
-        <img class="product-card-img" src="images/ChatGPT Image Jun 3, 2026, 12_04_28 AM.png" alt="Melkchocolade">
-        <div class="product-card-badge">Ecuador</div>
-        <h4 class="product-card-name">Melkchocolade Classic</h4>
-        <p class="product-card-origin">Herkomst Ecuador</p>
-        <p class="product-card-expiry">Houdbaar: 12 mei 2026</p>
-      </article>
-
-      <article class="card product-card">
-        <img class="product-card-img" src="images/ChatGPT Image Jun 3, 2026, 12_06_13 AM.png" alt="Witte Chocolade">
-        <div class="product-card-badge">Madagascar</div>
-        <h4 class="product-card-name">Witte Chocolade Delight</h4>
-        <p class="product-card-origin">Herkomst Madagascar</p>
-        <p class="product-card-expiry">Houdbaar: 8 jun 2026</p>
-      </article>
-
-      <article class="card product-card">
-        <img class="product-card-img" src="images/ChatGPT Image Jun 3, 2026, 12_03_13 AM.png" alt="Pure Chocolade">
-        <div class="product-card-badge">Ghana</div>
-        <h4 class="product-card-name">Pure Chocolade 85%</h4>
-        <p class="product-card-origin">Single Origin</p>
-        <p class="product-card-expiry">Houdbaar: 30 mei 2026</p>
-      </article>
+      <!-- Wordt dynamisch gevuld door laadDashboardProducten() in app.js -->
     </div>
 
     <!-- Snelle Toegang -->
@@ -102,26 +80,31 @@
       <h2 style="color:#3D2817;">Snelle Toegang</h2>
     </div>
 
+    <!--
+      [WIJZIGING] Recepten-shortcut verwijderd (geen MVP-functionaliteit, niet in wireframes).
+      Vervangen door drie relevante MVP-shortcuts: Mijn Producten, Bestellingen, Service.
+    -->
     <div class="quick-actions">
-      <!-- Recepten verwijst nu naar de receptenpagina in de bibliotheek -->
-      <a href="mychocolate.html#recepten" class="action-tile" style="text-decoration:none;">
-        <img class="action-icon" src="images/recipe.png" alt="Recepten">
-        <span class="action-label">Recepten</span>
+      <a href="mychocolate.html" class="action-tile" style="text-decoration:none;">
+        <img class="action-icon" src="images/orders.png" alt="Mijn Producten">
+        <span class="action-label">Mijn Producten</span>
       </a>
       <a href="shop.html" class="action-tile" style="text-decoration:none;">
-        <img class="action-icon" src="images/orders.png" alt="Bestellingen">
+        <img class="action-icon" src="images/shop.png" alt="Bestellingen">
         <span class="action-label">Bestellingen</span>
       </a>
-      <a href="shop.html" class="action-tile" style="text-decoration:none;">
-        <img class="action-icon" src="images/shop.png" alt="Winkel">
-        <span class="action-label">Winkel</span>
+      <a href="klachten.html" class="action-tile" style="text-decoration:none;">
+        <img class="action-icon" src="images/service.png" alt="Service">
+        <span class="action-label">Service</span>
       </a>
     </div>
 
     <!-- Product registreren CTA -->
     <div class="cta-section">
       <a href="registerproduct.html" class="btn-primary btn-lg" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:10px;">
-        <span class="plus-icon">+</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
         Product Registreren
       </a>
     </div>
@@ -156,33 +139,12 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Gebruikersnaam dynamisch laden (geen hardcoded "Sarah")
+  // Gebruikersnaam dynamisch laden
   const gebruiker = JSON.parse(localStorage.getItem('huidigGebruiker') || '{}');
   const naam = gebruiker.naam || 'Chocoladeliefhebber';
   const welkomEl = document.getElementById('welkomNaam');
   if (welkomEl) welkomEl.textContent = naam;
-
-  // Verloop-banner tonen op basis van geregistreerde producten
-  const producten = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]');
-  const zeven = new Date();
-  zeven.setDate(zeven.getDate() + 7);
-
-  const maanden = { jan:0, feb:1, mrt:2, apr:3, mei:4, jun:5, jul:6, aug:7, sep:8, okt:9, nov:10, dec:11 };
-
-  const bijnaVerlopen = producten.filter(p => {
-    const delen = (p.houdbaar || '').toLowerCase().split(' ');
-    if (delen.length < 3) return false;
-    const d = new Date(parseInt(delen[2]), maanden[delen[1]?.substring(0, 3)], parseInt(delen[0]));
-    return !isNaN(d) && d <= zeven;
-  });
-
-  if (bijnaVerlopen.length > 0) {
-    document.getElementById('promoBanner').style.display = 'none';
-    const banner = document.getElementById('verloopBanner');
-    banner.style.display = 'flex';
-    banner.querySelector('.banner-tekst').textContent =
-      `${bijnaVerlopen.length} product${bijnaVerlopen.length > 1 ? 'en verlopen' : ' verloopt'} binnen 7 dagen`;
-  }
+  // Producten en verloopbanner worden geladen door app.js
 });
 </script>
 </body>

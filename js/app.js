@@ -15,7 +15,7 @@ const supabase = createClient(
 // ============================================================
 
 function inloggen() {
-  const email     = document.getElementById('email')?.value.trim()
+  const email      = document.getElementById('email')?.value.trim()
   const wachtwoord = document.getElementById('password')?.value.trim()
 
   if (!email || !wachtwoord) {
@@ -32,7 +32,6 @@ function inloggen() {
     return
   }
 
-  // Demo-login: als nog geen accounts bestaan
   if (gebruikers.length === 0 && wachtwoord.length >= 3) {
     const demoGebruiker = { naam: 'Demo Gebruiker', email, wachtwoord }
     gebruikers.push(demoGebruiker)
@@ -46,11 +45,11 @@ function inloggen() {
 }
 
 function registreren() {
-  const naam      = document.getElementById('registerName')?.value.trim()
-  const email     = document.getElementById('registerEmail')?.value.trim()
+  const naam       = document.getElementById('registerName')?.value.trim()
+  const email      = document.getElementById('registerEmail')?.value.trim()
   const wachtwoord = document.getElementById('registerPassword')?.value.trim()
-  const bevestig  = document.getElementById('registerConfirmPassword')?.value.trim()
-  const akkoord   = document.getElementById('acceptTerms')?.checked
+  const bevestig   = document.getElementById('registerConfirmPassword')?.value.trim()
+  const akkoord    = document.getElementById('acceptTerms')?.checked
 
   if (!naam || !email || !wachtwoord || !bevestig) {
     toonFoutmelding('Vul alle velden in.')
@@ -171,14 +170,12 @@ function registreerProduct() {
   opgeslagen.push(nieuwProduct)
   localStorage.setItem('geregistreerdeProducten', JSON.stringify(opgeslagen))
 
-  // Supabase opslaan (niet-blokkerend)
   supabase.from('producten').insert([{ gebruiker: gebruikerEmail, productcode: productCode }]).then()
 
-  // Succes modal tonen
   const modal = document.getElementById('successModal')
   if (modal) {
     modal.classList.add('actief')
-    modal.classList.add('active') // beide klassen voor compatibiliteit
+    modal.classList.add('active')
   }
 }
 
@@ -299,16 +296,16 @@ function slaWinkelwagenOp(wagen) {
 }
 
 function updateWinkelwagenTeller() {
-  const wagen = haalWinkelwagen()
+  const wagen  = haalWinkelwagen()
   const totaal = wagen.reduce((s, i) => s + i.aantal, 0)
   document.querySelectorAll('.winkelwagen-teller').forEach(el => {
-    el.textContent = totaal
-    el.style.display = totaal > 0 ? 'flex' : 'none'
+    el.textContent    = totaal
+    el.style.display  = totaal > 0 ? 'flex' : 'none'
   })
 }
 
 function voegToeAanWinkelwagen(id) {
-  const artikel = shopArtikelen.find(a => a.id === id)
+  const artikel  = shopArtikelen.find(a => a.id === id)
   if (!artikel || artikel.voorraad === 0) return
 
   const wagen    = haalWinkelwagen()
@@ -324,11 +321,11 @@ function voegToeAanWinkelwagen(id) {
 
   const knop = document.querySelector(`[data-product-id="${id}"]`)
   if (knop) {
-    const origineel = knop.textContent
-    knop.textContent = 'Toegevoegd!'
+    const origineel   = knop.textContent
+    knop.textContent  = 'Toegevoegd!'
     knop.style.background = '#2d7a2d'
     setTimeout(() => {
-      knop.textContent = origineel
+      knop.textContent      = origineel
       knop.style.background = ''
     }, 1500)
   }
@@ -440,11 +437,11 @@ function afrekenen() {
 
   Promise.all(wagen.map(item =>
     supabase.from('bestellingen').insert([{
-      productid: item.id,
+      productid:   item.id,
       productnaam: item.naam,
       ordernummer,
-      gebruiker: gebruikerEmail,
-      aantal: item.aantal
+      gebruiker:   gebruikerEmail,
+      aantal:      item.aantal
     }])
   )).then(() => {
     slaWinkelwagenOp([])
@@ -471,10 +468,16 @@ if (document.getElementById('shopProducten')) {
 }
 
 // ============================================================
-//  AI CHATBOT – Anthropic API
+//  AI CHATBOT – via beveiligde backend proxy
 // ============================================================
 
 let chatGeschiedenis = []
+
+// Pas deze URL aan zodra je weet waar je host:
+//   Netlify:  '/.netlify/functions/chat'
+//   Vercel:   '/api/chat'
+//   Eigen server: 'https://jouwserver.nl/api/chat'
+const CHAT_PROXY_URL = '/.netlify/functions/chat'
 
 async function stuurChatbericht() {
   const invoer = document.getElementById('chatInvoer') || document.getElementById('userInput')
@@ -487,8 +490,8 @@ async function stuurChatbericht() {
   const laadId = 'laad-' + Date.now()
   voegChatBerichtToe('...', 'bot', laadId)
 
-  const gebruiker  = huidigGebruiker()
-  const producten  = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
+  const gebruiker      = huidigGebruiker()
+  const producten      = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
     .filter(p => p.gebruiker === (gebruiker?.email || 'demo@vellin.nl'))
   const productenTekst = producten.length > 0
     ? producten.map(p => `${p.naam} (houdbaar: ${p.houdbaar}, herkomst: ${p.herkomst})`).join(', ')
@@ -507,27 +510,19 @@ Bij bestellingen: verwijs naar de Winkel-pagina.`
   chatGeschiedenis.push({ role: 'user', content: vraag })
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch(CHAT_PROXY_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 300,
-        system: systeembericht,
-        messages: chatGeschiedenis.slice(-10)
+        messages: chatGeschiedenis.slice(-10),
+        systeembericht
       })
     })
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`)
-    }
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
-    const data    = await response.json()
-    const antwoord = data.content?.[0]?.text || 'Excuses, er is iets misgegaan. Probeer het opnieuw.'
+    const data     = await response.json()
+    const antwoord = data.content?.[0]?.text || 'Excuses, ik kon geen antwoord genereren. Probeer het opnieuw.'
 
     chatGeschiedenis.push({ role: 'assistant', content: antwoord })
 
@@ -548,9 +543,9 @@ function voegChatBerichtToe(tekst, type, id) {
   const chatBox = document.getElementById('chatBox')
   if (!chatBox) return
 
-  const div       = document.createElement('div')
-  div.className   = type === 'gebruiker' ? 'chat-bericht-gebruiker' : 'chat-bericht-bot'
-  if (id) div.id  = id
+  const div     = document.createElement('div')
+  div.className = type === 'gebruiker' ? 'chat-bericht-gebruiker' : 'chat-bericht-bot'
+  if (id) div.id = id
 
   if (tekst === '...') {
     div.innerHTML = '<span class="chat-laadanimatie"><span>.</span><span>.</span><span>.</span></span>'
@@ -636,27 +631,27 @@ function toggleJourney(id, knop) {
 //  GLOBALE EXPORTS (voor onclick= attributen in HTML)
 // ============================================================
 
-window.inloggen               = inloggen
-window.registreren            = registreren
-window.uitloggen              = uitloggen
-window.registreerProduct      = registreerProduct
-window.gaNaarCollectie        = gaNaarCollectie
-window.verstuurKlacht         = verstuurKlacht
-window.laadShop               = laadShop
-window.updateShopFilter       = updateShopFilter
-window.voegToeAanWinkelwagen  = voegToeAanWinkelwagen
-window.toonWinkelwagen        = toonWinkelwagen
-window.sluitWinkelwagen       = sluitWinkelwagen
-window.verwijderUitWagen      = verwijderUitWagen
-window.afrekenen              = afrekenen
-window.stuurChatbericht       = stuurChatbericht
-window.handleChatEnter        = handleChatEnter
-window.toggleJourney          = toggleJourney
+window.inloggen              = inloggen
+window.registreren           = registreren
+window.uitloggen             = uitloggen
+window.registreerProduct     = registreerProduct
+window.gaNaarCollectie       = gaNaarCollectie
+window.verstuurKlacht        = verstuurKlacht
+window.laadShop              = laadShop
+window.updateShopFilter      = updateShopFilter
+window.voegToeAanWinkelwagen = voegToeAanWinkelwagen
+window.toonWinkelwagen       = toonWinkelwagen
+window.sluitWinkelwagen      = sluitWinkelwagen
+window.verwijderUitWagen     = verwijderUitWagen
+window.afrekenen             = afrekenen
+window.stuurChatbericht      = stuurChatbericht
+window.handleChatEnter       = handleChatEnter
+window.toggleJourney         = toggleJourney
 
 // Legacy aliassen
-window.login        = inloggen
-window.register     = registreren
-window.vraagBot     = stuurChatbericht
+window.login         = inloggen
+window.register      = registreren
+window.vraagBot      = stuurChatbericht
 window.bestelProduct = (id) => voegToeAanWinkelwagen(id)
-window.showSuccess  = () => document.getElementById('successModal')?.classList.add('active')
+window.showSuccess   = () => document.getElementById('successModal')?.classList.add('active')
 window.goToCollection = gaNaarCollectie

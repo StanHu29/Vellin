@@ -28,16 +28,28 @@
   color: var(--primary);
   font-size: 1.2rem;
 }
+
+/* [FIX] Herkomst: geen emoji-vlag meer, SVG pin-icoon + tekst */
 .herkomst {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--secondary);
   font-weight: 700;
   font-size: 0.85rem;
   margin: 0 0 4px;
 }
+.herkomst svg {
+  flex-shrink: 0;
+}
+
 .houdbaarheidsdatum {
   color: var(--text-secondary);
   font-size: 0.85rem;
   margin: 0 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .allergeen-badges {
@@ -63,6 +75,7 @@
   font-weight: 600;
 }
 
+/* [FIX] Journey-knop: geen 🗺️ emoji meer, SVG-icoon */
 .journey-knop {
   width: 100%;
   border: none;
@@ -76,6 +89,10 @@
   font-weight: 700;
   font-family: inherit;
   transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 .journey-knop:active { transform: scale(0.98); }
 
@@ -91,7 +108,14 @@
   to { opacity: 1; transform: translateY(0); }
 }
 .journey-kop { margin-bottom: 16px; }
-.journey-kop h3 { margin: 0 0 4px; color: var(--primary); font-family: 'Playfair Display', serif; }
+.journey-kop h3 {
+  margin: 0 0 4px;
+  color: var(--primary);
+  font-family: 'Playfair Display', serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .journey-kop p { margin: 0; color: var(--text-secondary); font-size: 0.85rem; }
 
 .journey-samenvatting {
@@ -181,8 +205,6 @@
   font-size: 0.7rem;
   color: var(--text-secondary);
 }
-
-/* Hero sectie */
 </style>
 <script type="module" src="js/app.js" defer></script>
 </head>
@@ -213,19 +235,54 @@
       <img src="images/ChatGPT Image Jun 3, 2026, 12_03_13 AM.png" class="chocolade-afbeelding" alt="Pure Chocolade">
       <div class="chocolade-inhoud">
         <h3>Pure Chocolade 85%</h3>
-        <p class="herkomst">🇪🇨 Ecuador</p>
-        <p class="houdbaarheidsdatum">Houdbaar tot: 25 apr 2026</p>
+
+        <!-- [FIX] Vlag-emoji vervangen door SVG locatie-pin + landnaam -->
+        <p class="herkomst">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          Ecuador
+        </p>
+
+        <!-- [FIX] Houdbaarheidsdatum met kalender-icoon -->
+        <p class="houdbaarheidsdatum">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Houdbaar tot: 25 apr 2026
+        </p>
+
         <div class="allergeen-badges">
           <span class="allergeen-badge">Kan melk bevatten</span>
           <span class="allergeen-badge">Bevat soja</span>
           <span class="cert-badge">Fairtrade</span>
           <span class="cert-badge">Biologisch</span>
         </div>
-        <button class="journey-knop" onclick="toggleJourney('journey1', this)">🗺️ Bekijk Cacaoreis</button>
+
+        <!-- [FIX] Journey-knop: 🗺️ vervangen door SVG kaart-icoon -->
+        <button class="journey-knop" onclick="toggleJourney('journey1', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+            <line x1="9" y1="3" x2="9" y2="18"/>
+            <line x1="15" y1="6" x2="15" y2="21"/>
+          </svg>
+          Bekijk Cacaoreis
+        </button>
 
         <div class="journey-inhoud" id="journey1">
           <div class="journey-kop">
-            <h3>🌍 Cacaoreis</h3>
+            <!-- [FIX] 🌍 emoji vervangen door SVG globe-icoon -->
+            <h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              Cacaoreis
+            </h3>
             <p>Van cacaoboon tot jouw thuis</p>
           </div>
           <div class="journey-samenvatting">
@@ -251,21 +308,21 @@
               <div class="tijdlijn-marker"></div>
               <div class="tijdlijn-info">
                 <h4>Cacaoboerderij</h4>
-                <p>Ecuador • nov 2025</p>
+                <p>Ecuador &bull; nov 2025</p>
               </div>
             </div>
             <div class="tijdlijn-stap">
               <div class="tijdlijn-marker"></div>
               <div class="tijdlijn-info">
                 <h4>Verwerkingsfabriek</h4>
-                <p>Quito • dec 2025</p>
+                <p>Quito &bull; dec 2025</p>
               </div>
             </div>
             <div class="tijdlijn-stap">
               <div class="tijdlijn-marker"></div>
               <div class="tijdlijn-info">
                 <h4>Chocoladefabriek</h4>
-                <p>België • jan 2026</p>
+                <p>België &bull; jan 2026</p>
               </div>
             </div>
             <div class="tijdlijn-stap huidig">
@@ -284,7 +341,7 @@
             </div>
             <div class="duurzaamheid-kaart">
               <div class="duurzaamheid-getal">5kg</div>
-              <div class="duurzaamheid-label">CO₂ Gecompenseerd</div>
+              <div class="duurzaamheid-label">CO&#8322; Gecompenseerd</div>
             </div>
             <div class="duurzaamheid-kaart">
               <div class="duurzaamheid-getal">130%</div>
@@ -300,70 +357,64 @@
       <img src="images/ChatGPT Image Jun 3, 2026, 12_04_28 AM.png" class="chocolade-afbeelding" alt="Melkchocolade">
       <div class="chocolade-inhoud">
         <h3>Melkchocolade Classic</h3>
-        <p class="herkomst">🇬🇭 Ghana</p>
-        <p class="houdbaarheidsdatum">Houdbaar tot: 12 mei 2026</p>
+        <p class="herkomst">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          Ghana
+        </p>
+        <p class="houdbaarheidsdatum">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Houdbaar tot: 12 mei 2026
+        </p>
         <div class="allergeen-badges">
           <span class="allergeen-badge">Bevat melk</span>
           <span class="allergeen-badge">Kan noten bevatten</span>
           <span class="cert-badge">Fairtrade</span>
         </div>
-        <button class="journey-knop" onclick="toggleJourney('journey2', this)">🗺️ Bekijk Cacaoreis</button>
+        <button class="journey-knop" onclick="toggleJourney('journey2', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+            <line x1="9" y1="3" x2="9" y2="18"/>
+            <line x1="15" y1="6" x2="15" y2="21"/>
+          </svg>
+          Bekijk Cacaoreis
+        </button>
 
         <div class="journey-inhoud" id="journey2">
           <div class="journey-kop">
-            <h3>🌍 Cacaoreis</h3>
+            <h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              Cacaoreis
+            </h3>
             <p>Van cacaoboon tot jouw thuis</p>
           </div>
           <div class="journey-samenvatting">
-            <div class="samenvatting-kaart">
-              <span class="samenvatting-label">Herkomst</span>
-              <span class="samenvatting-waarde">Ghana</span>
-            </div>
-            <div class="samenvatting-kaart">
-              <span class="samenvatting-label">Verwerkt in</span>
-              <span class="samenvatting-waarde">Accra</span>
-            </div>
-            <div class="samenvatting-kaart">
-              <span class="samenvatting-label">Geproduceerd</span>
-              <span class="samenvatting-waarde">België</span>
-            </div>
-            <div class="samenvatting-kaart">
-              <span class="samenvatting-label">Geleverd</span>
-              <span class="samenvatting-waarde">mei 2026</span>
-            </div>
+            <div class="samenvatting-kaart"><span class="samenvatting-label">Herkomst</span><span class="samenvatting-waarde">Ghana</span></div>
+            <div class="samenvatting-kaart"><span class="samenvatting-label">Verwerkt in</span><span class="samenvatting-waarde">Accra</span></div>
+            <div class="samenvatting-kaart"><span class="samenvatting-label">Geproduceerd</span><span class="samenvatting-waarde">België</span></div>
+            <div class="samenvatting-kaart"><span class="samenvatting-label">Geleverd</span><span class="samenvatting-waarde">mei 2026</span></div>
           </div>
           <div class="tijdlijn">
-            <div class="tijdlijn-stap">
-              <div class="tijdlijn-marker"></div>
-              <div class="tijdlijn-info"><h4>Cacaoboerderij</h4><p>Ghana • okt 2025</p></div>
-            </div>
-            <div class="tijdlijn-stap">
-              <div class="tijdlijn-marker"></div>
-              <div class="tijdlijn-info"><h4>Verwerkingsfabriek</h4><p>Accra • nov 2025</p></div>
-            </div>
-            <div class="tijdlijn-stap">
-              <div class="tijdlijn-marker"></div>
-              <div class="tijdlijn-info"><h4>Chocoladefabriek</h4><p>België • dec 2025</p></div>
-            </div>
-            <div class="tijdlijn-stap huidig">
-              <div class="tijdlijn-marker"></div>
-              <div class="tijdlijn-info"><h4>Jouw Thuis</h4><p>Geleverd mei 2026</p></div>
-            </div>
+            <div class="tijdlijn-stap"><div class="tijdlijn-marker"></div><div class="tijdlijn-info"><h4>Cacaoboerderij</h4><p>Ghana &bull; okt 2025</p></div></div>
+            <div class="tijdlijn-stap"><div class="tijdlijn-marker"></div><div class="tijdlijn-info"><h4>Verwerkingsfabriek</h4><p>Accra &bull; nov 2025</p></div></div>
+            <div class="tijdlijn-stap"><div class="tijdlijn-marker"></div><div class="tijdlijn-info"><h4>Chocoladefabriek</h4><p>België &bull; dec 2025</p></div></div>
+            <div class="tijdlijn-stap huidig"><div class="tijdlijn-marker"></div><div class="tijdlijn-info"><h4>Jouw Thuis</h4><p>Geleverd mei 2026</p></div></div>
           </div>
           <h4 style="margin:0 0 12px;color:var(--primary);">Duurzaamheidsimpact</h4>
           <div class="duurzaamheid-raster">
-            <div class="duurzaamheid-kaart">
-              <div class="duurzaamheid-getal">310L</div>
-              <div class="duurzaamheid-label">Water Bespaard</div>
-            </div>
-            <div class="duurzaamheid-kaart">
-              <div class="duurzaamheid-getal">6kg</div>
-              <div class="duurzaamheid-label">CO₂ Gecompenseerd</div>
-            </div>
-            <div class="duurzaamheid-kaart">
-              <div class="duurzaamheid-getal">125%</div>
-              <div class="duurzaamheid-label">Eerlijk Loon</div>
-            </div>
+            <div class="duurzaamheid-kaart"><div class="duurzaamheid-getal">310L</div><div class="duurzaamheid-label">Water Bespaard</div></div>
+            <div class="duurzaamheid-kaart"><div class="duurzaamheid-getal">6kg</div><div class="duurzaamheid-label">CO&#8322; Gecompenseerd</div></div>
+            <div class="duurzaamheid-kaart"><div class="duurzaamheid-getal">125%</div><div class="duurzaamheid-label">Eerlijk Loon</div></div>
           </div>
         </div>
       </div>
@@ -374,54 +425,57 @@
       <img src="images/ChatGPT Image Jun 3, 2026, 12_06_13 AM.png" class="chocolade-afbeelding" alt="Witte Chocolade">
       <div class="chocolade-inhoud">
         <h3>Witte Chocolade Delight</h3>
-        <p class="herkomst">🇲🇬 Madagascar</p>
-        <p class="houdbaarheidsdatum">Houdbaar tot: 8 jun 2026</p>
+        <p class="herkomst">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          Madagascar
+        </p>
+        <p class="houdbaarheidsdatum">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Houdbaar tot: 8 jun 2026
+        </p>
         <div class="allergeen-badges">
           <span class="allergeen-badge">Bevat melk</span>
           <span class="cert-badge">Biologisch</span>
         </div>
-        <button class="journey-knop" onclick="toggleJourney('journey3', this)">🗺️ Bekijk Cacaoreis</button>
+        <button class="journey-knop" onclick="toggleJourney('journey3', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+            <line x1="9" y1="3" x2="9" y2="18"/>
+            <line x1="15" y1="6" x2="15" y2="21"/>
+          </svg>
+          Bekijk Cacaoreis
+        </button>
 
         <div class="journey-inhoud" id="journey3">
           <div class="journey-kop">
-            <h3>🌍 Cacaoreis</h3>
+            <h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              Cacaoreis
+            </h3>
             <p>Van cacaoboon tot jouw thuis</p>
           </div>
           <div class="journey-samenvatting">
-            <div class="samenvatting-kaart">
-              <span class="samenvatting-label">Herkomst</span>
-              <span class="samenvatting-waarde">Madagascar</span>
-            </div>
-            <div class="samenvatting-kaart">
-              <span class="samenvatting-label">Verwerkt in</span>
-              <span class="samenvatting-waarde">Antananarivo</span>
-            </div>
-            <div class="samenvatting-kaart">
-              <span class="samenvatting-label">Geproduceerd</span>
-              <span class="samenvatting-waarde">België</span>
-            </div>
-            <div class="samenvatting-kaart">
-              <span class="samenvatting-label">Geleverd</span>
-              <span class="samenvatting-waarde">jun 2026</span>
-            </div>
+            <div class="samenvatting-kaart"><span class="samenvatting-label">Herkomst</span><span class="samenvatting-waarde">Madagascar</span></div>
+            <div class="samenvatting-kaart"><span class="samenvatting-label">Verwerkt in</span><span class="samenvatting-waarde">Antananarivo</span></div>
+            <div class="samenvatting-kaart"><span class="samenvatting-label">Geproduceerd</span><span class="samenvatting-waarde">België</span></div>
+            <div class="samenvatting-kaart"><span class="samenvatting-label">Geleverd</span><span class="samenvatting-waarde">jun 2026</span></div>
           </div>
           <div class="tijdlijn">
-            <div class="tijdlijn-stap">
-              <div class="tijdlijn-marker"></div>
-              <div class="tijdlijn-info"><h4>Cacaoboerderij</h4><p>Madagascar • nov 2025</p></div>
-            </div>
-            <div class="tijdlijn-stap">
-              <div class="tijdlijn-marker"></div>
-              <div class="tijdlijn-info"><h4>Verwerkingsfabriek</h4><p>Antananarivo • dec 2025</p></div>
-            </div>
-            <div class="tijdlijn-stap">
-              <div class="tijdlijn-marker"></div>
-              <div class="tijdlijn-info"><h4>Chocoladefabriek</h4><p>België • jan 2026</p></div>
-            </div>
-            <div class="tijdlijn-stap huidig">
-              <div class="tijdlijn-marker"></div>
-              <div class="tijdlijn-info"><h4>Jouw Thuis</h4><p>Geleverd jun 2026</p></div>
-            </div>
+            <div class="tijdlijn-stap"><div class="tijdlijn-marker"></div><div class="tijdlijn-info"><h4>Cacaoboerderij</h4><p>Madagascar &bull; nov 2025</p></div></div>
+            <div class="tijdlijn-stap"><div class="tijdlijn-marker"></div><div class="tijdlijn-info"><h4>Verwerkingsfabriek</h4><p>Antananarivo &bull; dec 2025</p></div></div>
+            <div class="tijdlijn-stap"><div class="tijdlijn-marker"></div><div class="tijdlijn-info"><h4>Chocoladefabriek</h4><p>België &bull; jan 2026</p></div></div>
+            <div class="tijdlijn-stap huidig"><div class="tijdlijn-marker"></div><div class="tijdlijn-info"><h4>Jouw Thuis</h4><p>Geleverd jun 2026</p></div></div>
           </div>
         </div>
       </div>
