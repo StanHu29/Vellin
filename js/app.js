@@ -1,6 +1,6 @@
 // ============================================================
 //  Vellin Chocolate Firm – app.js
-//  Volledig herschreven: NL, werkende functies, AI chatbot
+//  Volledig Nederlandstalig | AI chatbot | Geen hardcoded namen
 // ============================================================
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
@@ -15,7 +15,7 @@ const supabase = createClient(
 // ============================================================
 
 function inloggen() {
-  const email = document.getElementById('email')?.value.trim()
+  const email     = document.getElementById('email')?.value.trim()
   const wachtwoord = document.getElementById('password')?.value.trim()
 
   if (!email || !wachtwoord) {
@@ -24,7 +24,7 @@ function inloggen() {
   }
 
   const gebruikers = JSON.parse(localStorage.getItem('gebruikers') || '[]')
-  const gebruiker = gebruikers.find(u => u.email === email && u.wachtwoord === wachtwoord)
+  const gebruiker  = gebruikers.find(u => u.email === email && u.wachtwoord === wachtwoord)
 
   if (gebruiker) {
     localStorage.setItem('huidigGebruiker', JSON.stringify(gebruiker))
@@ -32,7 +32,7 @@ function inloggen() {
     return
   }
 
-  // Demo-login: als geen accounts bestaan
+  // Demo-login: als nog geen accounts bestaan
   if (gebruikers.length === 0 && wachtwoord.length >= 3) {
     const demoGebruiker = { naam: 'Demo Gebruiker', email, wachtwoord }
     gebruikers.push(demoGebruiker)
@@ -46,11 +46,11 @@ function inloggen() {
 }
 
 function registreren() {
-  const naam = document.getElementById('registerName')?.value.trim()
-  const email = document.getElementById('registerEmail')?.value.trim()
+  const naam      = document.getElementById('registerName')?.value.trim()
+  const email     = document.getElementById('registerEmail')?.value.trim()
   const wachtwoord = document.getElementById('registerPassword')?.value.trim()
-  const bevestig = document.getElementById('registerConfirmPassword')?.value.trim()
-  const akkoord = document.getElementById('acceptTerms')?.checked
+  const bevestig  = document.getElementById('registerConfirmPassword')?.value.trim()
+  const akkoord   = document.getElementById('acceptTerms')?.checked
 
   if (!naam || !email || !wachtwoord || !bevestig) {
     toonFoutmelding('Vul alle velden in.')
@@ -137,9 +137,13 @@ const productData = {
 // ============================================================
 
 function registreerProduct() {
-  const code = document.getElementById('productCode')?.value.trim().toUpperCase()
-  const batch = document.getElementById('batchNumber')?.value.trim()
-  const bon = document.getElementById('receiptNumber')?.value.trim()
+  const codeEl  = document.getElementById('productCode')
+  const batchEl = document.getElementById('batchNumber')
+  const bonEl   = document.getElementById('receiptNumber')
+
+  const code  = codeEl?.value.trim().toUpperCase()
+  const batch = batchEl?.value.trim()
+  const bon   = bonEl?.value.trim() || ''
 
   if (!code && !batch) {
     toonFoutmelding('Voer een productcode of batchnummer in.')
@@ -147,10 +151,9 @@ function registreerProduct() {
   }
 
   const gebruikerEmail = huidigGebruiker()?.email || 'demo@vellin.nl'
-  const productCode = code || batch
-
-  const opgeslagen = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
-  const info = productData[productCode]
+  const productCode    = code || batch
+  const opgeslagen     = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
+  const info           = productData[productCode]
 
   const nieuwProduct = {
     code: productCode,
@@ -160,7 +163,7 @@ function registreerProduct() {
     allergenen: info ? info.allergenen : [],
     certificeringen: info ? info.certificeringen : [],
     batch: batch || productCode,
-    bon: bon || '',
+    bon,
     datum: new Date().toLocaleDateString('nl-NL'),
     gebruiker: gebruikerEmail
   }
@@ -168,12 +171,15 @@ function registreerProduct() {
   opgeslagen.push(nieuwProduct)
   localStorage.setItem('geregistreerdeProducten', JSON.stringify(opgeslagen))
 
-  // Supabase opslaan (optioneel, niet-blokkerend)
+  // Supabase opslaan (niet-blokkerend)
   supabase.from('producten').insert([{ gebruiker: gebruikerEmail, productcode: productCode }]).then()
 
   // Succes modal tonen
   const modal = document.getElementById('successModal')
-  if (modal) modal.classList.add('active')
+  if (modal) {
+    modal.classList.add('actief')
+    modal.classList.add('active') // beide klassen voor compatibiliteit
+  }
 }
 
 function gaNaarCollectie() {
@@ -185,13 +191,15 @@ function gaNaarCollectie() {
 // ============================================================
 
 async function verstuurKlacht() {
-  const onderwerp = document.getElementById('onderwerp')?.value.trim()
+  const onderwerp    = document.getElementById('onderwerp')?.value.trim()
   const beschrijving = document.getElementById('beschrijving')?.value.trim()
-  const productcode = document.getElementById('klachtProductCode')?.value.trim() || ''
-  const statusDiv = document.getElementById('klachtStatus')
+  const productcode  = document.getElementById('klachtProductCode')?.value.trim() || ''
+  const statusDiv    = document.getElementById('klachtStatus')
 
   if (!onderwerp || !beschrijving) {
-    if (statusDiv) statusDiv.innerHTML = '<div class="status-melding status-error">Vul het onderwerp en de beschrijving in.</div>'
+    if (statusDiv) {
+      statusDiv.innerHTML = '<div class="status-melding status-error">Vul het onderwerp en de beschrijving in.</div>'
+    }
     return
   }
 
@@ -207,11 +215,13 @@ async function verstuurKlacht() {
     } else {
       statusDiv.innerHTML = `
         <div class="status-melding status-success">
-          ✓ Klacht ontvangen! Ons team neemt binnen 1 werkdag contact op.<br>
+          Klacht ontvangen! Ons team neemt binnen 1 werkdag contact op.<br>
           <strong>Ticketnummer: #${ticketnummer}</strong>
         </div>`
-      document.getElementById('onderwerp').value = ''
-      document.getElementById('beschrijving').value = ''
+      const onderwerpEl    = document.getElementById('onderwerp')
+      const beschrijvingEl = document.getElementById('beschrijving')
+      if (onderwerpEl)    onderwerpEl.value    = ''
+      if (beschrijvingEl) beschrijvingEl.value = ''
     }
   }
 }
@@ -279,7 +289,6 @@ const shopArtikelen = [
   },
 ]
 
-// Winkelwagen in localStorage
 function haalWinkelwagen() {
   return JSON.parse(localStorage.getItem('winkelwagen') || '[]')
 }
@@ -302,7 +311,7 @@ function voegToeAanWinkelwagen(id) {
   const artikel = shopArtikelen.find(a => a.id === id)
   if (!artikel || artikel.voorraad === 0) return
 
-  const wagen = haalWinkelwagen()
+  const wagen    = haalWinkelwagen()
   const bestaand = wagen.find(i => i.id === id)
 
   if (bestaand) {
@@ -313,11 +322,10 @@ function voegToeAanWinkelwagen(id) {
 
   slaWinkelwagenOp(wagen)
 
-  // Visuele bevestiging
   const knop = document.querySelector(`[data-product-id="${id}"]`)
   if (knop) {
     const origineel = knop.textContent
-    knop.textContent = '✓ Toegevoegd!'
+    knop.textContent = 'Toegevoegd!'
     knop.style.background = '#2d7a2d'
     setTimeout(() => {
       knop.textContent = origineel
@@ -328,8 +336,8 @@ function voegToeAanWinkelwagen(id) {
 
 function filterShopArtikelen() {
   const zoekopdracht = document.getElementById('shopZoeken')?.value.toLowerCase().trim() || ''
-  const actieveKnop = document.querySelector('.pill-filters .pill.active')
-  const categorie = actieveKnop?.dataset.filter || 'all'
+  const actieveKnop  = document.querySelector('.pill-filters .pill.active')
+  const categorie    = actieveKnop?.dataset.filter || 'all'
 
   return shopArtikelen.filter(artikel =>
     (categorie === 'all' || artikel.categorie === categorie) &&
@@ -353,7 +361,7 @@ function laadShop() {
   const zichtbaar = filterShopArtikelen()
 
   if (zichtbaar.length === 0) {
-    container.innerHTML = '<p style="color:#888;padding:20px;">Geen producten gevonden. Probeer een andere zoekterm of filter.</p>'
+    container.innerHTML = '<p style="color:#888;padding:20px;grid-column:1/-1;">Geen producten gevonden. Probeer een andere zoekterm of filter.</p>'
     return
   }
 
@@ -370,8 +378,8 @@ function laadShop() {
           <span class="product-shop-prijs">${artikel.prijs}</span>
           <span class="product-shop-voorraad ${artikel.voorraad === 0 ? 'uitverkocht' : artikel.voorraad < 50 ? 'laag' : ''}">${artikel.voorraadLabel}</span>
         </div>
-        <p class="product-shop-levertijd">🚚 ${artikel.levertijd}</p>
-        ${artikel.b2b ? `<div class="b2b-info"><span>📈 B2B</span> ${artikel.b2b}</div>` : ''}
+        <p class="product-shop-levertijd">Levering: ${artikel.levertijd}</p>
+        ${artikel.b2b ? `<div class="b2b-info"><span>B2B</span> ${artikel.b2b}</div>` : ''}
         ${artikel.voorraad > 0
           ? `<button class="btn-winkelwagen" data-product-id="${artikel.id}" onclick="voegToeAanWinkelwagen('${artikel.id}')">In winkelwagen</button>`
           : `<button class="btn-winkelwagen btn-uitverkocht" disabled>Niet beschikbaar</button>`
@@ -384,9 +392,9 @@ function laadShop() {
 }
 
 function toonWinkelwagen() {
-  const wagen = haalWinkelwagen()
+  const wagen   = haalWinkelwagen()
   const overlay = document.getElementById('winkelwagenOverlay')
-  const inhoud = document.getElementById('winkelwagenInhoud')
+  const inhoud  = document.getElementById('winkelwagenInhoud')
   if (!overlay || !inhoud) return
 
   if (wagen.length === 0) {
@@ -396,10 +404,10 @@ function toonWinkelwagen() {
     inhoud.innerHTML = `
       ${wagen.map(item => `
         <div class="wagen-item">
-          <span>${item.naam}</span>
+          <span>${item.naam} (${item.aantal}x)</span>
           <div class="wagen-item-rechts">
             <span>€${(item.prijs * item.aantal).toFixed(2).replace('.', ',')}</span>
-            <button onclick="verwijderUitWagen('${item.id}')" class="btn-verwijder">✕</button>
+            <button onclick="verwijderUitWagen('${item.id}')" class="btn-verwijder">x</button>
           </div>
         </div>
       `).join('')}
@@ -427,10 +435,9 @@ function afrekenen() {
   const wagen = haalWinkelwagen()
   if (wagen.length === 0) return
 
-  const ordernummer = 'VEL-' + Math.floor(Math.random() * 9000 + 1000)
+  const ordernummer    = 'VEL-' + Math.floor(Math.random() * 9000 + 1000)
   const gebruikerEmail = huidigGebruiker()?.email || 'demo@vellin.nl'
 
-  // Opslaan in Supabase
   Promise.all(wagen.map(item =>
     supabase.from('bestellingen').insert([{
       productid: item.id,
@@ -447,7 +454,7 @@ function afrekenen() {
     if (resultaat) {
       resultaat.innerHTML = `
         <div class="status-melding status-success">
-          ✓ Bestelling geplaatst!<br>
+          Bestelling geplaatst!<br>
           <strong>Ordernummer: #${ordernummer}</strong><br>
           Je ontvangt een bevestiging per e-mail.
         </div>`
@@ -471,57 +478,68 @@ let chatGeschiedenis = []
 
 async function stuurChatbericht() {
   const invoer = document.getElementById('chatInvoer') || document.getElementById('userInput')
-  const vraag = invoer?.value.trim()
+  const vraag  = invoer?.value.trim()
   if (!vraag) return
 
   voegChatBerichtToe(vraag, 'gebruiker')
   invoer.value = ''
 
-  // Laadanimatie
   const laadId = 'laad-' + Date.now()
   voegChatBerichtToe('...', 'bot', laadId)
 
-  // Gebruikerscontext samenstellen
-  const gebruiker = huidigGebruiker()
-  const producten = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
+  const gebruiker  = huidigGebruiker()
+  const producten  = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
     .filter(p => p.gebruiker === (gebruiker?.email || 'demo@vellin.nl'))
   const productenTekst = producten.length > 0
     ? producten.map(p => `${p.naam} (houdbaar: ${p.houdbaar}, herkomst: ${p.herkomst})`).join(', ')
     : 'Geen producten geregistreerd'
 
-  const systeembericht = `Je bent Vellin, de vriendelijke klantenservice-assistent van Chocolate Firm. 
-Je helpt klanten in het Nederlands met vragen over chocoladeproducten, allergenen, bestellingen, klachten en de Cocoa Journey.
-Wees beknopt, warm en professioneel. Gebruik max 3 zinnen per antwoord.
-De klant heet ${gebruiker?.naam || 'de klant'} en heeft deze producten geregistreerd: ${productenTekst}.
+  const klantNaam = gebruiker?.naam || 'de klant'
+
+  const systeembericht = `Je bent Vellin, de vriendelijke klantenservice-assistent van Chocolate Firm.
+Je helpt klanten uitsluitend in het Nederlands met vragen over chocoladeproducten, allergenen, bestellingen, klachten en de Cocoa Journey.
+Antwoord altijd in het Nederlands, ook als de klant in een andere taal schrijft.
+Wees beknopt, warm en professioneel. Gebruik maximaal 3 zinnen per antwoord.
+De klant heet ${klantNaam} en heeft deze producten geregistreerd: ${productenTekst}.
 Bij klachten: verwijs naar de Klachten-pagina in de app.
-Bij bestellingen: verwijs naar de Shop-pagina.`
+Bij bestellingen: verwijs naar de Winkel-pagina.`
 
   chatGeschiedenis.push({ role: 'user', content: vraag })
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 300,
         system: systeembericht,
-        messages: chatGeschiedenis.slice(-10) // max 10 berichten history
+        messages: chatGeschiedenis.slice(-10)
       })
     })
 
-    const data = await response.json()
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`)
+    }
+
+    const data    = await response.json()
     const antwoord = data.content?.[0]?.text || 'Excuses, er is iets misgegaan. Probeer het opnieuw.'
 
     chatGeschiedenis.push({ role: 'assistant', content: antwoord })
 
-    // Laadanimatie verwijderen en antwoord plaatsen
     document.getElementById(laadId)?.remove()
     voegChatBerichtToe(antwoord, 'bot')
 
   } catch (fout) {
     document.getElementById(laadId)?.remove()
-    voegChatBerichtToe('Excuses, ik kan momenteel niet reageren. Neem contact op via 0800-VELLIN (9:00–17:00).', 'bot')
+    voegChatBerichtToe(
+      'Excuses, ik kan momenteel niet reageren. Neem contact op via de Service-pagina of bel 0800-VELLIN (9:00–17:00).',
+      'bot'
+    )
     console.error('Chatbot fout:', fout)
   }
 }
@@ -530,9 +548,9 @@ function voegChatBerichtToe(tekst, type, id) {
   const chatBox = document.getElementById('chatBox')
   if (!chatBox) return
 
-  const div = document.createElement('div')
-  div.className = type === 'gebruiker' ? 'chat-bericht-gebruiker' : 'chat-bericht-bot'
-  if (id) div.id = id
+  const div       = document.createElement('div')
+  div.className   = type === 'gebruiker' ? 'chat-bericht-gebruiker' : 'chat-bericht-bot'
+  if (id) div.id  = id
 
   if (tekst === '...') {
     div.innerHTML = '<span class="chat-laadanimatie"><span>.</span><span>.</span><span>.</span></span>'
@@ -556,33 +574,35 @@ function controleerVerlopenProducten() {
   const banner = document.getElementById('verloopBanner')
   if (!banner) return
 
-  const producten = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
+  const producten      = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
   const gebruikerEmail = huidigGebruiker()?.email || 'demo@vellin.nl'
-  const mijnProducten = producten.filter(p => p.gebruiker === gebruikerEmail)
+  const mijnProducten  = producten.filter(p => p.gebruiker === gebruikerEmail)
 
-  const zeven_dagen_later = new Date()
-  zeven_dagen_later.setDate(zeven_dagen_later.getDate() + 7)
+  const zevenDagenLater = new Date()
+  zevenDagenLater.setDate(zevenDagenLater.getDate() + 7)
 
   const bijnaVerlopen = mijnProducten.filter(p => {
     if (!p.houdbaar || p.houdbaar === 'Onbekend') return false
     const datum = parseerDatum(p.houdbaar)
-    return datum && datum <= zeven_dagen_later
+    return datum && datum <= zevenDagenLater
   })
 
   if (bijnaVerlopen.length > 0) {
     banner.style.display = 'flex'
-    banner.querySelector('.banner-tekst').textContent =
-      `⚠️ ${bijnaVerlopen.length} product${bijnaVerlopen.length > 1 ? 'en verlopen' : ' verloopt'} binnen 7 dagen`
+    const tekstEl = banner.querySelector('.banner-tekst')
+    if (tekstEl) {
+      tekstEl.textContent = `${bijnaVerlopen.length} product${bijnaVerlopen.length > 1 ? 'en verlopen' : ' verloopt'} binnen 7 dagen`
+    }
   }
 }
 
 function parseerDatum(tekst) {
   const maanden = { jan: 0, feb: 1, mrt: 2, apr: 3, mei: 4, jun: 5, jul: 6, aug: 7, sep: 8, okt: 9, nov: 10, dec: 11 }
-  const delen = tekst.toLowerCase().split(' ')
+  const delen   = tekst.toLowerCase().split(' ')
   if (delen.length >= 3) {
-    const dag = parseInt(delen[0])
+    const dag   = parseInt(delen[0])
     const maand = maanden[delen[1].substring(0, 3)]
-    const jaar = parseInt(delen[2])
+    const jaar  = parseInt(delen[2])
     if (!isNaN(dag) && maand !== undefined && !isNaN(jaar)) {
       return new Date(jaar, maand, dag)
     }
@@ -599,45 +619,44 @@ if (document.getElementById('verloopBanner')) {
 // ============================================================
 
 function toggleJourney(id, knop) {
-  document.querySelectorAll('.journey-content').forEach(sectie => {
+  document.querySelectorAll('.journey-inhoud').forEach(sectie => {
     if (sectie.id !== id) sectie.classList.remove('active')
   })
-  document.querySelectorAll('.journey-btn').forEach(btn => {
-    if (btn !== knop) btn.textContent = 'Bekijk Reis'
+  document.querySelectorAll('.journey-knop').forEach(btn => {
+    if (btn !== knop) btn.textContent = 'Bekijk Cacaoreis'
   })
 
   const sectie = document.getElementById(id)
   if (!sectie) return
   sectie.classList.toggle('active')
-  if (knop) knop.textContent = sectie.classList.contains('active') ? 'Verberg Reis' : 'Bekijk Reis'
+  if (knop) knop.textContent = sectie.classList.contains('active') ? 'Verberg Cacaoreis' : 'Bekijk Cacaoreis'
 }
 
 // ============================================================
-//  GLOBALE EXPORTS (voor onclick= attributen)
+//  GLOBALE EXPORTS (voor onclick= attributen in HTML)
 // ============================================================
 
-window.inloggen = inloggen
-window.registreren = registreren
-window.uitloggen = uitloggen
-window.registreerProduct = registreerProduct
-window.gaNaarCollectie = gaNaarCollectie
-window.verstuurKlacht = verstuurKlacht
-window.laadShop = laadShop
-window.updateShopFilter = updateShopFilter
-window.voegToeAanWinkelwagen = voegToeAanWinkelwagen
-window.toonWinkelwagen = toonWinkelwagen
-window.sluitWinkelwagen = sluitWinkelwagen
-window.verwijderUitWagen = verwijderUitWagen
-window.afrekenen = afrekenen
-window.stuurChatbericht = stuurChatbericht
-window.handleChatEnter = handleChatEnter
-window.toggleJourney = toggleJourney
+window.inloggen               = inloggen
+window.registreren            = registreren
+window.uitloggen              = uitloggen
+window.registreerProduct      = registreerProduct
+window.gaNaarCollectie        = gaNaarCollectie
+window.verstuurKlacht         = verstuurKlacht
+window.laadShop               = laadShop
+window.updateShopFilter       = updateShopFilter
+window.voegToeAanWinkelwagen  = voegToeAanWinkelwagen
+window.toonWinkelwagen        = toonWinkelwagen
+window.sluitWinkelwagen       = sluitWinkelwagen
+window.verwijderUitWagen      = verwijderUitWagen
+window.afrekenen              = afrekenen
+window.stuurChatbericht       = stuurChatbericht
+window.handleChatEnter        = handleChatEnter
+window.toggleJourney          = toggleJourney
 
-// Legacy aliases (voor bestaande onclick= in HTML)
-window.login = inloggen
-window.register = registreren
-window.verstuurKlacht = verstuurKlacht
-window.vraagBot = stuurChatbericht
+// Legacy aliassen
+window.login        = inloggen
+window.register     = registreren
+window.vraagBot     = stuurChatbericht
 window.bestelProduct = (id) => voegToeAanWinkelwagen(id)
-window.showSuccess = () => document.getElementById('successModal')?.classList.add('active')
+window.showSuccess  = () => document.getElementById('successModal')?.classList.add('active')
 window.goToCollection = gaNaarCollectie

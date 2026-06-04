@@ -23,11 +23,11 @@
       <img class="hero-bg" src="images/hero-chocolate.png" alt="Premium Chocolade Vellin">
       <div class="hero-content">
         <p class="hero-sub">Welkom terug</p>
-        <h2 class="hero-title">Sarah</h2>
+        <h2 class="hero-title" id="welkomNaam">Chocoladeliefhebber</h2>
         <p class="hero-caption">Jouw chocolade-collectie wacht</p>
       </div>
 
-      <!-- Verlopen producten banner -->
+      <!-- Verlopen producten banner (dynamisch) -->
       <div id="verloopBanner" class="card status-card" style="display:none;">
         <div class="status-content">
           <div class="status-main">
@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <!-- Statische banner als geen verlopen producten -->
+      <!-- Statische banner als er geen verlopen producten zijn -->
       <div id="promoBanner" class="card status-card">
         <div class="status-content">
           <div class="status-main">
@@ -103,7 +103,8 @@
     </div>
 
     <div class="quick-actions">
-      <a href="mychocolate.html" class="action-tile" style="text-decoration:none;">
+      <!-- Recepten verwijst nu naar de receptenpagina in de bibliotheek -->
+      <a href="mychocolate.html#recepten" class="action-tile" style="text-decoration:none;">
         <img class="action-icon" src="images/recipe.png" alt="Recepten">
         <span class="action-label">Recepten</span>
       </a>
@@ -154,25 +155,35 @@
 </div>
 
 <script>
-// Verloop-banner tonen op basis van localStorage producten
 document.addEventListener('DOMContentLoaded', () => {
-  const producten = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]')
-  const zeven = new Date(); zeven.setDate(zeven.getDate() + 7)
-  const maanden = { jan:0,feb:1,mrt:2,apr:3,mei:4,jun:5,jul:6,aug:7,sep:8,okt:9,nov:10,dec:11 }
+  // Gebruikersnaam dynamisch laden (geen hardcoded "Sarah")
+  const gebruiker = JSON.parse(localStorage.getItem('huidigGebruiker') || '{}');
+  const naam = gebruiker.naam || 'Chocoladeliefhebber';
+  const welkomEl = document.getElementById('welkomNaam');
+  if (welkomEl) welkomEl.textContent = naam;
+
+  // Verloop-banner tonen op basis van geregistreerde producten
+  const producten = JSON.parse(localStorage.getItem('geregistreerdeProducten') || '[]');
+  const zeven = new Date();
+  zeven.setDate(zeven.getDate() + 7);
+
+  const maanden = { jan:0, feb:1, mrt:2, apr:3, mei:4, jun:5, jul:6, aug:7, sep:8, okt:9, nov:10, dec:11 };
+
   const bijnaVerlopen = producten.filter(p => {
-    const delen = (p.houdbaar || '').toLowerCase().split(' ')
-    if (delen.length < 3) return false
-    const d = new Date(parseInt(delen[2]), maanden[delen[1]?.substring(0,3)], parseInt(delen[0]))
-    return !isNaN(d) && d <= zeven
-  })
+    const delen = (p.houdbaar || '').toLowerCase().split(' ');
+    if (delen.length < 3) return false;
+    const d = new Date(parseInt(delen[2]), maanden[delen[1]?.substring(0, 3)], parseInt(delen[0]));
+    return !isNaN(d) && d <= zeven;
+  });
+
   if (bijnaVerlopen.length > 0) {
-    document.getElementById('promoBanner').style.display = 'none'
-    const banner = document.getElementById('verloopBanner')
-    banner.style.display = 'flex'
+    document.getElementById('promoBanner').style.display = 'none';
+    const banner = document.getElementById('verloopBanner');
+    banner.style.display = 'flex';
     banner.querySelector('.banner-tekst').textContent =
-      `${bijnaVerlopen.length} product${bijnaVerlopen.length > 1 ? 'en verlopen' : ' verloopt'} binnen 7 dagen`
+      `${bijnaVerlopen.length} product${bijnaVerlopen.length > 1 ? 'en verlopen' : ' verloopt'} binnen 7 dagen`;
   }
-})
+});
 </script>
 </body>
 </html>
